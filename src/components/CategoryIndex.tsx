@@ -39,7 +39,7 @@ const CategoryIndex: React.FC<CategoryIndexProps> = ({ onCategoryClick, activeCa
   };
 
   return (
-    <div className="fixed right-2 top-1/2 transform -translate-y-1/2 z-50">
+    <div className="fixed right-[200px] top-1/2 transform -translate-y-1/2 z-50">
       <div 
         className="bg-white rounded-lg shadow-md p-2 max-h-[80vh] overflow-y-auto"
       >
@@ -70,4 +70,4 @@ const CategoryIndex: React.FC<CategoryIndexProps> = ({ onCategoryClick, activeCa
   );
 };
 
-export default CategoryIndex; 
+export default CategoryIndex;
