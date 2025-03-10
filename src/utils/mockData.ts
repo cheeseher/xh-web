@@ -130,6 +130,27 @@ export const categories = [
 
 // 账户数据
 export const accounts = [
+  {
+    id: 'gmail-1',
+    title: 'Gmail邮箱-稳定可用（手工）',
+    price: 4.20,
+    originalPrice: 6.50,
+    image: '/images/gmail.png',
+    category: 'gmail',
+    categoryName: '谷歌邮箱',
+    stock: 427,
+    batchPrice: '≥500/¥3.99',
+    description: '账号密码将发送至此邮箱',
+    features: [
+      '全新注册，从未使用',
+      '支持所有谷歌服务',
+      '可用于各类平台注册',
+      '24小时自动发货',
+      '专业售后支持'
+    ],
+    deliveryMethod: '自动发货',
+    verificationMethod: '填写便于自己记忆的查询密码'
+  },
   // Gmail 账户 - 13个
   ...Array(13).fill(null).map((_, index) => ({
     id: `gmail-${index + 1}`,

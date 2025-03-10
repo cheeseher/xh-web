@@ -7,12 +7,29 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#3B82F6',
+        primary: '#00925d',
+        'primary-dark': '#007a4d',
         secondary: '#10B981',
         dark: '#1F2937',
         light: '#F9FAFB',
+        price: '#ff4d4f',
+        'price-light': '#fff2f0',
+        'batch-price': '#52c41a',
+        'batch-price-light': '#f6ffed',
+      },
+      container: {
+        center: true,
+        padding: '1rem',
+        screens: {
+          sm: '640px',
+          md: '768px',
+          lg: '1024px',
+          xl: '1280px',
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 } 

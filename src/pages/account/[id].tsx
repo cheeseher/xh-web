@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { accounts } from '../../utils/mockData';
-import { FaShoppingCart, FaCheck, FaArrowLeft, FaInfoCircle } from 'react-icons/fa';
+import { FaShoppingCart, FaCheck, FaArrowLeft, FaInfoCircle, FaGoogle } from 'react-icons/fa';
 import { useCart } from '../../context/CartContext';
 
 const AccountDetailPage: React.FC = () => {
@@ -13,7 +13,9 @@ const AccountDetailPage: React.FC = () => {
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [queryPassword, setQueryPassword] = useState('');
+  const [receiveEmail, setReceiveEmail] = useState('');
   const [addedToCart, setAddedToCart] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   // 查找当前账户
   const account = accounts.find((acc) => acc.id === id);
@@ -46,6 +48,18 @@ const AccountDetailPage: React.FC = () => {
 
   // 处理添加到购物车
   const handleAddToCart = () => {
+    if (!agreed) {
+      alert('请先阅读并同意服务协议和告后协议');
+      return;
+    }
+    if (!receiveEmail) {
+      alert('请输入接收邮箱');
+      return;
+    }
+    if (!queryPassword) {
+      alert('请输入查询密码');
+      return;
+    }
     for (let i = 0; i < quantity; i++) {
       addItem({
         id: account.id,
@@ -56,6 +70,7 @@ const AccountDetailPage: React.FC = () => {
     }
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
+    router.push('/checkout');
   };
 
   // 计算批发价
@@ -139,25 +154,37 @@ const AccountDetailPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center">
-                  <span className="w-20 text-gray-600">接收邮箱：</span>
-                  <div className="text-gray-500">账号密码将发送至邮箱</div>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">接收邮箱</label>
+                  <input
+                    type="email"
+                    value={receiveEmail}
+                    onChange={(e) => setReceiveEmail(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+                    placeholder="账号密码将发送至此邮箱"
+                  />
                 </div>
 
-                <div className="flex items-center">
-                  <span className="w-20 text-gray-600">查询密码：</span>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">查询密码</label>
                   <input
-                    type="text"
+                    type="password"
                     value={queryPassword}
                     onChange={(e) => setQueryPassword(e.target.value)}
-                    placeholder="填写用于自身记忆的查询密码"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+                    placeholder="填写便于自己记忆的查询密码"
                   />
                 </div>
               </div>
 
               <div className="flex items-center mb-6">
-                <input type="checkbox" id="agreement" className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="agreement"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className="mr-2 rounded text-primary focus:ring-primary"
+                />
                 <label htmlFor="agreement" className="text-sm text-gray-600">
                   我已阅读并同意
                   <Link href="#" className="text-blue-500 hover:underline mx-1">服务协议</Link>
@@ -166,17 +193,12 @@ const AccountDetailPage: React.FC = () => {
                 </label>
               </div>
 
-              <div className="flex space-x-4">
+              <div className="flex">
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 btn bg-primary text-white hover:bg-primary-dark"
+                  className="w-full py-3 px-6 bg-primary text-white text-base font-medium rounded-md hover:bg-primary-dark transition-colors duration-200"
                 >
                   立即购买
-                </button>
-                <button
-                  className="flex-1 btn bg-gray-800 text-white hover:bg-gray-900"
-                >
-                  订阅通知
                 </button>
               </div>
             </div>

@@ -2,84 +2,76 @@ import React from 'react';
 import Link from 'next/link';
 
 const Footer: React.FC = () => {
+  const quickLinks = [
+    { name: '谷歌邮箱购买', href: '/products/gmail' },
+    { name: 'Gmail', href: '/products/gmail' },
+    { name: 'Outlook', href: '/products/outlook' },
+    { name: 'Yahoo Mail', href: '/products/yahoo' },
+    { name: 'Aol Mail', href: '/products/aol' },
+    { name: 'Naver Mail', href: '/products/naver' },
+    { name: 'Facebook', href: '/products/facebook' },
+    { name: 'Twitter', href: '/products/twitter' },
+    { name: 'Amazon', href: '/products/amazon' },
+  ];
+
+  const disclaimers = [
+    '本站只是代注册各种账号，提供账号和密码，账号所有权归账号官网所有。我们只保证账号密码正确，特殊功能需少量购买后自行测试。',
+    '客户付款提供后，为保证安全，项目可更改密码及密码保护资料等一切可以修改的信息。账号问题售后时间内只处理有问题的账号，不对因使用账户产生的问题做任何处理。',
+    '请合法使用购买的账号，对非法使用造成的后果由购买人承担一切后果以及法律责任。'
+  ];
+
   return (
-    <footer className="bg-dark text-white pt-8 pb-6">
-      <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {/* Company Info */}
-          <div>
-            <h3 className="text-lg font-semibold mb-3">账户商城</h3>
-            <p className="text-gray-400 text-sm mb-3">
-              提供各类优质账户，安全可靠，价格合理。
-            </p>
-          </div>
+    <footer className="bg-gray-800 text-gray-300 py-8">
+      {/* 免责声明 */}
+      <div className="container mx-auto px-4 mb-8">
+        <div className="bg-gray-700 rounded-lg p-4">
+          {disclaimers.map((text, index) => (
+            <div key={index} className="flex items-start mb-2 last:mb-0">
+              <span className="mr-2">{index + 1}.</span>
+              <p className="text-sm">{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-sm font-semibold mb-3 text-gray-300">快速链接</h3>
-            <ul className="space-y-1 text-sm">
-              <li>
-                <Link href="/" className="text-gray-400 hover:text-primary">
-                  首页
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories" className="text-gray-400 hover:text-primary">
-                  全部分类
-                </Link>
-              </li>
-              <li>
-                <Link href="/accounts" className="text-gray-400 hover:text-primary">
-                  全部账户
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-gray-400 hover:text-primary">
-                  常见问题
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Categories */}
-          <div>
-            <h3 className="text-sm font-semibold mb-3 text-gray-300">账户分类</h3>
-            <ul className="space-y-1 text-sm">
-              <li>
-                <Link href="/categories/email" className="text-gray-400 hover:text-primary">
-                  邮箱账户
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/social" className="text-gray-400 hover:text-primary">
-                  社交媒体
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/streaming" className="text-gray-400 hover:text-primary">
-                  流媒体账户
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/gaming" className="text-gray-400 hover:text-primary">
-                  游戏账户
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-sm font-semibold mb-3 text-gray-300">联系我们</h3>
-            <ul className="space-y-1 text-sm text-gray-400">
-              <li>客服邮箱: support@accountshop.com</li>
-              <li>工作时间: 周一至周日 9:00-22:00</li>
-            </ul>
-          </div>
+      {/* 快捷链接 */}
+      <div className="container mx-auto px-4">
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+          {quickLinks.map((link, index) => (
+            <Link 
+              key={index}
+              href={link.href}
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              {link.name}
+            </Link>
+          ))}
         </div>
 
-        <div className="border-t border-gray-800 mt-6 pt-6 text-center text-gray-500 text-xs">
-          <p>&copy; {new Date().getFullYear()} 账户商城. 保留所有权利.</p>
+        {/* 版权信息 */}
+        <div className="text-center text-sm text-gray-400">
+          <p className="mb-2">
+            © 2022 很多号邮箱平台 | Powered by{' '}
+            <a 
+              href="http://www.henduohao.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-white"
+            >
+              www.henduohao.com
+            </a>
+          </p>
+          <div className="flex justify-center gap-4">
+            <Link href="/sitemap" className="hover:text-white">
+              Sitemap
+            </Link>
+            <Link href="/email" className="hover:text-white">
+              E-Mail
+            </Link>
+            <Link href="/telegram" className="hover:text-white">
+              Telegram
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

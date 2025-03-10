@@ -83,9 +83,11 @@ const AccountsPage: React.FC = () => {
                 id={account.id}
                 title={account.title}
                 price={account.price}
+                originalPrice={account.originalPrice}
                 image={account.image}
-                category={account.categoryName}
+                category={account.category}
                 stock={account.stock}
+                batchPrice={account.batchPrice}
               />
             ))}
           </div>
