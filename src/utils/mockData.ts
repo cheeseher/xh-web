@@ -366,6 +366,7 @@ export const accounts = [
     id: `other-${index + 1}`,
     title: `其他邮箱账户 ${['基础版', '高级版', '特殊版'][index % 3]}`,
     price: [12.99, 22.99, 32.99][index % 3],
+    originalPrice: [16.99, 26.99, 36.99][index % 3],
     image: '/images/other.png',
     category: 'other',
     categoryName: '其他邮箱集合',
@@ -377,6 +378,8 @@ export const accounts = [
       '支持安全登录',
       ['基础存储空间', '扩展存储空间', '高级存储空间'][index % 3],
     ],
+    deliveryMethod: '自动发货',
+    verificationMethod: '已验证',
   })),
 
   // Instagram 账户 - 13个
@@ -510,6 +513,7 @@ export const accounts = [
     id: `amazon-${index + 1}`,
     title: `亚马逊账号 ${['基础版', 'Prime版', '企业版'][index % 3]}`,
     price: [24.99, 44.99, 89.99][index % 3],
+    originalPrice: [29.99, 54.99, 109.99][index % 3],
     image: '/images/amazon.png',
     category: 'amazon',
     categoryName: '亚马逊账号',
@@ -521,6 +525,8 @@ export const accounts = [
       '支持双重认证',
       ['基础功能', 'Prime特权', '企业特权'][index % 3],
     ],
+    deliveryMethod: '自动发货',
+    verificationMethod: '已验证',
   })),
 ];
 
