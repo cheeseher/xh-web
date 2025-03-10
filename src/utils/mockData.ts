@@ -161,6 +161,7 @@ export const accounts = [
     category: 'gmail',
     categoryName: 'Gmail邮箱',
     stock: 20,
+    batchPrice: ['≥100/¥14.99', '≥100/¥24.99', '≥100/¥34.99'][index % 3],
     description: `全新Gmail账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       'Google全套服务',
@@ -182,6 +183,7 @@ export const accounts = [
     category: 'outlook',
     categoryName: 'Outlook邮箱',
     stock: 20,
+    batchPrice: ['≥100/¥13.99', '≥100/¥23.99', '≥100/¥33.99'][index % 3],
     description: `全新Outlook账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       'Microsoft全套服务',
@@ -203,6 +205,7 @@ export const accounts = [
     category: 'yahoo',
     categoryName: 'Yahoo邮箱',
     stock: 20,
+    batchPrice: ['≥100/¥13.99', '≥100/¥23.99', '≥100/¥33.99'][index % 3],
     description: `全新Yahoo账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -224,6 +227,7 @@ export const accounts = [
     category: 'gmx',
     categoryName: 'GMX邮箱',
     stock: 20,
+    batchPrice: ['≥100/¥12.99', '≥100/¥22.99', '≥100/¥32.99'][index % 3],
     description: `全新GMX账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -245,6 +249,7 @@ export const accounts = [
     category: 'aol',
     categoryName: 'AOL邮箱',
     stock: 20,
+    batchPrice: ['≥100/¥11.99', '≥100/¥21.99', '≥100/¥31.99'][index % 3],
     description: `全新AOL账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -266,6 +271,7 @@ export const accounts = [
     category: 'protonmail',
     categoryName: 'ProtonMail邮箱',
     stock: 20,
+    batchPrice: ['≥100/¥17.99', '≥100/¥27.99', '≥100/¥37.99'][index % 3],
     description: `全新ProtonMail账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -287,6 +293,7 @@ export const accounts = [
     category: 'mail',
     categoryName: 'Mail.com邮箱',
     stock: 20,
+    batchPrice: ['≥100/¥12.99', '≥100/¥22.99', '≥100/¥32.99'][index % 3],
     description: `全新Mail.com账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -308,6 +315,7 @@ export const accounts = [
     category: 'naver',
     categoryName: 'Naver邮箱',
     stock: 20,
+    batchPrice: ['≥100/¥14.99', '≥100/¥24.99', '≥100/¥34.99'][index % 3],
     description: `韩国Naver账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '韩国IP注册',
@@ -329,6 +337,7 @@ export const accounts = [
     category: 'rambler',
     categoryName: '俄罗斯邮箱',
     stock: 20,
+    batchPrice: ['≥100/¥13.99', '≥100/¥23.99', '≥100/¥33.99'][index % 3],
     description: `俄罗斯邮箱账户，${['基础功能完整', '已验证6个月+', 'VIP特权'][index % 3]}`,
     features: [
       '俄罗斯IP注册',
@@ -350,6 +359,7 @@ export const accounts = [
     category: 'german',
     categoryName: '德国DE邮箱',
     stock: 20,
+    batchPrice: ['≥100/¥15.99', '≥100/¥25.99', '≥100/¥35.99'][index % 3],
     description: `德国DE邮箱账户，${['基础功能完整', '已验证6个月+', '商业版特权'][index % 3]}`,
     features: [
       '德国IP注册',
@@ -371,6 +381,7 @@ export const accounts = [
     category: 'other',
     categoryName: '其他邮箱集合',
     stock: 20,
+    batchPrice: ['≥100/¥11.99', '≥100/¥21.99', '≥100/¥31.99'][index % 3],
     description: `其他类型邮箱账户，${['基础功能完整', '高级功能已开通', '特殊功能已开通'][index % 3]}`,
     features: [
       '已完成验证',
@@ -392,6 +403,7 @@ export const accounts = [
     category: 'instagram',
     categoryName: 'Instagram账号',
     stock: 20,
+    batchPrice: ['≥100/¥15.99', '≥100/¥25.99', '≥100/¥35.99'][index % 3],
     description: `精品Instagram账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -413,6 +425,7 @@ export const accounts = [
     category: 'twitter',
     categoryName: 'Twitter账号',
     stock: 20,
+    batchPrice: ['≥100/¥14.99', '≥100/¥24.99', '≥100/¥34.99'][index % 3],
     description: `精品Twitter账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -434,6 +447,7 @@ export const accounts = [
     category: 'facebook',
     categoryName: 'Facebook账号',
     stock: 20,
+    batchPrice: ['≥100/¥16.99', '≥100/¥26.99', '≥100/¥36.99'][index % 3],
     description: `精品Facebook账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -455,6 +469,7 @@ export const accounts = [
     category: 'discord',
     categoryName: 'Discord账号',
     stock: 20,
+    batchPrice: ['≥100/¥12.99', '≥100/¥22.99', '≥100/¥32.99'][index % 3],
     description: `精品Discord账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -476,6 +491,7 @@ export const accounts = [
     category: 'chatgpt',
     categoryName: 'ChatGPT账号',
     stock: 20,
+    batchPrice: ['≥100/¥18.99', '≥100/¥28.99', '≥100/¥38.99'][index % 3],
     description: `精品ChatGPT账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -497,6 +513,7 @@ export const accounts = [
     category: 'tiktok',
     categoryName: 'TikTok账号',
     stock: 20,
+    batchPrice: ['≥100/¥15.99', '≥100/¥25.99', '≥100/¥35.99'][index % 3],
     description: `精品TikTok账户，${['基础功能完整', '已验证6个月+', 'Premium特权'][index % 3]}`,
     features: [
       '已完成验证',
@@ -518,6 +535,7 @@ export const accounts = [
     category: 'amazon',
     categoryName: '亚马逊账号',
     stock: 20,
+    batchPrice: ['≥100/¥23.99', '≥100/¥43.99', '≥100/¥88.99'][index % 3],
     description: `亚马逊账号，${['基础购物功能', 'Prime会员特权', '企业购物特权'][index % 3]}`,
     features: [
       '已完成验证',
