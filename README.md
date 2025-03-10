@@ -1,13 +1,5 @@
 # 账户销售网站
 
-## 部署状态
-[![Vercel Production Deployment](https://img.shields.io/github/deployments/yourusername/xinghaiqiantai/Production?label=vercel&logo=vercel&logoColor=white)](https://vercel.com/dashboard)
-
-## 自动部署说明
-本项目使用 Vercel 进行自动部署：
-- 当代码推送到 main 分支时，自动触发生产环境部署
-- 所有分支都会生成预览部署
-- 可在 Vercel Dashboard 查看部署历史和状态
 
 ## 项目概述
 这是一个展示和销售各类账户（如邮箱、社交媒体等）的网站前端项目。网站提供直观的界面，让用户可以浏览和购买各种类型的账户。
