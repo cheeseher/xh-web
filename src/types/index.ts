@@ -10,14 +10,14 @@ export interface Account {
   id: string;
   title: string;
   price: number;
-  originalPrice?: number;
+  originalPrice: number;
   image: string;
   category: string;
   categoryName: string;
   stock: number;
   batchPrice?: string;
   description: string;
-  features?: string[];
+  features: string[];
   deliveryMethod: string;
   verificationMethod: string;
 }
