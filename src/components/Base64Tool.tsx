@@ -1,119 +1,85 @@
 import React, { useState } from 'react';
-import { FaCopy } from 'react-icons/fa';
 
 const Base64Tool: React.FC = () => {
-  const [originalText, setOriginalText] = useState('');
-  const [encodedText, setEncodedText] = useState('');
-  const [decodedText, setDecodedText] = useState('');
+  const [input, setInput] = useState('');
+  const [encoded, setEncoded] = useState('');
+  const [decoded, setDecoded] = useState('');
 
-  // 编码函数
-  const handleEncode = () => {
+  // 处理编码和解码
+  const handleConvert = () => {
+    if (!input.trim()) return;
+    
     try {
-      const encoded = btoa(originalText);
-      setEncodedText(encoded);
+      // 尝试解码，如果失败则进行编码
+      try {
+        const result = atob(input);
+        setDecoded(result);
+        setEncoded(input);
+      } catch {
+        const result = btoa(input);
+        setEncoded(result);
+        setDecoded(input);
+      }
     } catch (error) {
-      setEncodedText('编码失败，请检查输入是否正确');
+      setEncoded('处理失败，请检查输入');
+      setDecoded('处理失败，请检查输入');
     }
   };
 
-  // 解码函数
-  const handleDecode = () => {
-    try {
-      const decoded = atob(encodedText);
-      setDecodedText(decoded);
-    } catch (error) {
-      setDecodedText('解码失败，请检查输入是否正确');
-    }
-  };
-
-  // 复制函数
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
-  };
+  // 文本框和复制按钮组件
+  const ResultField = ({ label, value }: { label: string; value: string }) => (
+    <div>
+      <div className="flex items-center justify-between mb-1">
+        <label className="text-sm font-medium text-gray-700">{label}</label>
+        <button
+          onClick={() => value && navigator.clipboard.writeText(value)}
+          className="px-4 py-1 bg-primary text-white rounded hover:bg-primary-dark transition-colors"
+        >
+          点击复制
+        </button>
+      </div>
+      <textarea
+        value={value}
+        readOnly
+        placeholder={`${label}将显示在这里`}
+        className="w-full px-4 py-2 border rounded-md bg-gray-50 h-32 resize-none"
+      />
+    </div>
+  );
 
   return (
-    <div className="max-w-4xl mx-auto">
-      {/* 原始编码 */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-medium text-gray-700">
-            原始编码
-          </label>
-        </div>
+    <div className="space-y-4">
+      {/* 输入区域 */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          原始编码
+        </label>
         <textarea
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="输入卡密中BASE64代码/字符"
           className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32 resize-none"
-          value={originalText}
-          onChange={(e) => setOriginalText(e.target.value)}
         />
       </div>
 
-      {/* 编码结果 */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-medium text-gray-700">
-            编码结果
-          </label>
-          <button
-            onClick={() => handleCopy(encodedText)}
-            className="text-primary hover:text-primary-dark text-sm flex items-center"
-          >
-            <FaCopy className="mr-1" />
-            点击复制
-          </button>
-        </div>
-        <textarea
-          placeholder="BASE64字符编码结果"
-          className="w-full px-4 py-2 border rounded-md bg-gray-50 h-32 resize-none"
-          value={encodedText}
-          readOnly
-        />
-      </div>
-
-      {/* 解码结果 */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-medium text-gray-700">
-            解码结果
-          </label>
-          <button
-            onClick={() => handleCopy(decodedText)}
-            className="text-primary hover:text-primary-dark text-sm flex items-center"
-          >
-            <FaCopy className="mr-1" />
-            点击复制
-          </button>
-        </div>
-        <textarea
-          placeholder="BASE64字符解码结果"
-          className="w-full px-4 py-2 border rounded-md bg-gray-50 h-32 resize-none"
-          value={decodedText}
-          readOnly
-        />
-      </div>
+      {/* 结果区域 */}
+      <ResultField label="编码结果" value={encoded} />
+      <ResultField label="解码结果" value={decoded} />
 
       {/* 操作按钮 */}
-      <div className="flex space-x-4">
-        <button
-          onClick={handleEncode}
-          className="flex-1 py-2 px-4 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
-        >
-          编码
-        </button>
-        <button
-          onClick={handleDecode}
-          className="flex-1 py-2 px-4 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
-        >
-          解码
-        </button>
-      </div>
+      <button
+        onClick={handleConvert}
+        className="w-full px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-colors"
+      >
+        编码/解码
+      </button>
 
       {/* 友情提示 */}
-      <div className="mt-6 bg-yellow-50 p-4 rounded-md">
+      <div className="bg-yellow-50 p-4 rounded-md">
         <h3 className="text-yellow-800 font-medium mb-2">友情提示</h3>
-        <p className="text-sm text-yellow-700">
-          BASE64编解码工具，如果出现错误或者没有结果，请检查是否正确。
-        </p>
+        <ol className="text-sm text-yellow-700 list-decimal list-inside">
+          <li>BASE64编解码工具，如果出现错误或者没有结果，请检查是否正确。</li>
+        </ol>
       </div>
     </div>
   );

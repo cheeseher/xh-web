@@ -13,7 +13,6 @@ const Navbar: React.FC = () => {
   const menuItems = [
     { name: '首页', href: '/' },
     { name: '订单查询', href: '/orders/query' },
-    { name: '在线客服', href: '/support' },
     { name: '工具合集', href: '/tools' },
     { name: '帮助须知', href: '/help' },
     { name: '关于我们', href: '/about' },
