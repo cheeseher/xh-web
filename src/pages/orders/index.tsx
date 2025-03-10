@@ -1,16 +1,30 @@
-import React, { useState } from 'react';
-import Layout from '@/components/Layout';
+import { useState, useEffect } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
+import Layout from '@/components/Layout';
 import Captcha from '@/components/Captcha';
+import { storage } from '@/utils/storage';
 
 const OrdersPage = () => {
-  const [orderNumber, setOrderNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [queryPassword, setQueryPassword] = useState('');
   const [captcha, setCaptcha] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: 实现订单查询逻辑
-    console.log('查询订单:', orderNumber, captcha);
+    setError('');
+    setIsSubmitting(true);
+
+    try {
+      // TODO: 实现订单查询逻辑
+      console.log('查询订单:', email, queryPassword, captcha);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    } catch (err) {
+      setError('查询失败，请稍后重试');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCaptchaRefresh = () => {
@@ -26,67 +40,79 @@ const OrdersPage = () => {
         <div className="bg-gray-50 p-4 rounded-lg mb-6">
           <p className="flex items-start text-gray-600">
             <FaInfoCircle className="text-blue-500 mt-1 mr-2 flex-shrink-0" />
-            友情提示：订单查询仅能查询最近天的数据；移动端模式下，仅能查询最近一笔订单。
+            友情提示：订单查询仅能查询最近2天的数据。
           </p>
         </div>
 
         {/* 查询表单 */}
         <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="space-y-4">
-            {/* 浏览器提示 */}
-            <div className="flex items-center space-x-4">
-              <span className="text-gray-600 min-w-[80px]">浏览器提示</span>
-              <div className="flex items-center space-x-4">
-                <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors">
-                  测试器运行
-                </button>
-                <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors">
-                  联系方式
-                </button>
-              </div>
+          <form onSubmit={handleSearch} className="space-y-4">
+            {/* 邮箱 */}
+            <div className="space-y-2">
+              <label htmlFor="email" className="block text-gray-700">
+                邮箱地址
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="请输入下单时使用的邮箱地址"
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                required
+              />
             </div>
 
-            <form onSubmit={handleSearch} className="space-y-4">
-              {/* 订单号 */}
-              <div className="flex items-center space-x-4">
-                <span className="text-gray-600 min-w-[80px]">订单号</span>
-                <input
-                  type="text"
-                  value={orderNumber}
-                  onChange={(e) => setOrderNumber(e.target.value)}
-                  placeholder="只有下单的地址才能通过订单号进行查询"
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
-              </div>
+            {/* 查询密码 */}
+            <div className="space-y-2">
+              <label htmlFor="queryPassword" className="block text-gray-700">
+                查询密码
+              </label>
+              <input
+                type="password"
+                id="queryPassword"
+                value={queryPassword}
+                onChange={(e) => setQueryPassword(e.target.value)}
+                placeholder="请输入下单时设置的查询密码"
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                required
+              />
+            </div>
 
-              {/* 图形验证 */}
+            {/* 图形验证码 */}
+            <div className="space-y-2">
+              <label htmlFor="captcha" className="block text-gray-700">验证码</label>
               <div className="flex items-center space-x-4">
-                <span className="text-gray-600 min-w-[80px]">图形验证</span>
                 <input
                   type="text"
+                  id="captcha"
                   value={captcha}
                   onChange={(e) => setCaptcha(e.target.value)}
                   className="w-48 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  required
                 />
                 <Captcha onRefresh={handleCaptchaRefresh} />
               </div>
+            </div>
 
-              {/* 查询按钮 */}
-              <div className="flex items-center space-x-4">
-                <span className="min-w-[80px]"></span>
-                <button
-                  type="submit"
-                  className="px-6 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-colors"
-                >
-                  查询
-                </button>
-              </div>
-            </form>
-          </div>
+            {/* 错误提示 */}
+            {error && (
+              <div className="text-red-500 text-sm">{error}</div>
+            )}
+
+            {/* 查询按钮 */}
+            <button
+              type="submit"
+              className="w-full px-6 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? '查询中...' : '查询订单'}
+            </button>
+          </form>
         </div>
       </div>
     </Layout>
   );
 };
 
-export default OrdersPage; 
+export default OrdersPage;

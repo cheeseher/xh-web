@@ -70,9 +70,12 @@ const AccountCard: React.FC<AccountCardProps> = ({
   return (
     <Link href={`/account/${id}`}>
       <div className="bg-white border border-gray-100 rounded-md hover:shadow-md transition-all duration-300">
-        <div className="h-32 w-full flex items-center justify-center p-2 bg-gray-50 relative">
-          {getIcon()}
-          <div className="absolute top-1 right-1 bg-green-100 text-green-600 text-xs px-1 py-0.5 rounded">
+        <div className="h-32 w-full flex items-center justify-center p-2 relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-75"></div>
+          <div className="relative transform group-hover:scale-110 transition-transform duration-300 ease-in-out">
+            {getIcon()}
+          </div>
+          <div className="absolute top-2 right-2 bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full font-medium shadow-sm">
             充足
           </div>
         </div>
@@ -94,4 +97,4 @@ const AccountCard: React.FC<AccountCardProps> = ({
   );
 };
 
-export default AccountCard; 
+export default AccountCard;

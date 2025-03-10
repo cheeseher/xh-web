@@ -18,11 +18,11 @@ const FloatingButtons: React.FC = () => {
   };
 
   const handleCustomerService = () => {
-    window.open('https://t.me/yourTelegramUsername', '_blank');
+    // 移除跳转功能，为后续添加其他交互做准备
   };
 
   const handleTelegram = () => {
-    window.open('https://t.me/yourTelegramUsername', '_blank');
+    // 移除跳转功能，为后续添加其他交互做准备
   };
 
   return (
@@ -59,4 +59,4 @@ const FloatingButtons: React.FC = () => {
   );
 };
 
-export default FloatingButtons; 
+export default FloatingButtons;
