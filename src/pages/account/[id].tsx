@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { accounts } from '../../utils/mockData';
-import { FaShoppingCart, FaCheck, FaArrowLeft } from 'react-icons/fa';
+import { FaShoppingCart, FaCheck, FaArrowLeft, FaInfoCircle } from 'react-icons/fa';
 import { useCart } from '../../context/CartContext';
 
 const AccountDetailPage: React.FC = () => {
@@ -12,6 +12,7 @@ const AccountDetailPage: React.FC = () => {
   const { id } = router.query;
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const [queryPassword, setQueryPassword] = useState('');
   const [addedToCart, setAddedToCart] = useState(false);
 
   // 查找当前账户
@@ -57,23 +58,27 @@ const AccountDetailPage: React.FC = () => {
     setTimeout(() => setAddedToCart(false), 2000);
   };
 
+  // 计算批发价
+  const getWholesalePrice = () => {
+    return (account.price * 0.95).toFixed(2);
+  };
+
   return (
     <Layout
       title={`${account.title} - 账户商城`}
       description={account.description}
     >
-      <div className="container-custom py-12">
-        {/* 返回按钮 */}
-        <div className="mb-6">
-          <button
-            onClick={() => router.back()}
-            className="flex items-center text-gray-600 hover:text-primary transition-colors"
-          >
-            <FaArrowLeft className="mr-2" /> 返回
-          </button>
+      <div className="container-custom py-6">
+        {/* 面包屑导航 */}
+        <div className="text-sm text-gray-500 mb-4">
+          <Link href="/" className="hover:text-primary">首页</Link>
+          <span className="mx-2">/</span>
+          <Link href={`/categories/${account.category}`} className="hover:text-primary">{account.categoryName}</Link>
+          <span className="mx-2">/</span>
+          <span className="text-gray-700">{account.title}</span>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="md:flex">
             {/* 账户图片 */}
             <div className="md:w-1/3 p-6 flex items-center justify-center bg-gray-50">
@@ -89,82 +94,112 @@ const AccountDetailPage: React.FC = () => {
 
             {/* 账户信息 */}
             <div className="md:w-2/3 p-6">
-              <h1 className="text-2xl font-bold text-dark mb-2">{account.title}</h1>
-              <div className="flex items-center mb-4">
-                <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-sm">
-                  {account.categoryName}
-                </span>
-                <span className="ml-4 text-gray-600">
-                  库存: {account.stock} 个
-                </span>
+              <div className="flex items-center space-x-2 mb-4">
+                <span className="bg-green-100 text-green-600 px-2 py-1 rounded-sm text-sm">自助发货</span>
+                <span className="text-gray-500 text-sm">库存: {account.stock}</span>
+                <span className="text-blue-500 text-sm hover:text-blue-600 cursor-pointer">通知补货?</span>
               </div>
 
-              <p className="text-gray-700 mb-6">{account.description}</p>
+              <h1 className="text-xl font-medium text-gray-800 mb-4">{account.title}</h1>
 
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold mb-2">账户特点:</h3>
-                <ul className="space-y-2">
-                  {account.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
-                      <FaCheck className="text-green-500 mr-2" /> {feature}
-                    </li>
-                  ))}
-                </ul>
+              <div className="space-y-4 mb-6">
+                <div className="flex items-baseline">
+                  <span className="text-2xl font-bold text-red-500">¥{account.price.toFixed(2)}</span>
+                  <span className="ml-2 text-gray-400 line-through">¥{(account.price * 1.5).toFixed(2)}</span>
+                </div>
+                <div className="text-sm text-gray-600">
+                  批发价：≥500个{getWholesalePrice()} <span className="text-red-500">更有批发优惠</span>
+                </div>
               </div>
 
-              <div className="border-t border-gray-200 pt-6">
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-3xl font-bold text-primary">
-                    ¥{account.price.toFixed(2)}
-                  </span>
-                  <div className="flex items-center">
-                    <span className="mr-3">数量:</span>
-                    <div className="flex items-center border border-gray-300 rounded-md">
-                      <button
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="px-3 py-1 border-r border-gray-300"
-                        disabled={quantity <= 1}
-                      >
-                        -
-                      </button>
-                      <span className="px-4 py-1">{quantity}</span>
-                      <button
-                        onClick={() => setQuantity(Math.min(account.stock, quantity + 1))}
-                        className="px-3 py-1 border-l border-gray-300"
-                        disabled={quantity >= account.stock}
-                      >
-                        +
-                      </button>
-                    </div>
+              <div className="space-y-4 mb-6">
+                <div className="flex items-center">
+                  <span className="w-20 text-gray-600">数量：</span>
+                  <div className="flex items-center border border-gray-300 rounded">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="px-3 py-1 border-r border-gray-300 hover:bg-gray-100"
+                      disabled={quantity <= 1}
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      value={quantity}
+                      onChange={(e) => setQuantity(Math.min(account.stock, Math.max(1, parseInt(e.target.value) || 1)))}
+                      className="w-16 text-center py-1 border-none focus:outline-none"
+                    />
+                    <button
+                      onClick={() => setQuantity(Math.min(account.stock, quantity + 1))}
+                      className="px-3 py-1 border-l border-gray-300 hover:bg-gray-100"
+                      disabled={quantity >= account.stock}
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-                  <button
-                    onClick={handleAddToCart}
-                    className={`btn ${
-                      addedToCart ? 'bg-green-500 hover:bg-green-600' : 'btn-primary'
-                    } flex-1 flex items-center justify-center`}
-                    disabled={addedToCart}
-                  >
-                    {addedToCart ? (
-                      <>
-                        <FaCheck className="mr-2" /> 已添加到购物车
-                      </>
-                    ) : (
-                      <>
-                        <FaShoppingCart className="mr-2" /> 添加到购物车
-                      </>
-                    )}
-                  </button>
-                  <Link
-                    href="/cart"
-                    className="btn bg-gray-800 text-white hover:bg-gray-900 flex-1 flex items-center justify-center"
-                  >
-                    立即购买
-                  </Link>
+                <div className="flex items-center">
+                  <span className="w-20 text-gray-600">接收邮箱：</span>
+                  <div className="text-gray-500">账号密码将发送至邮箱</div>
+                </div>
+
+                <div className="flex items-center">
+                  <span className="w-20 text-gray-600">查询密码：</span>
+                  <input
+                    type="text"
+                    value={queryPassword}
+                    onChange={(e) => setQueryPassword(e.target.value)}
+                    placeholder="填写用于自身记忆的查询密码"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-primary"
+                  />
                 </div>
               </div>
+
+              <div className="flex items-center mb-6">
+                <input type="checkbox" id="agreement" className="mr-2" />
+                <label htmlFor="agreement" className="text-sm text-gray-600">
+                  我已阅读并同意
+                  <Link href="#" className="text-blue-500 hover:underline mx-1">服务协议</Link>
+                  和
+                  <Link href="#" className="text-blue-500 hover:underline mx-1">售后协议</Link>
+                </label>
+              </div>
+
+              <div className="flex space-x-4">
+                <button
+                  onClick={handleAddToCart}
+                  className="flex-1 btn bg-primary text-white hover:bg-primary-dark"
+                >
+                  立即购买
+                </button>
+                <button
+                  className="flex-1 btn bg-gray-800 text-white hover:bg-gray-900"
+                >
+                  订阅通知
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* 商品描述 */}
+          <div className="border-t border-gray-200 p-6">
+            <h2 className="text-lg font-medium text-gray-800 mb-4">商品描述</h2>
+            <div className="space-y-4 text-gray-600">
+              <h3 className="font-medium">账号说明：</h3>
+              <ul className="list-disc pl-5 space-y-2">
+                {account.features.map((feature, index) => (
+                  <li key={index}>{feature}</li>
+                ))}
+              </ul>
+              <p>所有账号经过严格测试，均可正常使用，每天都会上新。</p>
+              <p>购买建议：先少量购买进行测试，再进行批量购买，批量购买自动优惠价。</p>
+              
+              <h3 className="font-medium mt-6">格式说明：</h3>
+              <p>账号----密码----辅助邮箱</p>
+              
+              <h3 className="font-medium mt-6">登录网址：</h3>
+              <p>{account.category}.com（包含方法登录 第三方登录不上不售后）</p>
             </div>
           </div>
         </div>

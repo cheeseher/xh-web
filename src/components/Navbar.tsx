@@ -1,42 +1,55 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { FaShoppingCart, FaUser, FaBars, FaTimes } from 'react-icons/fa';
+import { FaShoppingCart, FaUser, FaBars, FaTimes, FaCaretDown, FaStar } from 'react-icons/fa';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const menuItems = [
+    { name: '首页', href: '/' },
+    { name: '订单查询', href: '/orders' },
+    { name: '工具集合', href: '/toolset' },
+    { name: '帮助须知', href: '/help' },
+    { name: '关于我们', href: '/about' },
+    { name: '联系客服', href: 'https://t.me/yourTelegramUsername', external: true },
+  ];
 
   return (
     <nav className="bg-dark text-white shadow-md">
       <div className="container-custom py-3">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold">
-            账户商城
+          <Link href="/" className="text-xl font-bold flex items-center">
+            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center mr-2">
+              <FaStar className="text-white text-lg" />
+            </div>
+            星海账户
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="hover:text-primary transition-colors text-sm">
-              首页
-            </Link>
-            <Link href="/categories" className="hover:text-primary transition-colors text-sm">
-              全部分类
-            </Link>
-            <Link href="/accounts" className="hover:text-primary transition-colors text-sm">
-              全部账户
-            </Link>
-            <Link href="/faq" className="hover:text-primary transition-colors text-sm">
-              常见问题
-            </Link>
+          <div className="hidden md:flex items-center space-x-4">
+            {menuItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium ${
+                  item.name === '联系客服' ? 'text-primary' : ''
+                }`}
+                target={item.external ? '_blank' : undefined}
+                rel={item.external ? 'noopener noreferrer' : undefined}
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
 
           {/* User Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/cart" className="hover:text-primary transition-colors">
-              <FaShoppingCart className="text-lg" />
+            <Link href="/login" className="text-sm hover:text-primary transition-colors">
+              登录
             </Link>
-            <Link href="/account" className="hover:text-primary transition-colors">
-              <FaUser className="text-lg" />
+            <Link href="/register" className="text-sm hover:text-primary transition-colors">
+              注册
             </Link>
           </div>
 
@@ -57,52 +70,19 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-3 pb-3">
-            <div className="flex flex-col space-y-3">
-              <Link 
-                href="/" 
-                className="hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                首页
-              </Link>
-              <Link 
-                href="/categories" 
-                className="hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                全部分类
-              </Link>
-              <Link 
-                href="/accounts" 
-                className="hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                全部账户
-              </Link>
-              <Link 
-                href="/faq" 
-                className="hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                常见问题
-              </Link>
-              <div className="flex space-x-4 pt-2">
-                <Link 
-                  href="/cart" 
-                  className="hover:text-primary transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
+          <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden`}>
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
                 >
-                  <FaShoppingCart className="text-lg" />
+                  {item.name}
                 </Link>
-                <Link 
-                  href="/account" 
-                  className="hover:text-primary transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <FaUser className="text-lg" />
-                </Link>
-              </div>
+              ))}
             </div>
           </div>
         )}

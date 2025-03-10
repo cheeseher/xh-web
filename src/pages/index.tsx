@@ -1,125 +1,104 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Layout from '../components/Layout';
 import AccountCard from '../components/AccountCard';
-import { accounts } from '../utils/mockData';
+import CategoryIndex from '../components/CategoryIndex';
+import { accounts, categories } from '../utils/mockData';
 import Link from 'next/link';
 
 const HomePage: React.FC = () => {
-  // 按类别分组账户
-  const emailAccounts = accounts.filter(account => account.category === 'email');
-  const socialAccounts = accounts.filter(account => account.category === 'social');
-  const streamingAccounts = accounts.filter(account => account.category === 'streaming');
-  const gamingAccounts = accounts.filter(account => account.category === 'gaming');
+  const [activeCategory, setActiveCategory] = useState<string>(categories[0]?.id || '');
+  const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  // 设置ref的回调函数
+  const setCategoryRef = (id: string) => (el: HTMLDivElement | null) => {
+    categoryRefs.current[id] = el;
+  };
+
+  // 滚动到指定分类
+  const scrollToCategory = (categoryId: string) => {
+    const element = categoryRefs.current[categoryId];
+    if (element) {
+      const yOffset = -80; // 考虑导航栏的高度
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+      setActiveCategory(categoryId);
+    }
+  };
+
+  // 监听滚动事件，更新当前活动分类
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 100;
+      
+      // 找到当前在视口中的分类
+      let currentCategory = categories[0]?.id;
+      for (const categoryId in categoryRefs.current) {
+        const element = categoryRefs.current[categoryId];
+        if (element) {
+          const { top, bottom } = element.getBoundingClientRect();
+          if (top <= 100 && bottom >= 100) {
+            currentCategory = categoryId;
+            break;
+          }
+        }
+      }
+      
+      if (currentCategory) {
+        setActiveCategory(currentCategory);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   // 标题样式
   const sectionTitleStyle = "text-lg font-medium text-gray-700 border-l-4 border-primary pl-3";
-  const viewAllStyle = "text-xs text-gray-500 hover:text-primary";
 
   return (
     <Layout>
-      {/* 邮箱账户 */}
-      <section className="py-6">
-        <div className="container-custom">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className={sectionTitleStyle}>邮箱账户</h2>
-            <Link href="/categories/email" className={viewAllStyle}>
-              查看全部
-            </Link>
-          </div>
+      {/* 分类索引导航 */}
+      <CategoryIndex onCategoryClick={scrollToCategory} activeCategory={activeCategory} />
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {emailAccounts.slice(0, 10).map((account) => (
-              <AccountCard
-                key={account.id}
-                id={account.id}
-                title={account.title}
-                price={account.price}
-                image={account.image}
-                category={account.categoryName}
-                stock={account.stock}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <div className="container-custom py-6">
+        {/* 按分类展示账户 */}
+        {categories.map((category) => {
+          const categoryAccounts = accounts.filter(account => account.category === category.id);
+          
+          if (categoryAccounts.length === 0) return null;
+          
+          return (
+            <section 
+              key={category.id} 
+              className={`py-6 ${categories.indexOf(category) % 2 === 0 ? '' : 'bg-gray-50'} rounded-lg mb-6`}
+              ref={setCategoryRef(category.id)}
+              id={`category-${category.id}`}
+            >
+              <div className="px-4">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className={sectionTitleStyle}>{category.name}</h2>
+                </div>
 
-      {/* 社交媒体账户 */}
-      <section className="py-6 bg-gray-50">
-        <div className="container-custom">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className={sectionTitleStyle}>社交媒体账户</h2>
-            <Link href="/categories/social" className={viewAllStyle}>
-              查看全部
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {socialAccounts.slice(0, 10).map((account) => (
-              <AccountCard
-                key={account.id}
-                id={account.id}
-                title={account.title}
-                price={account.price}
-                image={account.image}
-                category={account.categoryName}
-                stock={account.stock}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 流媒体账户 */}
-      <section className="py-6">
-        <div className="container-custom">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className={sectionTitleStyle}>流媒体账户</h2>
-            <Link href="/categories/streaming" className={viewAllStyle}>
-              查看全部
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {streamingAccounts.slice(0, 5).map((account) => (
-              <AccountCard
-                key={account.id}
-                id={account.id}
-                title={account.title}
-                price={account.price}
-                image={account.image}
-                category={account.categoryName}
-                stock={account.stock}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 游戏账户 */}
-      <section className="py-6 bg-gray-50">
-        <div className="container-custom">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className={sectionTitleStyle}>游戏账户</h2>
-            <Link href="/categories/gaming" className={viewAllStyle}>
-              查看全部
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {gamingAccounts.slice(0, 5).map((account) => (
-              <AccountCard
-                key={account.id}
-                id={account.id}
-                title={account.title}
-                price={account.price}
-                image={account.image}
-                category={account.categoryName}
-                stock={account.stock}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {categoryAccounts.slice(0, 8).map((account) => (
+                    <AccountCard
+                      key={account.id}
+                      id={account.id}
+                      title={account.title}
+                      price={account.price}
+                      image={account.image}
+                      category={account.categoryName}
+                      stock={account.stock}
+                    />
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        })}
+      </div>
 
       {/* 为什么选择我们 */}
       <section className="py-10">

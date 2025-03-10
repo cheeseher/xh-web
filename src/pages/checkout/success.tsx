@@ -4,8 +4,8 @@ import Layout from '../../components/Layout';
 import { FaCheckCircle } from 'react-icons/fa';
 
 const CheckoutSuccessPage: React.FC = () => {
-  // 生成随机订单号
-  const orderNumber = `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
+  // 使用固定订单号
+  const orderNumber = `ORD-123456`;
 
   return (
     <Layout title="订单成功 - 账户商城" description="您的订单已成功提交">
