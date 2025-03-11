@@ -18,7 +18,9 @@ const HomePage: React.FC = () => {
   const scrollToCategory = (categoryId: string) => {
     const element = categoryRefs.current[categoryId];
     if (element) {
-      const yOffset = -80; // 考虑导航栏的高度
+      // 考虑移动端和桌面端不同的偏移量
+      const isMobile = window.innerWidth < 768;
+      const yOffset = isMobile ? -120 : -80; // 移动端考虑顶部分类栏的高度
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
       setActiveCategory(categoryId);
@@ -28,7 +30,10 @@ const HomePage: React.FC = () => {
   // 监听滚动事件，更新当前活动分类
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100;
+      // 考虑移动端和桌面端不同的偏移量
+      const isMobile = window.innerWidth < 768;
+      const scrollOffset = isMobile ? 150 : 100;
+      const scrollPosition = window.scrollY + scrollOffset;
       
       // 找到当前在视口中的分类
       let currentCategory = categories[0]?.id;
@@ -36,7 +41,7 @@ const HomePage: React.FC = () => {
         const element = categoryRefs.current[categoryId];
         if (element) {
           const { top, bottom } = element.getBoundingClientRect();
-          if (top <= 100 && bottom >= 100) {
+          if (top <= scrollOffset && bottom >= scrollOffset) {
             currentCategory = categoryId;
             break;
           }
@@ -62,7 +67,7 @@ const HomePage: React.FC = () => {
       {/* 分类索引导航 */}
       <CategoryIndex onCategoryClick={scrollToCategory} activeCategory={activeCategory} />
 
-      <div className="container-custom py-6">
+      <div className="container-custom py-6 md:py-6">
         {/* 按分类展示账户 */}
         {categories.map((category) => {
           const categoryAccounts = accounts.filter(account => account.category === category.id);
