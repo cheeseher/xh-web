@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FaShoppingCart, FaUser, FaBars, FaTimes, FaCaretDown, FaStar, FaCrown, FaWallet, FaKey, FaHistory } from 'react-icons/fa';
+import { FaShoppingCart, FaUser, FaBars, FaTimes, FaCaretDown, FaStar, FaCrown, FaWallet, FaKey, FaHistory, FaEnvelope } from 'react-icons/fa';
 import { useUser } from '../contexts/UserContext';
 
 const Navbar: React.FC = () => {
@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
   const menuItems = [
     { name: '账户商城', href: '/' },
     { name: '订单查询', href: '/orders/query' },
-    { name: '工具合集', href: '/tools' },
+    { name: '实用工具', href: '/tools' },
     { name: '常见问题', href: '/help' },
     { name: '关于我们', href: '/about' },
   ];
@@ -46,15 +46,15 @@ const Navbar: React.FC = () => {
   );
 
   return (
-    <nav className="bg-gradient-to-r from-gray-900 to-gray-800 text-white shadow-lg sticky top-0 z-50">
-      <div className="container-custom py-4">
+    <nav className="bg-black text-white shadow-lg sticky top-0 z-50">
+      <div className="container-custom py-2">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="text-xl font-bold flex items-center group transition-transform duration-200 hover:scale-105">
-            <div className="w-10 h-10 bg-gradient-to-r from-primary to-blue-400 rounded-full flex items-center justify-center mr-3 shadow-lg group-hover:shadow-primary/50 transition-shadow duration-200">
-              <FaStar className="text-white text-xl" />
+            <div className="w-8 h-8 flex items-center justify-center mr-2">
+              <FaEnvelope className="text-white text-xl" />
             </div>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">星海账户</span>
+            <span className="text-white">星海</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${isCurrentPage(item.href) ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/10'}`}
+                className={`px-3 py-2 text-sm font-medium transition-all duration-200 ${isCurrentPage(item.href) ? 'text-white' : 'text-gray-300 hover:text-white'}`}
               >
                 {item.name}
               </Link>
@@ -74,22 +74,23 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <div className="flex items-center space-x-4">
+                {/* 充值按钮 */}
+                <Link 
+                  href="/user/recharge" 
+                  className="bg-gray-700 hover:bg-gray-600 text-white text-sm px-4 py-1 rounded transition-colors duration-200"
+                >
+                  充值
+                </Link>
+                
                 {/* 用户信息 */}
                 <div className="relative">
                   <button
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-2 text-sm text-gray-300 hover:text-white transition-colors duration-200 px-4 py-2 rounded-md hover:bg-white/10"
+                    className="flex items-center space-x-2 text-sm text-gray-300 hover:text-white transition-colors duration-200 px-2 py-1 rounded-md"
                   >
                     <div className="flex items-center">
-                      <img
-                        src={user.avatar || '/images/default-avatar.png'}
-                        alt="用户头像"
-                        className="w-8 h-8 rounded-full"
-                      />
-                      <span className="ml-2">{user.username}</span>
-                      {user.isVip && <VipBadge />}
+                      <span className="mr-2">{user.username}</span>
                     </div>
-                    <FaCaretDown />
                   </button>
 
                   {isUserMenuOpen && (
@@ -128,6 +129,13 @@ const Navbar: React.FC = () => {
                     </div>
                   )}
                 </div>
+                
+                {/* VIP标识 */}
+                {user.isVip && (
+                  <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white px-2 py-1 rounded text-xs font-bold">
+                    VIP
+                  </div>
+                )}
               </div>
             ) : (
               <>
@@ -165,20 +173,27 @@ const Navbar: React.FC = () => {
                 {user ? (
                   <div className="border-b border-gray-200 pb-4">
                     <div className="flex items-center mb-4">
-                      <img
-                        src={user.avatar || '/images/default-avatar.png'}
-                        alt="用户头像"
-                        className="w-10 h-10 rounded-full"
-                      />
                       <div className="ml-3">
                         <div className="flex items-center space-x-2">
                           <span className="font-medium text-gray-900">{user.username}</span>
-                          {user.isVip && <VipBadge />}
+                          {user.isVip && (
+                            <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white px-2 py-1 rounded text-xs font-bold">
+                              VIP
+                            </div>
+                          )}
                         </div>
                         <div className="text-sm text-primary">余额：¥{user.balance}</div>
                       </div>
                     </div>
                     <div className="space-y-2">
+                      <Link
+                        href="/user/recharge"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <FaWallet className="mr-2 text-gray-400" />
+                        充值
+                      </Link>
                       <Link
                         href="/user/profile"
                         className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
