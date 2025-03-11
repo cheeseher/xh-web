@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import { accounts } from '../../utils/mockData';
-import { FaShoppingCart, FaCheck, FaArrowLeft, FaInfoCircle, FaGoogle } from 'react-icons/fa';
+import { FaShoppingCart, FaCheck, FaArrowLeft, FaInfoCircle, FaGoogle, FaImage, FaTimes } from 'react-icons/fa';
 import { useCart } from '../../context/CartContext';
 
 const AccountDetailPage: React.FC = () => {
@@ -16,6 +16,7 @@ const AccountDetailPage: React.FC = () => {
   const [receiveEmail, setReceiveEmail] = useState('');
   const [addedToCart, setAddedToCart] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const [showWholesaleModal, setShowWholesaleModal] = useState(false);
 
   // 查找当前账户
   const account = accounts.find((acc) => acc.id === id);
@@ -97,13 +98,8 @@ const AccountDetailPage: React.FC = () => {
           <div className="md:flex">
             {/* 账户图片 */}
             <div className="md:w-1/3 p-6 flex items-center justify-center bg-gray-50">
-              <div className="relative h-64 w-64">
-                <Image
-                  src={account.image}
-                  alt={account.title}
-                  fill
-                  className="object-contain"
-                />
+              <div className="relative h-64 w-64 flex items-center justify-center bg-gray-200 rounded-lg">
+                <FaImage className="text-gray-400 text-5xl" />
               </div>
             </div>
 
@@ -123,7 +119,7 @@ const AccountDetailPage: React.FC = () => {
                   <span className="ml-2 text-gray-400 line-through">¥{(account.price * 1.5).toFixed(2)}</span>
                 </div>
                 <div className="text-sm text-gray-600">
-                  批发价：≥500个{getWholesalePrice()} <span className="text-red-500">更有批发优惠</span>
+                  批发价：≥500个{getWholesalePrice()} <span className="text-red-500 cursor-pointer" onClick={() => setShowWholesaleModal(true)}>更有批发优惠</span>
                 </div>
               </div>
 
@@ -230,4 +226,48 @@ const AccountDetailPage: React.FC = () => {
   );
 };
 
-export default AccountDetailPage; 
+export default AccountDetailPage;
+
+{/* 批发价格弹窗 */}
+{showWholesaleModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">折扣信息</h3>
+        <button onClick={() => setShowWholesaleModal(false)} className="text-gray-500 hover:text-gray-700">
+          <FaTimes />
+        </button>
+      </div>
+      <table className="w-full mb-4">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">数量</th>
+            <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">折扣</th>
+            <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">折扣价</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          <tr>
+            <td className="px-4 py-2 text-sm text-gray-900">≥500</td>
+            <td className="px-4 py-2 text-sm text-gray-900">0.95</td>
+            <td className="px-4 py-2 text-sm text-primary font-medium">¥{(account.price * 0.95).toFixed(2)}元</td>
+          </tr>
+          <tr>
+            <td className="px-4 py-2 text-sm text-gray-900">≥1000</td>
+            <td className="px-4 py-2 text-sm text-gray-900">0.90</td>
+            <td className="px-4 py-2 text-sm text-primary font-medium">¥{(account.price * 0.90).toFixed(2)}元</td>
+          </tr>
+          <tr>
+            <td className="px-4 py-2 text-sm text-gray-900">≥2000</td>
+            <td className="px-4 py-2 text-sm text-gray-900">0.85</td>
+            <td className="px-4 py-2 text-sm text-primary font-medium">¥{(account.price * 0.85).toFixed(2)}元</td>
+          </tr>
+        </tbody>
+      </table>
+      <div className="text-sm text-gray-500">
+        <p>* 批发价格仅供参考，具体价格以实际结算为准</p>
+        <p>* 如需更大数量采购，请联系客服获取更优惠的价格</p>
+      </div>
+    </div>
+  </div>
+)}

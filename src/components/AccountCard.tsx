@@ -161,7 +161,10 @@ const AccountCard: React.FC<AccountCardProps> = ({
           )}
         </div>
         <div className="p-4 border-t border-gray-100">
-          <h3 className="text-sm font-medium text-gray-800 mb-2 truncate">{title}</h3>
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-medium text-gray-800 truncate">{title}</h3>
+            <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded">自动发货</span>
+          </div>
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <span className="text-lg font-bold text-price">¥{price.toFixed(2)}</span>
@@ -171,12 +174,11 @@ const AccountCard: React.FC<AccountCardProps> = ({
             </div>
           </div>
           <div className="mt-2 flex justify-between items-center">
-            <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded">自动发货</span>
             <span className="text-xs text-gray-500">库存: {stock}</span>
           </div>
           {batchPrice && (
-            <div className="mt-1 text-xs text-batch-price">
-              批发：{batchPrice}
+            <div className="mt-1 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded inline-block">
+              批发：≥500个 {batchPrice}
             </div>
           )}
         </div>

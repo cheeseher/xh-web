@@ -14,10 +14,25 @@ const Navbar: React.FC = () => {
     { name: '首页', href: '/' },
     { name: '订单查询', href: '/orders/query' },
     { name: '工具合集', href: '/tools' },
-    { name: '帮助须知', href: '/help' },
+    { name: '常见问题', href: '/help' },
     { name: '关于我们', href: '/about' },
-    { name: '联系客服', href: 'https://t.me/yourTelegramUsername', external: true },
+    { name: '充值', href: '/user/recharge' },
   ];
+
+  const isCurrentPage = (href: string) => {
+    if (href === '/') {
+      return router.pathname === href;
+    }
+    // 对于子路由，需要确保完全匹配或者是直接子路由
+    const pathWithoutQuery = router.pathname.split('?')[0];
+    if (href === pathWithoutQuery) return true;
+    if (href !== '/') {
+      const parentPath = href.endsWith('/') ? href : `${href}/`;
+      return pathWithoutQuery.startsWith(parentPath) && 
+             pathWithoutQuery.split('/').length <= href.split('/').length + 2;
+    }
+    return false;
+  };
 
   const handleLogout = () => {
     logout();
@@ -49,9 +64,7 @@ const Navbar: React.FC = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:bg-white/10"
-                target={item.external ? '_blank' : undefined}
-                rel={item.external ? 'noopener noreferrer' : undefined}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${isCurrentPage(item.href) ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/10'}`}
               >
                 {item.name}
               </Link>
@@ -62,15 +75,6 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <div className="flex items-center space-x-4">
-                {/* 充值按钮 */}
-                <Link
-                  href="/user/recharge"
-                  className="flex items-center space-x-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-400 text-white rounded-full hover:shadow-lg transition-shadow duration-200"
-                >
-                  <FaWallet className="text-sm" />
-                  <span className="font-medium">充值</span>
-                </Link>
-
                 {/* 用户信息 */}
                 <div className="relative">
                   <button
@@ -132,6 +136,15 @@ const Navbar: React.FC = () => {
                     </div>
                   )}
                 </div>
+
+                {/* 充值按钮 */}
+                <Link
+                  href="/user/recharge"
+                  className="flex items-center space-x-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-400 text-white rounded-full hover:shadow-lg transition-shadow duration-200"
+                >
+                  <FaWallet className="text-sm" />
+                  <span className="font-medium">充值</span>
+                </Link>
               </div>
             ) : (
               <>
@@ -247,9 +260,7 @@ const Navbar: React.FC = () => {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="text-base font-medium text-gray-900 hover:text-primary transition-colors duration-200"
-                      target={item.external ? '_blank' : undefined}
-                      rel={item.external ? 'noopener noreferrer' : undefined}
+                      className={`text-base font-medium ${isCurrentPage(item.href) ? 'text-primary' : 'text-gray-900 hover:text-primary'} transition-colors duration-200`}
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.name}
