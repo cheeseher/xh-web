@@ -78,7 +78,10 @@ const HomePage: React.FC = () => {
             >
               <div className="px-4">
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className={sectionTitleStyle}>{category.name}</h2>
+                  <div>
+                    <h2 className={sectionTitleStyle}>{category.name}</h2>
+                    <p className="text-sm text-gray-500 mt-1 ml-3">{category.description}</p>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

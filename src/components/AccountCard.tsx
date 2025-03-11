@@ -220,8 +220,9 @@ const AccountCard: React.FC<AccountCardProps> = ({
           
           {/* 批发价格标签 */}
           {batchPrice && (
-            <div className="mt-2 text-xs text-gray-500">
-              批发价: {batchPrice}
+            <div className="mt-2 flex items-center">
+              <span className="text-xs text-gray-500 mr-1">批发价:</span>
+              <span className="text-xs bg-red-500 text-white px-2 py-0.5 rounded">{batchPrice}</span>
             </div>
           )}
         </div>
