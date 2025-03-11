@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import { useUser } from '../../contexts/UserContext';
@@ -8,116 +8,178 @@ import Image from 'next/image';
 const RechargePage: React.FC = () => {
   const router = useRouter();
   const { user } = useUser();
-  const [paymentMethod, setPaymentMethod] = useState<'usdt' | 'other'>('usdt');
+  const [customAmount, setCustomAmount] = useState<string>('');
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
 
-  // 从URL获取充值金额
-  const amount = router.query.amount ? Number(router.query.amount) : 1000;
-  const orderId = router.query.orderId || 'HENDUOHAOVIP266523010194538974';
-
-  if (!user) {
-    if (typeof window !== 'undefined') {
+  // 未登录时重定向到登录页面
+  useEffect(() => {
+    if (!user && typeof window !== 'undefined') {
       router.push('/login');
     }
+  }, [user, router]);
+
+  if (!user) {
     return null;
   }
 
+  const handleAmountSelect = (amount: number) => {
+    setSelectedAmount(amount);
+    setCustomAmount('');
+  };
+
+  const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomAmount(e.target.value);
+    setSelectedAmount(null);
+  };
+
+  const handleRecharge = () => {
+    const amount = selectedAmount || Number(customAmount);
+    if (amount > 0) {
+      router.push(`/user/payment/usdt?orderId=RECHARGE${Date.now()}&amount=${amount}`);
+    } else {
+      alert('请选择或输入充值金额');
+    }
+  };
+
   return (
-    <Layout title="支付订单 - 账户商城">
-      <div className="container-custom py-8">
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            {/* 头部信息 */}
-            <div className="bg-gradient-to-r from-primary to-primary-dark p-6 text-white">
-              <div className="flex items-center space-x-3">
-                <FaWallet className="text-2xl" />
-                <div>
-                  <h1 className="text-2xl font-bold">支付订单</h1>
-                  <p className="mt-1 text-white/80">请选择支付方式完成充值</p>
-                </div>
+    <Layout title="账户充值 - 星海账户">
+      <div className="max-w-4xl mx-auto py-8 px-4">
+        <h1 className="text-2xl font-bold mb-6">充值</h1>
+        
+        <div className="bg-white p-6 border border-gray-200 rounded-md mb-6">
+          <h2 className="text-lg font-medium mb-4">账号信息</h2>
+          <div className="bg-gray-100 p-4 rounded-md">
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <div className="text-sm text-gray-500">账户昵称</div>
+                <div className="font-medium">{user.username}</div>
               </div>
-            </div>
-
-            {/* 订单信息 */}
-            <div className="p-6 border-b border-gray-200">
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">订单ID</span>
-                  <span className="text-gray-900 font-medium">{orderId}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">商品名称</span>
-                  <span className="text-gray-900">会员充值-{amount.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">支付金额</span>
-                  <span className="text-2xl font-bold text-primary">¥{amount.toFixed(2)}</span>
-                </div>
+              <div>
+                <div className="text-sm text-gray-500">账户邮箱</div>
+                <div className="font-medium">{user.email || 'dbadmin@qq.com'}</div>
               </div>
-            </div>
-
-            {/* 支付方式选择 */}
-            <div className="p-6">
-              <h2 className="text-lg font-medium mb-4">选择支付方式</h2>
-              <div className="grid grid-cols-2 gap-4">
-                <button
-                  onClick={() => setPaymentMethod('usdt')}
-                  className={`p-4 border rounded-lg flex items-center justify-center space-x-2 transition-colors ${
-                    paymentMethod === 'usdt'
-                      ? 'border-primary bg-primary/5'
-                      : 'border-gray-200 hover:border-primary/50'
-                  }`}
-                >
-                  <Image
-                    src="/images/tether-logo.png"
-                    alt="USDT"
-                    width={24}
-                    height={24}
-                  />
-                  <span className={paymentMethod === 'usdt' ? 'text-primary' : 'text-gray-700'}>
-                    USDT支付
-                  </span>
-                </button>
-                <button
-                  className="p-4 border border-gray-200 rounded-lg flex items-center justify-center space-x-2 opacity-50 cursor-not-allowed"
-                  disabled
-                >
-                  <Image
-                    src="/images/other-payment.png"
-                    alt="其他支付"
-                    width={24}
-                    height={24}
-                  />
-                  <span className="text-gray-400">其他支付</span>
-                </button>
+              <div>
+                <div className="text-sm text-gray-500">会员等级</div>
+                <div className="font-medium">VIP{user.vipLevel || 1}</div>
               </div>
-
-              {/* 友情提示 */}
-              <div className="mt-6 bg-yellow-50 p-4 rounded-md">
-                <div className="flex items-start space-x-2">
-                  <FaInfoCircle className="text-yellow-600 mt-1 flex-shrink-0" />
-                  <div className="text-sm text-yellow-700">
-                    <h3 className="font-medium mb-1">友情提示</h3>
-                    <ul className="space-y-1">
-                      <li>1. 所有支付方式均可正常支付，支付完成后自动发货，请放心使用</li>
-                      <li>2. 推荐 注册会员 充值余额后，使用余额支付方式，方便快捷且可省去多次支付的"工"费。</li>
-                      <li>3. 数字货币 支付，自助已配置支持所有类型数字货币常用支付（数字货币使用请遵循各国家法律法规）。</li>
-                      <li>4. USDT-TRC20支付，不足1U，按照1U计算，到账金额必须一致，否则无法完成支付（数字货币使用请遵循各国家法律法规）。</li>
-                      <li>5. 无法转账点击的"警告按钮点击"转账，优先选择其他支付或者查看其他家同类型商品。</li>
-                      <li>6. 数字货币平台推荐：币安、欧易、Coinbase、Kraken、Kucoin 等。</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* 支付按钮 */}
-              <button
-                onClick={() => router.push(`/user/payment/usdt?orderId=${orderId}&amount=${amount}`)}
-                className="w-full mt-6 bg-primary hover:bg-primary-dark text-white font-medium py-3 px-4 rounded-md transition-colors duration-200"
-              >
-                立即支付
-              </button>
             </div>
           </div>
+        </div>
+        
+        <div className="bg-white p-6 border border-gray-200 rounded-md mb-6">
+          <h2 className="text-lg font-medium mb-4">余额信息</h2>
+          <div className="bg-gray-100 p-4 rounded-md">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <div className="text-sm text-gray-500">当前余额</div>
+                <div className="font-medium">{user.balance || 99} 元</div>
+              </div>
+              <div>
+                <div className="text-sm text-gray-500">累计充值金额</div>
+                <div className="font-medium">500 元</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white p-6 border border-gray-200 rounded-md mb-6">
+          <h2 className="text-lg font-medium mb-4">充值金额</h2>
+          <div className="text-sm text-red-500 mb-4">继续充值 401 元升级VIP1</div>
+          
+          <div className="grid grid-cols-6 gap-4 mb-6">
+            <button 
+              onClick={() => handleAmountSelect(50)}
+              className={`py-2 border ${selectedAmount === 50 ? 'border-primary bg-primary/10' : 'border-gray-300'} rounded-md hover:border-primary transition-colors`}
+            >
+              50 元
+            </button>
+            <button 
+              onClick={() => handleAmountSelect(100)}
+              className={`py-2 border ${selectedAmount === 100 ? 'border-primary bg-primary/10' : 'border-gray-300'} rounded-md hover:border-primary transition-colors`}
+            >
+              100 元
+            </button>
+            <button 
+              onClick={() => handleAmountSelect(200)}
+              className={`py-2 border ${selectedAmount === 200 ? 'border-primary bg-primary/10' : 'border-gray-300'} rounded-md hover:border-primary transition-colors`}
+            >
+              200 元
+            </button>
+            <button 
+              onClick={() => handleAmountSelect(300)}
+              className={`py-2 border ${selectedAmount === 300 ? 'border-primary bg-primary/10' : 'border-gray-300'} rounded-md hover:border-primary transition-colors`}
+            >
+              300 元
+            </button>
+            <button 
+              onClick={() => handleAmountSelect(500)}
+              className={`py-2 border ${selectedAmount === 500 ? 'border-primary bg-primary/10' : 'border-gray-300'} rounded-md hover:border-primary transition-colors`}
+            >
+              500 元
+            </button>
+            <button 
+              onClick={() => handleAmountSelect(1000)}
+              className={`py-2 border ${selectedAmount === 1000 ? 'border-primary bg-primary/10' : 'border-gray-300'} rounded-md hover:border-primary transition-colors`}
+            >
+              1000 元
+            </button>
+          </div>
+          
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">请输入充值金额：</label>
+            <div className="flex items-center">
+              <input
+                type="number"
+                value={customAmount}
+                onChange={handleCustomAmountChange}
+                placeholder="请输入"
+                className="w-64 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+              <span className="ml-2">元</span>
+            </div>
+          </div>
+          
+          <button
+            onClick={handleRecharge}
+            className="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
+          >
+            立即充值
+          </button>
+        </div>
+        
+        <div className="bg-white p-6 border border-gray-200 rounded-md">
+          <h2 className="text-lg font-medium mb-4">会员等级说明</h2>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="border border-gray-200 px-4 py-2 text-left">会员等级</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">充值折扣</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">升级条件</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-gray-200 px-4 py-2">普通用户</td>
+                <td className="border border-gray-200 px-4 py-2">无折扣</td>
+                <td className="border border-gray-200 px-4 py-2">默认</td>
+              </tr>
+              <tr>
+                <td className="border border-gray-200 px-4 py-2">VIP1</td>
+                <td className="border border-gray-200 px-4 py-2">9.5折</td>
+                <td className="border border-gray-200 px-4 py-2">累计充值 500 元</td>
+              </tr>
+              <tr>
+                <td className="border border-gray-200 px-4 py-2">VIP2</td>
+                <td className="border border-gray-200 px-4 py-2">9折</td>
+                <td className="border border-gray-200 px-4 py-2">累计充值 1000 元</td>
+              </tr>
+              <tr>
+                <td className="border border-gray-200 px-4 py-2">VIP3</td>
+                <td className="border border-gray-200 px-4 py-2">8折</td>
+                <td className="border border-gray-200 px-4 py-2">累计充值 5000 元</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </Layout>
