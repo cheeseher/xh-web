@@ -10,7 +10,7 @@ const PaymentPage: React.FC = () => {
 
   // 模拟订单数据
   const orderData = {
-    orderId: 'HENDUOHAOVIP264520311150124492',
+    orderId: 'XINGHAIVIP264520311150124492',
     productName: '会员充值-1000.00',
     price: 1000,
     quantity: 1,

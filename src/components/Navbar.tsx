@@ -11,12 +11,11 @@ const Navbar: React.FC = () => {
   const router = useRouter();
 
   const menuItems = [
-    { name: '首页', href: '/' },
+    { name: '账户商城', href: '/' },
     { name: '订单查询', href: '/orders/query' },
     { name: '工具合集', href: '/tools' },
     { name: '常见问题', href: '/help' },
     { name: '关于我们', href: '/about' },
-    { name: '充值', href: '/user/recharge' },
   ];
 
   const isCurrentPage = (href: string) => {
@@ -113,18 +112,11 @@ const Navbar: React.FC = () => {
                         修改密码
                       </Link>
                       <Link
-                        href="/user/order-records"
+                        href="/user/records"
                         className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         <FaHistory className="mr-2 text-gray-400" />
-                        订单记录
-                      </Link>
-                      <Link
-                        href="/user/bill-records"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <FaHistory className="mr-2 text-gray-400" />
-                        账单记录
+                        我的记录
                       </Link>
                       <button
                         onClick={handleLogout}
@@ -136,15 +128,6 @@ const Navbar: React.FC = () => {
                     </div>
                   )}
                 </div>
-
-                {/* 充值按钮 */}
-                <Link
-                  href="/user/recharge"
-                  className="flex items-center space-x-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-400 text-white rounded-full hover:shadow-lg transition-shadow duration-200"
-                >
-                  <FaWallet className="text-sm" />
-                  <span className="font-medium">充值</span>
-                </Link>
               </div>
             ) : (
               <>
@@ -195,13 +178,6 @@ const Navbar: React.FC = () => {
                         <div className="text-sm text-primary">余额：¥{user.balance}</div>
                       </div>
                     </div>
-                    <Link
-                      href="/user/recharge"
-                      className="flex items-center justify-center w-full space-x-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-400 text-white rounded-full hover:shadow-lg transition-shadow duration-200 mb-4"
-                    >
-                      <FaWallet className="text-sm" />
-                      <span className="font-medium">充值</span>
-                    </Link>
                     <div className="space-y-2">
                       <Link
                         href="/user/profile"
@@ -220,20 +196,12 @@ const Navbar: React.FC = () => {
                         修改密码
                       </Link>
                       <Link
-                        href="/user/order-records"
+                        href="/user/records"
                         className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         <FaHistory className="mr-2 text-gray-400" />
-                        订单记录
-                      </Link>
-                      <Link
-                        href="/user/bill-records"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <FaHistory className="mr-2 text-gray-400" />
-                        账单记录
+                        我的记录
                       </Link>
                     </div>
                   </div>

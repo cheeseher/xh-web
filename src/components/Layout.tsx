@@ -16,7 +16,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({
   children,
-  title = '账户商城 - 优质账户销售平台',
+  title = '星海账户 - 优质账户销售平台',
   description = '提供各类优质账户，包括邮箱、社交媒体、流媒体等，安全可靠，价格合理。',
   showAlert = true,
 }) => {

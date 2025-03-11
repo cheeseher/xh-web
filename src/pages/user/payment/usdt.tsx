@@ -12,9 +12,9 @@ const UsdtPaymentPage: React.FC = () => {
 
   const { orderId, amount } = router.query;
   const usdtAmount = amount ? (Number(amount) / 7).toFixed(2) : '0.00'; // 模拟汇率转换
-  const usdtAddress = 'THDpUb2RCAvz6mZ6jQZc1MMhR6WmJy5Jh9';
+  const usdtAddress = 'TYQraQ5JJXKyVD6LTBuBHmDXCYHTQTiwA3';
   const paymentId = '202503101741607286955837';
-  const platformOrderId = 'HENDUOHAOVIP26652031019484906';
+  const platformOrderId = 'XINGHAIVIP26652031019484906';
 
   useEffect(() => {
     if (remainingTime > 0) {
@@ -59,8 +59,8 @@ const UsdtPaymentPage: React.FC = () => {
             />
           </div>
 
-          {/* 很多号服务平台 */}
-          <h1 className="text-lg font-bold mb-4">很多号服务平台</h1>
+          {/* 星海账户服务平台 */}
+          <h1 className="text-lg font-bold mb-4">星海账户服务平台</h1>
 
           {/* 支付编号和平台订单号 */}
           <div className="w-full text-sm mb-4">

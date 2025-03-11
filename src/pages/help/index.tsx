@@ -1,42 +1,77 @@
 import React, { useState } from 'react';
 import Layout from '../../components/Layout';
 import { FaChevronRight } from 'react-icons/fa';
+import Link from 'next/link';
 
 interface FaqItem {
-  id: number;
+  id: string;
   question: string;
   answer: string;
 }
 
-const faqItems: FaqItem[] = [
+interface FaqCategory {
+  id: string;
+  title: string;
+  items: FaqItem[];
+}
+
+const faqCategories: FaqCategory[] = [
   {
-    id: 1,
-    question: '使用Google Voice 注册第三方平台的常见问题有哪些？',
-    answer: '在基于云的电话系统的世界中，Google Voice 登录语音是最好的。它提供出色的音质、变更价格、让您有各种服务限制家庭或办公室电话。',
+    id: 'account',
+    title: '账号相关',
+    items: [
+      {
+        id: 'how-to-buy',
+        question: '如何购买账号？',
+        answer: '浏览商品列表，选择您需要的账号类型，点击商品进入详情页查看具体信息，确认无误后点击"立即购买"按钮...'
+      },
+      {
+        id: 'usage-notice',
+        question: '账号使用注意事项',
+        answer: '请勿在同一时间多人登录使用，定期更改密码以确保账号安全，不要在不安全的设备上登录账号...'
+      },
+      {
+        id: 'security-guide',
+        question: '账号安全指南',
+        answer: '使用强密码，包含字母、数字和特殊字符，定期更换密码，不同平台使用不同密码...'
+      }
+    ]
   },
   {
-    id: 2,
-    question: '使用Google Voice 注册第三方平台的常见问题有哪些？',
-    answer: '在基于云的电话系统的世界中，Google Voice 登录语音是最好的。它提供出色的音质、变更价格、让您有各种服务限制家庭或办公室电话。',
+    id: 'service',
+    title: '服务相关',
+    items: [
+      {
+        id: 'faq',
+        question: '常见问题解答',
+        answer: '包含账号问题、支付问题、售后问题等常见问题的解答...'
+      },
+      {
+        id: 'after-sales',
+        question: '售后服务说明',
+        answer: '我们提供账号登录问题处理、账号异常修复、技术支持服务等售后服务...'
+      }
+    ]
   },
   {
-    id: 3,
-    question: '使用Google Voice 注册第三方平台的常见问题有哪些？',
-    answer: '在基于云的电话系统的世界中，Google Voice 登录语音是最好的。它提供出色的音质、变更价格、让您有各种服务限制家庭或办公室电话。',
-  },
-  {
-    id: 4,
-    question: '使用Google Voice 注册第三方平台的常见问题有哪些？',
-    answer: '在基于云的电话系统的世界中，Google Voice 登录语音是最好的。它提供出色的音质、变更价格、让您有各种服务限制家庭或办公室电话。',
-  },
+    id: 'tutorial',
+    title: '教程指南',
+    items: [
+      {
+        id: 'how-to-discord',
+        question: '如何在Discord上赚钱',
+        answer: 'Discord是一款流行数百万用户的即时通信软件，本文介绍如何在Discord上赚钱的方法...'
+      }
+    ]
+  }
 ];
 
 const FaqPage: React.FC = () => {
-  const [openItemId, setOpenItemId] = useState<number | null>(null);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>('account');
 
-  // 切换FAQ项的展开/折叠状态
-  const toggleItem = (id: number) => {
-    setOpenItemId(openItemId === id ? null : id);
+  // 切换分类的展开/折叠状态
+  const toggleCategory = (id: string) => {
+    setExpandedCategory(expandedCategory === id ? null : id);
   };
 
   return (
@@ -44,27 +79,37 @@ const FaqPage: React.FC = () => {
       <div className="max-w-4xl mx-auto py-8 px-4">
         <h1 className="text-2xl font-bold mb-6">常见问题</h1>
 
-        {/* FAQ列表 */}
-        <div className="space-y-1">
-          {faqItems.map((item) => (
+        {/* FAQ分类列表 */}
+        <div className="space-y-6">
+          {faqCategories.map((category) => (
             <div
-              key={item.id}
-              className="border-b border-gray-200"
+              key={category.id}
+              className="border border-gray-200 rounded-md overflow-hidden"
             >
               <button
-                onClick={() => toggleItem(item.id)}
-                className="w-full py-4 text-left flex justify-between items-center focus:outline-none"
+                onClick={() => toggleCategory(category.id)}
+                className="w-full py-4 px-6 text-left flex justify-between items-center focus:outline-none bg-gray-50"
               >
-                <span className="font-medium">{item.question}</span>
+                <span className="font-medium text-lg">{category.title}</span>
                 <FaChevronRight 
                   className={`text-gray-400 transition-transform duration-200 ${
-                    openItemId === item.id ? 'transform rotate-90' : ''
+                    expandedCategory === category.id ? 'transform rotate-90' : ''
                   }`} 
                 />
               </button>
-              {openItemId === item.id && (
-                <div className="pb-4 text-gray-600 text-sm">
-                  <p>{item.answer}</p>
+              
+              {expandedCategory === category.id && (
+                <div className="p-6 space-y-4">
+                  {category.items.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={`/help/${item.id}`}
+                      className="block border-b border-gray-100 pb-4 hover:text-primary transition-colors"
+                    >
+                      <h3 className="font-medium mb-2">{item.question}</h3>
+                      <p className="text-sm text-gray-600 line-clamp-2">{item.answer}</p>
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>

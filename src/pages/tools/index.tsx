@@ -58,15 +58,15 @@ const ToolsPage: React.FC = () => {
         {/* 工具标签栏 */}
         <div className="border-b border-gray-200 mb-6">
           <div className="overflow-x-auto">
-            <div className="flex space-x-6">
+            <div className="flex">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`pb-3 text-sm font-medium transition-colors whitespace-nowrap ${
+                  className={`px-6 py-3 text-sm font-medium transition-colors whitespace-nowrap ${
                     activeTab === tab.id
-                      ? 'border-b-2 border-primary text-primary'
-                      : 'text-gray-700 hover:text-primary'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
                   {tab.name}

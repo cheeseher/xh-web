@@ -49,29 +49,16 @@ const Footer: React.FC = () => {
         </div>
 
         {/* 版权信息 */}
-        <div className="text-center text-sm text-gray-400">
-          <p className="mb-2">
-            © 2022 很多号邮箱平台 | Powered by{' '}
-            <a 
-              href="http://www.henduohao.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:text-white"
-            >
-              www.henduohao.com
-            </a>
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link href="/sitemap" className="hover:text-white">
-              Sitemap
-            </Link>
-            <Link href="/email" className="hover:text-white">
-              E-Mail
-            </Link>
-            <Link href="/telegram" className="hover:text-white">
-              Telegram
-            </Link>
-          </div>
+        <div className="text-center text-gray-500 text-sm mt-8">
+          © 2022 星海账户 | Powered by{' '}
+          <a
+            href="http://www.xinghai.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline"
+          >
+            www.xinghai.com
+          </a>
         </div>
       </div>
     </footer>

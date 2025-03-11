@@ -32,7 +32,7 @@ const OrdersPage = () => {
   };
 
   return (
-    <Layout title="订单查询 - 很多号">
+    <Layout title="订单查询 - 星海账户">
       <div className="container-custom py-8">
         <h1 className="text-2xl font-bold mb-6">查询订单</h1>
         

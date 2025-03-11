@@ -15,7 +15,7 @@ const AboutPage: React.FC = () => {
               在线客服: <span className="text-blue-500">网页在线客服</span> (网页右下角图标)
             </li>
             <li>
-              Email: <Link href="mailto:henduohao.aftersale@gmail.com" className="text-blue-500">henduohao.aftersale@gmail.com</Link>
+              Email: <Link href="mailto:xinghai.aftersale@gmail.com" className="text-blue-500">xinghai.aftersale@gmail.com</Link>
             </li>
             <li>
               Telegram: <span className="text-blue-500">Auto Man</span> (近期有仿冒客服请注意分辨，见下图)
