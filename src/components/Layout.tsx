@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import FloatingButtons from './FloatingButtons';
-import { FaInfoCircle, FaHeadset, FaTelegramPlane } from 'react-icons/fa';
+import { FaInfoCircle, FaHeadset, FaTelegramPlane, FaTimes } from 'react-icons/fa';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -22,6 +22,7 @@ const Layout: React.FC<LayoutProps> = ({
 }) => {
   const router = useRouter();
   const isHomePage = router.pathname === '/';
+  const [showTip, setShowTip] = useState(true);
 
   return (
     <>
@@ -34,35 +35,37 @@ const Layout: React.FC<LayoutProps> = ({
       <div className="flex flex-col min-h-screen">
         <Navbar />
         
-        {/* 只在首页显示提示信息 */}
-        {isHomePage && showAlert && (
-          <div className="bg-white rounded-lg border border-gray-100 overflow-hidden container-custom my-6">
-            <div className="p-6">
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <FaInfoCircle className="text-primary text-xl" />
-                </div>
-                <div className="flex-grow">
-                  <p className="text-gray-700 text-sm leading-relaxed">
-                    <span className="font-medium text-primary">重要提示：</span>
-                    购买本站任何商品，必须遵守各个国家法律法规及各大平台规则，非法用途一切后果自负，本站不承担任何法律及连带责任！
+        {/* 只在首页显示提示信息 - 新设计 */}
+        {isHomePage && showAlert && showTip && (
+          <div className="bg-gray-50 border-b border-gray-200">
+            <div className="container-custom py-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2 flex-1">
+                  <FaInfoCircle className="text-primary text-sm flex-shrink-0" />
+                  <p className="text-gray-700 text-xs md:text-sm truncate">
+                    <span className="font-medium text-primary">提示：</span>
+                    购买本站商品须遵守法律法规及平台规则，非法用途后果自负
                   </p>
-                  <div className="mt-4 flex flex-wrap gap-4">
-                    <div className="flex items-center text-sm text-gray-600 bg-gray-50 px-4 py-2 rounded-md hover:bg-gray-100 transition-colors duration-200">
-                      <FaHeadset className="text-primary mr-2" />
-                      <span>售前咨询/付款问题请联系：</span>
-                      <Link href="#" className="text-primary hover:text-primary-dark hover:underline ml-1 font-medium">
-                        网页客服
-                      </Link>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600 bg-gray-50 px-4 py-2 rounded-md hover:bg-gray-100 transition-colors duration-200">
-                      <FaTelegramPlane className="text-[#0088cc] mr-2" />
-                      <span>购买/库存/售后问题请联系：</span>
-                      <Link href="#" className="text-[#0088cc] hover:text-[#0077b5] hover:underline ml-1 font-medium">
-                        飞机客服
-                      </Link>
-                    </div>
+                </div>
+                <div className="flex items-center space-x-3 ml-2">
+                  <div className="hidden md:flex items-center">
+                    <Link href="#" className="text-xs text-gray-600 hover:text-primary flex items-center">
+                      <FaHeadset className="text-primary mr-1 text-xs" />
+                      <span>网页客服</span>
+                    </Link>
+                    <span className="mx-2 text-gray-300">|</span>
+                    <Link href="#" className="text-xs text-gray-600 hover:text-[#0088cc] flex items-center">
+                      <FaTelegramPlane className="text-[#0088cc] mr-1 text-xs" />
+                      <span>飞机客服</span>
+                    </Link>
                   </div>
+                  <button 
+                    onClick={() => setShowTip(false)}
+                    className="text-gray-400 hover:text-gray-600 p-1"
+                    aria-label="关闭提示"
+                  >
+                    <FaTimes size={12} />
+                  </button>
                 </div>
               </div>
             </div>
