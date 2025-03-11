@@ -40,7 +40,7 @@ const ProfilePage: React.FC = () => {
   }
 
   return (
-    <Layout title="修改昵称 - 账户商城" showAlert={false}>
+    <Layout title="账户信息 - 星海账户" showAlert={false}>
       <div className="max-w-md mx-auto">
         <div className="card p-6">
           <div className="flex items-center mb-6">
@@ -48,7 +48,7 @@ const ProfilePage: React.FC = () => {
               <FaUser className="text-primary text-xl" />
             </div>
             <div>
-              <h2 className="text-lg font-medium">个人资料</h2>
+              <h2 className="text-lg font-medium">账户信息</h2>
               <p className="text-sm text-gray-500">修改您的个人信息</p>
             </div>
           </div>
@@ -74,7 +74,7 @@ const ProfilePage: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                账号
+                邮箱
               </label>
               <input
                 type="text"
@@ -83,7 +83,7 @@ const ProfilePage: React.FC = () => {
                 className="input bg-gray-50 cursor-not-allowed"
               />
               <p className="mt-1 text-xs text-gray-500">
-                账号不可修改
+                邮箱不可修改
               </p>
             </div>
 

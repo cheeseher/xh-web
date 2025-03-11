@@ -103,7 +103,7 @@ const Navbar: React.FC = () => {
                         className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         <FaUser className="mr-2 text-gray-400" />
-                        修改昵称
+                        账户信息
                       </Link>
                       <Link
                         href="/user/password"
@@ -133,7 +133,7 @@ const Navbar: React.FC = () => {
                 {/* VIP标识 */}
                 {user.isVip && (
                   <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white px-2 py-1 rounded text-xs font-bold">
-                    VIP
+                    VIP{user.vipLevel}
                   </div>
                 )}
               </div>
@@ -178,7 +178,7 @@ const Navbar: React.FC = () => {
                           <span className="font-medium text-gray-900">{user.username}</span>
                           {user.isVip && (
                             <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white px-2 py-1 rounded text-xs font-bold">
-                              VIP
+                              VIP{user.vipLevel}
                             </div>
                           )}
                         </div>
@@ -200,7 +200,7 @@ const Navbar: React.FC = () => {
                         onClick={() => setIsMenuOpen(false)}
                       >
                         <FaUser className="mr-2 text-gray-400" />
-                        修改昵称
+                        账户信息
                       </Link>
                       <Link
                         href="/user/password"

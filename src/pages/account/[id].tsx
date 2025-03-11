@@ -113,7 +113,7 @@ const AccountDetailPage: React.FC = () => {
                 <div className="flex items-center">
                   <span className="text-gray-600 mr-2">批发价：</span>
                   <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-md">{accountData.batchPrice}</span>
-                  <span className="ml-2 text-gray-600">更看批发优惠</span>
+                  <span className="ml-2 text-gray-600">查看更多优惠</span>
                 </div>
               </div>
               
