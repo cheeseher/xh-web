@@ -9,6 +9,7 @@ const nextConfig = {
   images: {
     domains: ['via.placeholder.com'],
     minimumCacheTTL: 60,
+    unoptimized: true,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
