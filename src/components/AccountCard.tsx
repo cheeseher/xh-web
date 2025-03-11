@@ -34,109 +34,145 @@ const AccountCard: React.FC<AccountCardProps> = ({
         return {
           icon: <FaGoogle className="text-5xl text-red-500" />,
           gradient: 'from-red-500 to-red-600',
-          shadow: 'shadow-red-500/30'
+          shadow: 'shadow-red-500/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/gmail.png'
         };
       case 'outlook':
         return {
           icon: <FaMicrosoft className="text-5xl text-blue-500" />,
           gradient: 'from-blue-500 to-blue-600',
-          shadow: 'shadow-blue-500/30'
+          shadow: 'shadow-blue-500/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/outlook.png'
         };
       case 'instagram':
         return {
           icon: <FaInstagram className="text-5xl text-pink-500" />,
           gradient: 'from-pink-500 via-purple-500 to-orange-500',
-          shadow: 'shadow-pink-500/30'
+          shadow: 'shadow-pink-500/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/instagram.png'
         };
       case 'twitter':
         return {
           icon: <FaTwitter className="text-5xl text-sky-400" />,
           gradient: 'from-sky-400 to-sky-500',
-          shadow: 'shadow-sky-500/30'
+          shadow: 'shadow-sky-500/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/twitter.png'
         };
       case 'facebook':
         return {
           icon: <FaFacebook className="text-5xl text-blue-600" />,
           gradient: 'from-blue-600 to-blue-700',
-          shadow: 'shadow-blue-600/30'
+          shadow: 'shadow-blue-600/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/facebook.png'
         };
       case 'discord':
         return {
           icon: <FaDiscord className="text-5xl text-indigo-500" />,
           gradient: 'from-indigo-500 to-indigo-600',
-          shadow: 'shadow-indigo-500/30'
+          shadow: 'shadow-indigo-500/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/discord.png'
         };
       case 'chatgpt':
         return {
           icon: <FaRobot className="text-5xl text-teal-500" />,
           gradient: 'from-teal-500 to-teal-600',
-          shadow: 'shadow-teal-500/30'
+          shadow: 'shadow-teal-500/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/chatgpt.png'
         };
       case 'yahoo':
         return {
           icon: <FaYahoo className="text-5xl text-purple-500" />,
           gradient: 'from-purple-500 to-purple-600',
-          shadow: 'shadow-purple-500/30'
+          shadow: 'shadow-purple-500/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/yahoo.png'
         };
       case 'tiktok':
         return {
           icon: <FaTiktok className="text-5xl text-gray-900" />,
           gradient: 'from-gray-900 to-black',
-          shadow: 'shadow-black/30'
+          shadow: 'shadow-black/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/tiktok.png'
         };
       case 'gmx':
         return {
           icon: <FaAt className="text-5xl text-orange-500" />,
           gradient: 'from-orange-500 to-orange-600',
-          shadow: 'shadow-orange-500/30'
+          shadow: 'shadow-orange-500/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/gmx.png'
         };
       case 'aol':
         return {
           icon: <FaMailBulk className="text-5xl text-blue-700" />,
           gradient: 'from-blue-700 to-blue-800',
-          shadow: 'shadow-blue-700/30'
+          shadow: 'shadow-blue-700/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/aol.png'
         };
       case 'protonmail':
         return {
           icon: <FaEnvelope className="text-5xl text-green-600" />,
           gradient: 'from-green-600 to-green-700',
-          shadow: 'shadow-green-600/30'
+          shadow: 'shadow-green-600/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/protonmail.png'
         };
       case 'yandex':
         return {
           icon: <FaGlobeEurope className="text-5xl text-red-600" />,
           gradient: 'from-red-600 to-red-700',
-          shadow: 'shadow-red-600/30'
+          shadow: 'shadow-red-600/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/yandex.png'
         };
       case 'mail':
         return {
           icon: <FaMailBulk className="text-5xl text-gray-700" />,
           gradient: 'from-gray-700 to-gray-800',
-          shadow: 'shadow-gray-700/30'
+          shadow: 'shadow-gray-700/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/mail.png'
         };
       case 'naver':
         return {
           icon: <FaGlobeAsia className="text-5xl text-green-700" />,
           gradient: 'from-green-700 to-green-800',
-          shadow: 'shadow-green-700/30'
+          shadow: 'shadow-green-700/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/naver.png'
         };
       case 'rambler':
         return {
           icon: <FaGlobeEurope className="text-5xl text-blue-800" />,
           gradient: 'from-blue-800 to-blue-900',
-          shadow: 'shadow-blue-800/30'
+          shadow: 'shadow-blue-800/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/rambler.png'
         };
       case 'german':
         return {
           icon: <FaGlobeEurope className="text-5xl text-yellow-600" />,
           gradient: 'from-yellow-600 to-yellow-700',
-          shadow: 'shadow-yellow-600/30'
+          shadow: 'shadow-yellow-600/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/german.png'
         };
       default:
         return {
           icon: <FaGlobe className="text-5xl text-gray-500" />,
           gradient: 'from-gray-500 to-gray-600',
-          shadow: 'shadow-gray-500/30'
+          shadow: 'shadow-gray-500/30',
+          bgColor: 'bg-gray-100',
+          logo: '/images/default.png'
         };
     }
   };
@@ -145,40 +181,47 @@ const AccountCard: React.FC<AccountCardProps> = ({
 
   return (
     <Link href={`/account/${id}`}>
-      <div className="border border-gray-100 rounded-lg hover:shadow-md transition-all duration-300">
-        <div className="h-32 w-full flex items-center justify-center p-2 relative overflow-hidden group">
-          <div className={`relative flex items-center justify-center w-24 h-24 rounded-full ${brandStyle.shadow} transform group-hover:scale-110 transition-all duration-300`}>
-            {brandStyle.icon}
-          </div>
-          {stock > 0 ? (
-            <div className="absolute top-2 right-2 bg-batch-price-light text-batch-price text-xs px-2 py-1 rounded-full">
-              充足
-            </div>
+      <div className="border border-gray-200 rounded-lg hover:shadow-md transition-all duration-300 overflow-hidden bg-white">
+        {/* 商品图片区域 */}
+        <div className={`${brandStyle.bgColor} p-4 flex items-center justify-center h-40 relative`}>
+          {brandStyle.logo ? (
+            <img 
+              src={brandStyle.logo} 
+              alt={title}
+              className="max-h-28 max-w-full object-contain"
+            />
           ) : (
-            <div className="absolute top-2 right-2 bg-price-light text-price text-xs px-2 py-1 rounded-full">
-              缺货
+            <div className={`flex items-center justify-center w-24 h-24 rounded-full ${brandStyle.shadow}`}>
+              {brandStyle.icon}
             </div>
           )}
         </div>
-        <div className="p-4 border-t border-gray-100">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-medium text-gray-800 truncate">{title}</h3>
-            <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded">自动发货</span>
+        
+        {/* 商品信息区域 */}
+        <div className="p-3">
+          {/* 商品标题 */}
+          <h3 className="text-sm font-medium text-gray-800 mb-2 line-clamp-2 h-10">
+            {title}
+          </h3>
+          
+          {/* 价格区域 */}
+          <div className="flex items-baseline space-x-1">
+            <span className="text-red-500 text-lg font-bold">¥{price.toFixed(2)}</span>
+            {originalPrice && (
+              <span className="text-xs text-gray-400 line-through">¥{originalPrice.toFixed(2)}</span>
+            )}
           </div>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <span className="text-lg font-bold text-price">¥{price.toFixed(2)}</span>
-              {originalPrice && (
-                <span className="text-xs text-gray-400 line-through">¥{originalPrice.toFixed(2)}</span>
-              )}
-            </div>
-          </div>
+          
+          {/* 库存和自动发货标签 */}
           <div className="mt-2 flex justify-between items-center">
-            <span className="text-xs text-gray-500">库存: {stock}</span>
+            <span className="text-xs text-green-600">库存: {stock}</span>
+            <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">自动发货</span>
           </div>
+          
+          {/* 批发价格标签 */}
           {batchPrice && (
-            <div className="mt-1 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded inline-block">
-              批发：≥500个 {batchPrice}
+            <div className="mt-2 text-xs text-gray-500">
+              批发价: {batchPrice}
             </div>
           )}
         </div>
