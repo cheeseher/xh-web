@@ -19,6 +19,9 @@ const AccountDetailPage: React.FC = () => {
   const [notifyEmail, setNotifyEmail] = useState('');
   const [notifyQuantity, setNotifyQuantity] = useState('所需数量');
   const [notifyDescription, setNotifyDescription] = useState('');
+  
+  // 折扣信息弹窗状态
+  const [showDiscountModal, setShowDiscountModal] = useState(false);
 
   // 模拟账号数据
   const accountData = {
@@ -42,6 +45,15 @@ const AccountDetailPage: React.FC = () => {
     ],
     notice: [
       '登录进去后显示，账号如果安全活动一律 选择是自己操作。'
+    ],
+    // 添加折扣信息
+    discounts: [
+      { quantity: '≥50', discount: '0.99', originalPrice: '210.00', unitPrice: '4.16', discountPrice: '207.90' },
+      { quantity: '≥100', discount: '0.98', originalPrice: '420.00', unitPrice: '4.12', discountPrice: '411.60' },
+      { quantity: '≥200', discount: '0.97', originalPrice: '840.00', unitPrice: '4.07', discountPrice: '814.80' },
+      { quantity: '≥300', discount: '0.95', originalPrice: '1260.00', unitPrice: '3.99', discountPrice: '1197.00' },
+      { quantity: '≥500', discount: '0.93', originalPrice: '2100.00', unitPrice: '3.91', discountPrice: '1953.00' },
+      { quantity: '≥1000', discount: '0.90', originalPrice: '4200.00', unitPrice: '3.78', discountPrice: '3780.00' }
     ]
   };
 
@@ -137,7 +149,12 @@ const AccountDetailPage: React.FC = () => {
                 <div className="flex items-center">
                   <span className="text-gray-600 mr-2">批发价：</span>
                   <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-md">{accountData.batchPrice}</span>
-                  <span className="ml-2 text-gray-600">查看更多优惠</span>
+                  <span 
+                    className="ml-2 text-blue-500 cursor-pointer hover:underline"
+                    onClick={() => setShowDiscountModal(true)}
+                  >
+                    查看更多优惠
+                  </span>
                 </div>
               </div>
               
@@ -219,6 +236,50 @@ const AccountDetailPage: React.FC = () => {
                 </div>
               </div>
             </div>
+            
+            {/* 折扣信息弹窗 */}
+            {showDiscountModal && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="bg-white rounded-md shadow-lg w-full max-w-md mx-4">
+                  <div className="flex justify-between items-center p-4 border-b border-gray-200">
+                    <h3 className="text-lg font-medium">折扣信息</h3>
+                    <button 
+                      onClick={() => setShowDiscountModal(false)}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  <div className="p-4">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="bg-gray-50">
+                          <th className="border border-gray-200 px-4 py-2 text-left">数量</th>
+                          <th className="border border-gray-200 px-4 py-2 text-left">折扣</th>
+                          <th className="border border-gray-200 px-4 py-2 text-left">原价</th>
+                          <th className="border border-gray-200 px-4 py-2 text-left">单价</th>
+                          <th className="border border-gray-200 px-4 py-2 text-left">折扣价</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {accountData.discounts.map((discount, index) => (
+                          <tr key={index}>
+                            <td className="border border-gray-200 px-4 py-2">{discount.quantity}</td>
+                            <td className="border border-gray-200 px-4 py-2">{discount.discount}</td>
+                            <td className="border border-gray-200 px-4 py-2">{discount.originalPrice}元</td>
+                            <td className="border border-gray-200 px-4 py-2">{discount.unitPrice}元</td>
+                            <td className="border border-gray-200 px-4 py-2">{discount.discountPrice}元</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
             
             {/* 通知补货弹窗 */}
             {showNotifyModal && (
