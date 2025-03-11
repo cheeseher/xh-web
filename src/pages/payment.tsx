@@ -35,7 +35,7 @@ const PaymentPage: React.FC = () => {
   };
 
   return (
-    <Layout title="支付订单 - 星海账户">
+    <Layout title="支付订单 - 星海账户" hidePageTitle={true}>
       <div className="max-w-4xl mx-auto py-8 px-4">
         {/* 页面标题 */}
         <div className="flex items-center mb-8">

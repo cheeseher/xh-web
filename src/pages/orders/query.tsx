@@ -42,7 +42,7 @@ const OrderQueryPage: React.FC = () => {
   };
 
   return (
-    <Layout title="订单查询 - 星海账户" showAlert={false}>
+    <Layout title="订单查询 - 星海账户" showAlert={false} hidePageTitle={true}>
       <div className="max-w-3xl mx-auto py-8">
         <h1 className="text-2xl font-bold mb-6 text-center">订单查询</h1>
         

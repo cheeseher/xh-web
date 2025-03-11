@@ -75,7 +75,7 @@ const FaqPage: React.FC = () => {
   };
 
   return (
-    <Layout title="常见问题 - 星海账户" description="浏览星海账户的常见问题解答">
+    <Layout title="常见问题 - 星海账户" description="浏览星海账户的常见问题解答" hidePageTitle={true}>
       <div className="max-w-4xl mx-auto py-8 px-4">
         <h1 className="text-2xl font-bold mb-6">常见问题</h1>
 

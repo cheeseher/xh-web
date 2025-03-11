@@ -42,7 +42,7 @@ const RechargePage: React.FC = () => {
   };
 
   return (
-    <Layout title="账户充值 - 星海账户">
+    <Layout title="账户充值 - 星海账户" hidePageTitle={true}>
       <div className="max-w-4xl mx-auto py-8 px-4">
         <h1 className="text-2xl font-bold mb-6">充值</h1>
         

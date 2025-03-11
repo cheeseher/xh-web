@@ -40,7 +40,7 @@ const ProfilePage: React.FC = () => {
   }
 
   return (
-    <Layout title="账户信息 - 星海账户" showAlert={false}>
+    <Layout title="账户信息 - 星海账户" showAlert={false} hidePageTitle={true}>
       <div className="max-w-md mx-auto">
         <div className="card p-6">
           <div className="flex items-center mb-6">

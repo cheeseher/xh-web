@@ -12,6 +12,7 @@ interface LayoutProps {
   title?: string;
   description?: string;
   showAlert?: boolean;
+  hidePageTitle?: boolean;
 }
 
 const Layout: React.FC<LayoutProps> = ({
@@ -19,6 +20,7 @@ const Layout: React.FC<LayoutProps> = ({
   title = '星海账户 - 优质账户销售平台',
   description = '提供各类优质账户，包括邮箱、社交媒体、流媒体等，安全可靠，价格合理。',
   showAlert = true,
+  hidePageTitle = false,
 }) => {
   const router = useRouter();
   const isHomePage = router.pathname === '/';
@@ -72,8 +74,8 @@ const Layout: React.FC<LayoutProps> = ({
           </div>
         )}
 
-        {/* 页面标题 - 非首页显示 */}
-        {!isHomePage && (
+        {/* 页面标题 - 非首页显示，且hidePageTitle为false时显示 */}
+        {!isHomePage && !hidePageTitle && (
           <div className="bg-white border-b">
             <div className="container-custom py-4">
               <h1 className="text-xl font-bold text-gray-800">{title.split(' - ')[0]}</h1>

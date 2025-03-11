@@ -46,7 +46,7 @@ const UsdtPaymentPage: React.FC = () => {
   }
 
   return (
-    <Layout title="USDT支付 - 星海账户">
+    <Layout title="USDT支付 - 星海账户" hidePageTitle={true}>
       <div className="max-w-lg mx-auto bg-white rounded-xl shadow-lg p-6 mt-8 border border-gray-200">
         <div className="flex flex-col items-center">
           {/* 头部信息 */}
