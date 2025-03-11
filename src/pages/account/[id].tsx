@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import { useUser } from '../../contexts/UserContext';
@@ -110,8 +110,25 @@ const AccountDetailPage: React.FC = () => {
     // 关闭弹窗并重置表单
     setShowNotifyModal(false);
     setNotifyEmail('');
-    setNotifyQuantity('所需数量');
+    setNotifyQuantity('');
     setNotifyDescription('');
+  };
+
+  // 在组件加载时，如果用户已登录，设置默认邮箱
+  useEffect(() => {
+    if (user && user.email) {
+      setEmail(user.email);
+      setNotifyEmail(user.email);
+    }
+  }, [user]);
+
+  // 处理通知补货数量输入，只允许数字
+  const handleNotifyQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // 只允许输入数字
+    if (/^\d*$/.test(value)) {
+      setNotifyQuantity(value);
+    }
   };
 
   return (
@@ -135,9 +152,20 @@ const AccountDetailPage: React.FC = () => {
           {/* 右侧产品信息 */}
           <div className="md:w-2/3">
             <div className="bg-white p-6 rounded-md border border-gray-200 mb-6">
-              <div className="flex items-center mb-4">
-                <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-md mr-2">自动发货</span>
-                <h1 className="text-xl font-bold">{accountData.title}</h1>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-md mr-2">自动发货</span>
+                  <h1 className="text-xl font-bold">{accountData.title}</h1>
+                </div>
+                <button
+                  onClick={() => setShowNotifyModal(true)}
+                  className="px-3 py-1 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600 transition-colors flex items-center"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                  通知补货
+                </button>
               </div>
               
               <div className="bg-orange-50 p-4 rounded-md mb-4">
@@ -177,7 +205,8 @@ const AccountDetailPage: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="newshenghao@gmail.com"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    disabled={user && user.email ? true : false}
+                    className={`w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${user && user.email ? 'bg-gray-100' : ''}`}
                   />
                 </div>
                 
@@ -210,28 +239,9 @@ const AccountDetailPage: React.FC = () => {
                 <div className="flex space-x-4">
                   <button
                     onClick={handleBuyNow}
-                    className="flex-1 py-3 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+                    className="w-full py-3 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
                   >
                     立即购买
-                  </button>
-                  <button
-                    onClick={handleAddToCart}
-                    className="flex-1 py-3 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors"
-                  >
-                    添加购物车
-                  </button>
-                </div>
-                
-                {/* 添加通知补货按钮 */}
-                <div className="mt-4">
-                  <button
-                    onClick={() => setShowNotifyModal(true)}
-                    className="w-full py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors flex items-center justify-center"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                    </svg>
-                    通知补货
                   </button>
                 </div>
               </div>
@@ -306,7 +316,8 @@ const AccountDetailPage: React.FC = () => {
                           value={notifyEmail}
                           onChange={(e) => setNotifyEmail(e.target.value)}
                           placeholder="newshenghao@gmail.com"
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                          disabled={user && user.email ? true : false}
+                          className={`flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary ${user && user.email ? 'bg-gray-100' : ''}`}
                         />
                       </div>
                       
@@ -315,7 +326,7 @@ const AccountDetailPage: React.FC = () => {
                         <input
                           type="text"
                           value={notifyQuantity}
-                          onChange={(e) => setNotifyQuantity(e.target.value)}
+                          onChange={handleNotifyQuantityChange}
                           placeholder="所需数量"
                           className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                         />
