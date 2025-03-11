@@ -7,8 +7,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#00925d',
-        'primary-dark': '#007a4d',
+        primary: '#3b82f6',
+        'primary-dark': '#2563eb',
+        'primary-light': '#60a5fa',
         secondary: '#10B981',
         dark: '#1F2937',
         light: '#F9FAFB',
@@ -32,4 +33,4 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
   ],
-} 
+}

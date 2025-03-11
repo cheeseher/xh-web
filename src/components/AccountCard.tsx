@@ -145,10 +145,9 @@ const AccountCard: React.FC<AccountCardProps> = ({
 
   return (
     <Link href={`/account/${id}`}>
-      <div className="bg-white border border-gray-100 rounded-lg hover:shadow-md transition-all duration-300">
+      <div className="border border-gray-100 rounded-lg hover:shadow-md transition-all duration-300">
         <div className="h-32 w-full flex items-center justify-center p-2 relative overflow-hidden group">
-          <div className={`absolute inset-0 bg-gradient-to-br ${brandStyle.gradient} opacity-10 group-hover:opacity-15 transition-opacity duration-300`}></div>
-          <div className={`relative flex items-center justify-center w-24 h-24 bg-white rounded-full ${brandStyle.shadow} transform group-hover:scale-110 transition-all duration-300`}>
+          <div className={`relative flex items-center justify-center w-24 h-24 rounded-full ${brandStyle.shadow} transform group-hover:scale-110 transition-all duration-300`}>
             {brandStyle.icon}
           </div>
           {stock > 0 ? (
