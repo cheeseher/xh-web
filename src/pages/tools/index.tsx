@@ -53,13 +53,13 @@ const ToolsPage: React.FC = () => {
 
   return (
     <Layout title="实用工具 - 星海账户" showAlert={false} hidePageTitle={true}>
-      <div className="max-w-5xl mx-auto py-8 px-4">
+      <div className="max-w-5xl mx-auto py-6 px-4">
         {/* 页面标题 */}
-        <div className="flex items-center mb-8">
-          <div className="bg-primary p-2 rounded-full mr-3">
-            <FaTools className="text-white" />
+        <div className="flex items-center mb-6">
+          <div className="bg-primary p-1.5 rounded-full mr-2">
+            <FaTools className="text-white text-sm" />
           </div>
-          <h1 className="text-2xl font-bold">实用工具集合</h1>
+          <h1 className="text-xl font-bold">实用工具</h1>
         </div>
         
         <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
@@ -71,14 +71,14 @@ const ToolsPage: React.FC = () => {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-md transition-all duration-200 mx-1 ${
+                    className={`flex items-center px-3 py-2 text-xs font-medium rounded-md transition-all duration-200 mx-1 ${
                       activeTab === tab.id
                         ? 'bg-primary text-white shadow-sm'
                         : 'bg-white text-gray-700 hover:bg-gray-100'
                     }`}
                   >
                     {tab.icon}
-                    {tab.name}
+                    <span className="ml-1">{tab.name}</span>
                   </button>
                 ))}
               </div>
@@ -86,16 +86,16 @@ const ToolsPage: React.FC = () => {
           </div>
 
           {/* 工具内容区域 */}
-          <div className="p-6">
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold text-gray-800 mb-1">
+          <div className="p-4">
+            <div className="mb-3">
+              <h2 className="text-base font-semibold text-gray-800">
                 {tabs.find(tab => tab.id === activeTab)?.name}
               </h2>
-              <p className="text-sm text-gray-500">
+              <p className="text-xs text-gray-500">
                 {getToolDescription(activeTab)}
               </p>
             </div>
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
               {renderTool()}
             </div>
           </div>

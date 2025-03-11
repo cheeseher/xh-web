@@ -363,6 +363,7 @@ const AccountDetailPage: React.FC = () => {
               </div>
             )}
             
+            {/* 商品描述 */}
             <div className="bg-white p-6 rounded-md border border-gray-200">
               <div className="border-b border-gray-200 pb-2 mb-4">
                 <h2 className="text-lg font-bold">商品描述</h2>

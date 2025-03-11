@@ -125,12 +125,9 @@ const LoginPage: React.FC = () => {
                   </label>
                 </div>
 
-                <Link
-                  href="/forgot-password"
-                  className="text-sm text-primary hover:text-primary-dark"
-                >
-                  忘记密码？
-                </Link>
+                <div className="text-sm text-gray-400">
+                  暂不支持忘记密码
+                </div>
               </div>
 
               <button
