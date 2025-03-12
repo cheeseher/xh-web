@@ -1,13 +1,66 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Layout from '../components/Layout';
 import AccountCard from '../components/AccountCard';
 import CategoryIndex from '../components/CategoryIndex';
 import { accounts, categories } from '../utils/mockData';
 import Link from 'next/link';
+import { FaCheckCircle, FaClock, FaHeadset, FaSearch, FaChevronRight, FaShieldAlt, FaBolt, FaRegThumbsUp } from 'react-icons/fa';
+import Image from 'next/image';
+
+// 按照指定顺序排列分类
+const orderedCategories = [
+  // 社交媒体类
+  'instagram',
+  'twitter',
+  'facebook',
+  'discord',
+  'chatgpt',
+  'tiktok',
+  // 邮箱类
+  'gmail',
+  'outlook',
+  'yahoo',
+  'gmx',
+  'aol',
+  'protonmail',
+  'mail',
+  'naver',
+  'rambler',
+  'german',
+  'other',
+  'yandex'
+];
 
 const HomePage: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<string>(categories[0]?.id || '');
-  const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeCategory, setActiveCategory] = useState('');
+  const categoryRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+
+  // 处理分类数据
+  const categoryAccounts = useMemo(() => {
+    // 按照指定顺序获取分类
+    const orderedCats = orderedCategories
+      .map(id => categories.find(cat => cat.id === id))
+      .filter(Boolean) as typeof categories;
+    
+    return orderedCats.map(category => ({
+      category,
+      accounts: accounts.filter(account => account.category === category.id)
+    })).filter(item => item.accounts.length > 0);
+  }, []);
+
+  // 过滤账户
+  const filteredCategoryAccounts = useMemo(() => {
+    if (!searchTerm.trim()) return categoryAccounts;
+    
+    return categoryAccounts.map(categoryAccount => ({
+      category: categoryAccount.category,
+      accounts: categoryAccount.accounts.filter(account => 
+        account.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        categoryAccount.category.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    })).filter(item => item.accounts.length > 0);
+  }, [categoryAccounts, searchTerm]);
 
   // 设置ref的回调函数
   const setCategoryRef = (id: string) => (el: HTMLDivElement | null) => {
@@ -48,50 +101,67 @@ const HomePage: React.FC = () => {
         }
       }
       
-      if (currentCategory) {
+      if (currentCategory && currentCategory !== activeCategory) {
         setActiveCategory(currentCategory);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
+    
+    // 初始化时设置第一个分类为活动状态
+    if (filteredCategoryAccounts.length > 0 && !activeCategory) {
+      setActiveCategory(filteredCategoryAccounts[0].category.id);
+    }
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [activeCategory, filteredCategoryAccounts]);
 
   // 标题样式
-  const sectionTitleStyle = "text-lg font-medium text-gray-700 border-l-4 border-primary pl-3";
+  const sectionTitleStyle = "text-xl font-bold text-gray-800 border-l-4 border-indigo-600 pl-3";
 
   return (
     <Layout>
-      {/* 分类索引导航 */}
-      <CategoryIndex onCategoryClick={scrollToCategory} activeCategory={activeCategory} />
+      <div className="bg-gray-100 min-h-screen">
+        {/* 搜索栏 - 大面积深色带渐变效果 */}
+        <div className="-mt-4 sm:-mt-8 px-3 sm:px-6 pt-12 pb-8 sm:pt-16 sm:pb-12 bg-gradient-to-b from-gray-900 to-gray-800 shadow-md">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-6">寻找优质账号，从这里开始</h2>
+            <div className="relative max-w-xl mx-auto">
+              <input
+                type="text"
+                placeholder="搜索商品..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-3 pr-10 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 shadow-lg"
+              />
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                <FaSearch className="text-gray-500" />
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div className="container-custom py-6 md:py-6">
-        {/* 按分类展示账户 */}
-        {categories.map((category) => {
-          const categoryAccounts = accounts.filter(account => account.category === category.id);
-          
-          if (categoryAccounts.length === 0) return null;
-          
-          return (
-            <section 
-              key={category.id} 
-              className={`py-6 ${categories.indexOf(category) % 2 === 0 ? '' : 'bg-gray-50'} rounded-lg mb-6`}
-              ref={setCategoryRef(category.id)}
-              id={`category-${category.id}`}
-            >
-              <div className="px-4">
-                <div className="flex justify-between items-center mb-4">
-                  <div>
-                    <h2 className={sectionTitleStyle}>{category.name}</h2>
-                    <p className="text-sm text-gray-500 mt-1 ml-3">{category.description}</p>
-                  </div>
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
+          {/* 分类索引 */}
+          <CategoryIndex onCategoryClick={scrollToCategory} activeCategory={activeCategory} />
+
+          {/* 商品列表 */}
+          <div className="space-y-6 sm:space-y-8">
+            {filteredCategoryAccounts.map((categoryAccount) => (
+              <div 
+                key={categoryAccount.category.id} 
+                ref={setCategoryRef(categoryAccount.category.id)}
+                id={`category-${categoryAccount.category.id}`}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-800 border-l-4 border-gray-700 pl-2">{categoryAccount.category.name}</h2>
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {categoryAccounts.slice(0, 8).map((account) => (
-                    <AccountCard
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                  {categoryAccount.accounts.map((account) => (
+                    <AccountCard 
                       key={account.id}
                       id={account.id}
                       title={account.title}
@@ -105,46 +175,57 @@ const HomePage: React.FC = () => {
                   ))}
                 </div>
               </div>
-            </section>
-          );
-        })}
-      </div>
+            ))}
+          </div>
 
-      {/* 为什么选择我们 */}
-      <section className="bg-gray-50 py-12">
-        <div className="container-custom">
-          <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">为什么选择我们</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-md">
-                <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+          {/* 为什么选择我们 */}
+          <div className="mt-8 sm:mt-12">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800 text-center mb-4 sm:mb-6">为什么选择我们</h2>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-2">
+                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-2">
+                    <FaShieldAlt className="text-gray-700 text-sm" />
+                  </div>
+                  <h3 className="font-bold text-gray-800 text-sm sm:text-base">安全保障</h3>
+                </div>
+                <p className="text-xs sm:text-sm text-gray-600">所有账号均经过严格测试，确保质量可靠，交易安全有保障。</p>
               </div>
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">品质保证</h3>
-              <p className="text-gray-600">所有账户经过严格测试，确保质量可靠</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-md">
-                <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+              
+              <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-2">
+                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-2">
+                    <FaBolt className="text-gray-700 text-sm" />
+                  </div>
+                  <h3 className="font-bold text-gray-800 text-sm sm:text-base">极速发货</h3>
+                </div>
+                <p className="text-xs sm:text-sm text-gray-600">自动发货系统，下单后秒级到账，让您立即获得所需账号。</p>
               </div>
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">即时发货</h3>
-              <p className="text-gray-600">支付成功后立即自动发货，无需等待</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-md">
-                <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+              
+              <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-2">
+                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-2">
+                    <FaHeadset className="text-gray-700 text-sm" />
+                  </div>
+                  <h3 className="font-bold text-gray-800 text-sm sm:text-base">贴心服务</h3>
+                </div>
+                <p className="text-xs sm:text-sm text-gray-600">专业客服团队，7×24小时在线，随时解答您的问题和疑虑。</p>
               </div>
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">售后无忧</h3>
-              <p className="text-gray-600">专业客服团队，为您解决各种问题</p>
+              
+              <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-2">
+                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-2">
+                    <FaRegThumbsUp className="text-gray-700 text-sm" />
+                  </div>
+                  <h3 className="font-bold text-gray-800 text-sm sm:text-base">品质保证</h3>
+                </div>
+                <p className="text-xs sm:text-sm text-gray-600">严选优质账号，稳定可靠，使用无忧，让您的体验更加出色。</p>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </Layout>
   );
 };

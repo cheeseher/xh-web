@@ -39,235 +39,269 @@ const Navbar: React.FC = () => {
   };
 
   const VipBadge = () => (
-    <div className="flex items-center bg-gradient-to-r from-yellow-400 to-yellow-300 text-yellow-900 px-2 py-0.5 rounded-full shadow-sm">
-      <FaCrown className="text-yellow-700" />
-      <span className="ml-1 text-sm font-medium">VIP{user?.vipLevel}</span>
+    <div className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-2 py-0.5 rounded-md shadow-sm">
+      <FaCrown className="text-yellow-300 mr-1" />
+      <span className="text-xs font-medium">VIP{user?.vipLevel}</span>
     </div>
   );
 
   return (
-    <nav className="bg-black text-white shadow-lg sticky top-0 z-50">
-      <div className="container-custom py-2">
-        <div className="flex justify-between items-center">
+    <header className="bg-gray-800 shadow-md sticky top-0 z-50">
+      {/* 主导航栏 */}
+      <div className="max-w-6xl mx-auto px-3 sm:px-6">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold flex items-center group transition-transform duration-200 hover:scale-105">
-            <div className="w-8 h-8 flex items-center justify-center mr-2">
-              <FaEnvelope className="text-white text-xl" />
-            </div>
-            <span className="text-white">星海</span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            {menuItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`px-3 py-2 text-sm font-medium transition-all duration-200 ${isCurrentPage(item.href) ? 'text-white' : 'text-gray-300 hover:text-white'}`}
-              >
-                {item.name}
-              </Link>
-            ))}
+          <div className="flex-shrink-0">
+            <Link href="/" className="flex items-center">
+              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                <FaEnvelope className="text-gray-700 text-xl" />
+              </div>
+              <span className="ml-2 text-white text-lg font-bold hidden sm:block">星海</span>
+            </Link>
           </div>
 
-          {/* User Actions */}
+          {/* 桌面端导航 */}
+          <nav className="hidden md:flex space-x-1">
+            <Link href="/" className={`px-3 py-2 text-sm font-medium rounded-md ${router.pathname === '/' ? 'text-white bg-gray-700' : 'text-gray-300 hover:text-white hover:bg-gray-700'}`}>
+              商品商城
+            </Link>
+            <Link href="/orders/query" className={`px-3 py-2 text-sm font-medium rounded-md ${router.pathname === '/orders/query' ? 'text-white bg-gray-700' : 'text-gray-300 hover:text-white hover:bg-gray-700'}`}>
+              订单查询
+            </Link>
+            <Link href="/tools" className={`px-3 py-2 text-sm font-medium rounded-md ${router.pathname === '/tools' || router.pathname.startsWith('/tools/') ? 'text-white bg-gray-700' : 'text-gray-300 hover:text-white hover:bg-gray-700'}`}>
+              实用工具
+            </Link>
+            <Link href="/help" className={`px-3 py-2 text-sm font-medium rounded-md ${router.pathname === '/help' || router.pathname.startsWith('/help/') ? 'text-white bg-gray-700' : 'text-gray-300 hover:text-white hover:bg-gray-700'}`}>
+              帮助中心
+            </Link>
+            <Link href="/about" className={`px-3 py-2 text-sm font-medium rounded-md ${router.pathname === '/about' ? 'text-white bg-gray-700' : 'text-gray-300 hover:text-white hover:bg-gray-700'}`}>
+              关于我们
+            </Link>
+          </nav>
+
+          {/* 用户操作区 */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <div className="flex items-center space-x-4">
                 {/* 充值按钮 */}
-                <Link 
-                  href="/user/recharge" 
-                  className="bg-gray-700 hover:bg-gray-600 text-white text-sm px-4 py-1 rounded transition-colors duration-200"
-                >
-                  充值
+                <Link href="/user/recharge" className="text-white bg-gray-700 hover:bg-gray-600 px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
+                  <FaWallet className="inline-block mr-1" /> 充值
                 </Link>
-                
-                {/* 用户信息 */}
+
+                {/* 用户菜单 */}
                 <div className="relative">
                   <button
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-2 text-sm text-gray-300 hover:text-white transition-colors duration-200 px-2 py-1 rounded-md"
+                    className="flex items-center text-gray-300 hover:text-white"
                   >
-                    <div className="flex items-center">
-                      <span className="mr-2">{user.username}</span>
-                    </div>
+                    <span className="mr-1">{user.username}</span>
+                    {user.vipLevel > 0 && (
+                      <div className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-2 py-0.5 rounded-md shadow-sm mr-2">
+                        <FaCrown className="text-yellow-300 mr-1" />
+                        <span className="text-xs font-medium">VIP{user.vipLevel}</span>
+                      </div>
+                    )}
+                    <FaCaretDown className={`transition-transform duration-200 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
                   </button>
 
+                  {/* 下拉菜单 */}
                   {isUserMenuOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                       <div className="px-4 py-2 border-b border-gray-100">
-                        <div className="text-primary font-medium">余额：¥{user.balance}</div>
+                        <p className="text-sm font-medium text-gray-900">{user.username}</p>
+                        <div className="flex items-center space-x-2">
+                          <p className="text-xs text-gray-500">余额: ¥{user.balance.toFixed(2)}</p>
+                          {user.vipLevel > 0 && (
+                            <div className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-1.5 py-0.5 rounded-md shadow-sm">
+                              <FaCrown className="text-yellow-300 text-xs mr-0.5" />
+                              <span className="text-xs font-medium">VIP{user.vipLevel}</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <Link
                         href="/user/profile"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <FaUser className="mr-2 text-gray-400" />
-                        账户信息
-                      </Link>
-                      <Link
-                        href="/user/password"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <FaKey className="mr-2 text-gray-400" />
-                        修改密码
+                        <FaUser className="mr-2 text-gray-500" /> 个人资料
                       </Link>
                       <Link
                         href="/user/records"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <FaHistory className="mr-2 text-gray-400" />
-                        消费记录
+                        <FaHistory className="mr-2 text-gray-500" /> 消费记录
+                      </Link>
+                      <Link
+                        href="/user/password"
+                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <FaKey className="mr-2 text-gray-500" /> 修改密码
                       </Link>
                       <button
-                        onClick={handleLogout}
-                        className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                        onClick={() => {
+                          handleLogout();
+                          setIsUserMenuOpen(false);
+                        }}
+                        className="flex items-center w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 mt-1 border-t border-gray-100"
                       >
-                        <FaTimes className="mr-2" />
                         退出登录
                       </button>
                     </div>
                   )}
                 </div>
-                
-                {/* VIP标识 */}
-                {user.isVip && (
-                  <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white px-2 py-1 rounded text-xs font-bold">
-                    VIP{user.vipLevel}
-                  </div>
-                )}
               </div>
             ) : (
-              <>
-                <Link href="/login" className="text-sm text-gray-300 hover:text-white transition-colors duration-200 px-4 py-2 rounded-md hover:bg-white/10">
+              <div className="flex items-center space-x-2">
+                <Link href="/login" className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">
                   登录
                 </Link>
-                <Link href="/register" className="text-sm bg-primary hover:bg-primary-light text-white px-4 py-2 rounded-md transition-colors duration-200 shadow-md hover:shadow-lg">
+                <Link href="/register" className="bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                   注册
                 </Link>
-              </>
+              </div>
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          {/* 移动端菜单按钮 */}
+          <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white focus:outline-none"
+              className="text-gray-300 hover:text-white focus:outline-none"
             >
               {isMenuOpen ? (
-                <FaTimes className="text-xl" />
+                <FaTimes className="h-6 w-6" />
               ) : (
-                <FaBars className="text-xl" />
+                <FaBars className="h-6 w-6" />
               )}
             </button>
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="fixed inset-0 z-40 md:hidden">
-            <div className="fixed inset-0 bg-black bg-opacity-25" onClick={() => setIsMenuOpen(false)}></div>
-            <div className="relative bg-white z-50 h-full w-64 transform transition-transform duration-300 ease-in-out">
-              <div className="px-4 pt-5 pb-6 space-y-6">
-                {user ? (
-                  <div className="border-b border-gray-200 pb-4">
-                    <div className="flex items-center mb-4">
-                      <div className="ml-3">
-                        <div className="flex items-center space-x-2">
-                          <span className="font-medium text-gray-900">{user.username}</span>
-                          {user.isVip && (
-                            <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white px-2 py-1 rounded text-xs font-bold">
-                              VIP{user.vipLevel}
-                            </div>
-                          )}
-                        </div>
-                        <div className="text-sm text-primary">余额：¥{user.balance}</div>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Link
-                        href="/user/recharge"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <FaWallet className="mr-2 text-gray-400" />
-                        充值
-                      </Link>
-                      <Link
-                        href="/user/profile"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <FaUser className="mr-2 text-gray-400" />
-                        账户信息
-                      </Link>
-                      <Link
-                        href="/user/password"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <FaKey className="mr-2 text-gray-400" />
-                        修改密码
-                      </Link>
-                      <Link
-                        href="/user/records"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <FaHistory className="mr-2 text-gray-400" />
-                        消费记录
-                      </Link>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    <Link
-                      href="/login"
-                      className="block w-full text-center px-4 py-2 text-base font-medium text-gray-900 hover:text-primary transition-colors duration-200"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      登录
-                    </Link>
-                    <Link
-                      href="/register"
-                      className="block w-full text-center px-4 py-2 text-base font-medium text-white bg-primary hover:bg-primary-light rounded-md transition-colors duration-200"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      注册
-                    </Link>
-                  </div>
-                )}
-                <nav className="grid gap-y-4">
-                  {menuItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className={`text-base font-medium ${isCurrentPage(item.href) ? 'text-primary' : 'text-gray-900 hover:text-primary'} transition-colors duration-200`}
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </nav>
-                {user && (
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setIsMenuOpen(false);
-                    }}
-                    className="flex items-center justify-center w-full px-4 py-2 text-base font-medium text-red-600 hover:text-red-700 transition-colors duration-200"
-                  >
-                    <FaTimes className="mr-2" />
-                    退出登录
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-    </nav>
+
+      {/* 移动端侧边菜单 */}
+      <div
+        className={`fixed inset-0 z-50 ${isMenuOpen ? 'block' : 'hidden'}`}
+        onClick={() => setIsMenuOpen(false)}
+      >
+        {/* 背景遮罩 */}
+        <div className="absolute inset-0 bg-black bg-opacity-50" />
+
+        {/* 侧边栏内容 */}
+        <div
+          className="relative bg-white z-50 h-full w-72 transform transition-transform duration-300 ease-in-out shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="px-4 pt-6 pb-6 space-y-6">
+            {user ? (
+              <div className="border-b border-gray-200 pb-4">
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                    <FaUser className="text-gray-600" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-gray-900">{user.username}</p>
+                    <div className="flex items-center space-x-2">
+                      <p className="text-xs text-gray-500">余额: ¥{user.balance.toFixed(2)}</p>
+                      {user.vipLevel > 0 && (
+                        <div className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-1.5 py-0.5 rounded-md shadow-sm">
+                          <FaCrown className="text-yellow-300 text-xs mr-0.5" />
+                          <span className="text-xs font-medium">VIP{user.vipLevel}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <Link
+                  href="/user/recharge"
+                  className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-md hover:bg-gray-600"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <FaWallet className="mr-2" /> 充值
+                </Link>
+              </div>
+            ) : (
+              <div className="flex flex-col space-y-2 border-b border-gray-200 pb-4">
+                <Link
+                  href="/login"
+                  className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  登录
+                </Link>
+                <Link
+                  href="/register"
+                  className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-md hover:bg-gray-600"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  注册
+                </Link>
+              </div>
+            )}
+
+            <nav className="space-y-1">
+              {[
+                { name: '商品商城', href: '/' },
+                { name: '订单查询', href: '/orders/query' },
+                { name: '实用工具', href: '/tools' },
+                { name: '帮助中心', href: '/help' },
+                { name: '关于我们', href: '/about' },
+              ].map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-md ${
+                    router.pathname === item.href || (item.href !== '/' && router.pathname.startsWith(item.href))
+                      ? 'text-gray-900 bg-gray-100'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+
+            {user && (
+              <div className="border-t border-gray-200 pt-4 space-y-1">
+                <Link
+                  href="/user/profile"
+                  className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <FaUser className="mr-3 text-gray-500" /> 个人资料
+                </Link>
+                <Link
+                  href="/user/records"
+                  className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <FaHistory className="mr-3 text-gray-500" /> 消费记录
+                </Link>
+                <Link
+                  href="/user/password"
+                  className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <FaKey className="mr-3 text-gray-500" /> 修改密码
+                </Link>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="flex items-center w-full px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-md mt-2"
+                >
+                  退出登录
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
   );
 };
 

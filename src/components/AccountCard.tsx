@@ -182,44 +182,48 @@ const AccountCard: React.FC<AccountCardProps> = ({
 
   return (
     <Link href={`/account/${id}`}>
-      <div className="border border-gray-200 rounded-lg hover:shadow-md transition-all duration-300 overflow-hidden bg-white">
+      <div className="border border-gray-200 rounded-xl hover:shadow-lg transition-all duration-300 overflow-hidden bg-white h-full flex flex-col transform hover:-translate-y-1">
         {/* 商品图片区域 - 保持为正方形 */}
         <div className={`${brandStyle.bgColor} p-4 flex items-center justify-center aspect-square relative`}>
           {brandStyle.logo ? (
-            <div className="relative w-28 h-28">
+            <div className="relative w-28 h-28 transition-transform duration-300 hover:scale-110">
               <Image 
                 src={brandStyle.logo} 
                 alt={title}
                 fill
                 style={{ objectFit: 'contain' }}
+                className="drop-shadow-md"
               />
             </div>
           ) : (
-            <div className={`flex items-center justify-center w-20 h-20 rounded-full ${brandStyle.shadow}`}>
+            <div className={`flex items-center justify-center w-20 h-20 rounded-full ${brandStyle.shadow} transition-transform duration-300 hover:scale-110`}>
               {brandStyle.icon}
             </div>
           )}
         </div>
         
         {/* 商品信息区域 */}
-        <div className="p-3">
-          {/* 商品标题 */}
-          <h3 className="text-base font-medium text-gray-800 mb-2 line-clamp-2 min-h-[3rem]">
-            {title}
-          </h3>
-          
-          {/* 价格区域 */}
-          <div className="flex items-baseline space-x-2 mb-2">
-            <span className="text-red-500 text-xl font-bold">¥{price.toFixed(2)}</span>
-            {originalPrice && (
-              <span className="text-sm text-gray-400 line-through">¥{originalPrice.toFixed(2)}</span>
-            )}
+        <div className="p-4 flex-grow flex flex-col">
+          {/* 商品标题和自动发货标签 */}
+          <div className="flex items-start justify-between mb-3">
+            <h3 className="text-base font-medium text-gray-800 line-clamp-2 flex-1 mr-2">
+              {title}
+            </h3>
+            <span className="text-xs bg-[#009688] text-white px-2 py-1 rounded-md flex-shrink-0 shadow-sm">自动发货</span>
           </div>
           
-          {/* 库存和自动发货标签 */}
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-green-600">库存: {stock}</span>
-            <span className="text-xs bg-green-500 text-white px-2 py-1 rounded">自动发货</span>
+          {/* 价格和库存区域 */}
+          <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-100">
+            <div className="flex items-baseline space-x-2">
+              <span className="text-red-500 text-xl font-bold">¥{price.toFixed(2)}</span>
+              {originalPrice && (
+                <span className="text-sm text-gray-400 line-through">¥{originalPrice.toFixed(2)}</span>
+              )}
+            </div>
+            <span className="text-sm text-green-600 flex items-center">
+              <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
+              库存: {stock}
+            </span>
           </div>
         </div>
       </div>

@@ -99,7 +99,7 @@ const CategoryIndex: React.FC<CategoryIndexProps> = ({ onCategoryClick, activeCa
               onClick={() => onCategoryClick(category.id)}
               className={`inline-block px-3 py-1.5 mx-1 text-sm rounded-full ${
                 activeCategory === category.id
-                  ? 'bg-primary text-white'
+                  ? 'bg-gray-800 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -114,7 +114,7 @@ const CategoryIndex: React.FC<CategoryIndexProps> = ({ onCategoryClick, activeCa
   // 桌面端垂直索引
   const renderDesktopIndex = () => {
     return (
-      <div className="fixed top-[45%] transform -translate-y-1/2 z-50 hidden md:block" style={{ right: '20px' }}>
+      <div className="fixed top-[45%] transform -translate-y-1/2 z-50 hidden md:block" style={{ right: '28px' }}>
         <div 
           className="bg-white/90 backdrop-blur-sm rounded-lg shadow-md p-2 max-h-[70vh] overflow-y-auto hover:bg-white transition-colors duration-200"
           style={{ width: '130px' }}
@@ -130,11 +130,11 @@ const CategoryIndex: React.FC<CategoryIndexProps> = ({ onCategoryClick, activeCa
                     onClick={() => onCategoryClick(category.id)}
                     className={`w-full text-left flex items-center text-xs transition-colors py-1 ${
                       activeCategory === category.id
-                        ? 'text-primary font-medium'
-                        : 'text-gray-600 hover:text-primary'
+                        ? 'text-gray-800 font-medium'
+                        : 'text-gray-600 hover:text-gray-800'
                     }`}
                   >
-                    <span className="w-1 h-1 bg-primary rounded-full mr-1.5 flex-shrink-0"></span>
+                    <span className="w-1 h-1 bg-gray-700 rounded-full mr-1.5 flex-shrink-0"></span>
                     {category.name}
                   </button>
                 </li>
