@@ -184,22 +184,10 @@ const AccountCard: React.FC<AccountCardProps> = ({
     <Link href={`/account/${id}`}>
       <div className="bg-white rounded-lg overflow-hidden flex flex-row sm:flex-col h-full border border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
         {/* 商品图片区域 */}
-        <div className={`${brandStyle.bgColor} w-24 h-24 sm:w-full sm:h-auto sm:aspect-square flex items-center justify-center flex-shrink-0`}>
-          {brandStyle.logo ? (
-            <div className="relative w-16 h-16 sm:w-28 sm:h-28 transition-transform duration-300 hover:scale-110">
-              <Image 
-                src={brandStyle.logo} 
-                alt={title}
-                fill
-                style={{ objectFit: 'contain' }}
-                className="drop-shadow-md"
-              />
-            </div>
-          ) : (
-            <div className={`flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full ${brandStyle.shadow} transition-transform duration-300 hover:scale-110`}>
-              {brandStyle.icon}
-            </div>
-          )}
+        <div className={`bg-white w-24 h-24 sm:w-full sm:h-auto sm:aspect-square flex items-center justify-center flex-shrink-0 relative`}>
+          <div className={`flex items-center justify-center w-20 h-20 sm:w-32 sm:h-32 rounded-full ${brandStyle.shadow} transition-transform duration-300 hover:scale-110`}>
+            {brandStyle.icon}
+          </div>
         </div>
         
         {/* 商品信息区域 */}
