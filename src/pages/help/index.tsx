@@ -67,52 +67,43 @@ const faqCategories: FaqCategory[] = [
 ];
 
 const FaqPage: React.FC = () => {
-  const [expandedCategory, setExpandedCategory] = useState<string | null>('account');
-
-  // 切换分类的展开/折叠状态
-  const toggleCategory = (id: string) => {
-    setExpandedCategory(expandedCategory === id ? null : id);
-  };
+  const [activeCategory, setActiveCategory] = useState<string>('account');
 
   return (
     <Layout title="常见问题 - 星海账户" description="浏览星海账户的常见问题解答" hidePageTitle={true}>
       <div className="max-w-4xl mx-auto py-8 px-4">
         <h1 className="text-2xl font-bold mb-6">常见问题</h1>
 
-        {/* FAQ分类列表 */}
-        <div className="space-y-6">
-          {faqCategories.map((category) => (
-            <div
-              key={category.id}
-              className="border border-gray-200 rounded-md overflow-hidden"
-            >
+        {/* 标签栏样式的分类 */}
+        <div className="mb-6 border-b border-gray-200">
+          <div className="flex flex-wrap -mb-px">
+            {faqCategories.map((category) => (
               <button
-                onClick={() => toggleCategory(category.id)}
-                className="w-full py-4 px-6 text-left flex justify-between items-center focus:outline-none bg-gray-50"
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`mr-4 py-3 px-4 text-sm font-medium border-b-2 transition-colors duration-200 ${
+                  activeCategory === category.id 
+                    ? 'border-[#009688] text-[#009688]' 
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
               >
-                <span className="font-medium text-lg">{category.title}</span>
-                <FaChevronRight 
-                  className={`text-gray-400 transition-transform duration-200 ${
-                    expandedCategory === category.id ? 'transform rotate-90' : ''
-                  }`} 
-                />
+                {category.title}
               </button>
-              
-              {expandedCategory === category.id && (
-                <div className="p-6 space-y-4">
-                  {category.items.map((item) => (
-                    <Link
-                      key={item.id}
-                      href={`/help/${item.id}`}
-                      className="block border-b border-gray-100 pb-4 hover:text-primary transition-colors"
-                    >
-                      <h3 className="font-medium mb-2">{item.question}</h3>
-                      <p className="text-sm text-gray-600 line-clamp-2">{item.answer}</p>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 显示当前选中分类的内容 */}
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          {faqCategories.find(cat => cat.id === activeCategory)?.items.map((item) => (
+            <Link
+              key={item.id}
+              href={`/help/${item.id}`}
+              className="block border-b border-gray-100 py-4 last:border-0 hover:text-[#009688] transition-colors"
+            >
+              <h3 className="font-medium mb-2">{item.question}</h3>
+              <p className="text-sm text-gray-600 line-clamp-2">{item.answer}</p>
+            </Link>
           ))}
         </div>
       </div>

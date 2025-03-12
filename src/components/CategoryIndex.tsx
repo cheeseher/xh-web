@@ -126,17 +126,15 @@ const CategoryIndex: React.FC<CategoryIndexProps> = ({ onCategoryClick, activeCa
             {getOrderedCategories().map((category) => (
               category && (
                 <li key={category.id} className="px-1">
-                  <button
+                  <div 
+                    className={`flex items-center cursor-pointer py-1 ${activeCategory === category.id ? 'text-[#009688] font-medium' : 'text-gray-600'}`}
                     onClick={() => onCategoryClick(category.id)}
-                    className={`w-full text-left flex items-center text-xs transition-colors py-1 ${
-                      activeCategory === category.id
-                        ? 'text-gray-800 font-medium'
-                        : 'text-gray-600 hover:text-gray-800'
-                    }`}
                   >
-                    <span className="w-1 h-1 bg-gray-700 rounded-full mr-1.5 flex-shrink-0"></span>
-                    {category.name}
-                  </button>
+                    <div 
+                      className={`w-1 h-1 rounded-full mr-1.5 flex-shrink-0 ${activeCategory === category.id ? 'bg-[#009688]' : 'bg-gray-700'}`}
+                    ></div>
+                    <span className="text-xs">{category.name}</span>
+                  </div>
                 </li>
               )
             ))}

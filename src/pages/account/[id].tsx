@@ -138,7 +138,7 @@ const AccountDetailPage: React.FC = () => {
         {/* 面包屑导航 */}
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center text-sm">
-            <span className="bg-gray-700 text-white text-xs px-2 py-1 rounded-md mr-2">自动发货</span>
+            <span className="bg-[#009688] text-white text-xs px-2 py-1 rounded-md mr-2">自动发货</span>
             <Link href="/" className="text-gray-600 hover:text-gray-800">谷歌邮箱</Link>
             <span className="text-gray-400 mx-2">›</span>
             <span className="text-gray-700">{accountData.title}</span>
@@ -182,20 +182,16 @@ const AccountDetailPage: React.FC = () => {
             <div className="bg-gray-50 p-5 rounded-lg border border-gray-200 shadow-sm mb-5">
               <div className="flex items-baseline mb-3">
                 <span className="text-gray-600 mr-3 font-medium">价格</span>
-                <span className="text-gray-800 text-3xl font-bold">¥{accountData.price.toFixed(2)}</span>
+                <span className="text-red-500 text-3xl font-bold">¥{accountData.price.toFixed(2)}</span>
                 <span className="text-gray-400 line-through ml-3">¥{accountData.originalPrice.toFixed(2)}</span>
-                <span className="ml-3 bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">
-                  {((1 - accountData.price / accountData.originalPrice) * 100).toFixed(0)}% 优惠
-                </span>
               </div>
               <div className="flex items-center mt-2">
                 <span className="text-gray-600 mr-3 font-medium">批发价</span>
-                <span className="bg-gray-700 text-white text-xs px-3 py-1 rounded-full">{accountData.batchPrice}</span>
+                <span className="bg-[#009688] text-white text-xs px-3 py-1 rounded-md">{accountData.batchPrice}</span>
                 <span 
                   className="ml-3 text-gray-700 cursor-pointer hover:text-gray-900 flex items-center"
                   onClick={() => setShowDiscountModal(true)}
                 >
-                  <FaPercent className="mr-1 text-xs" />
                   <span className="underline">查看批发优惠</span>
                 </span>
               </div>
@@ -211,7 +207,7 @@ const AccountDetailPage: React.FC = () => {
                     min="1"
                     value={quantity}
                     onChange={handleQuantityChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                   />
                 </div>
                 
@@ -223,7 +219,7 @@ const AccountDetailPage: React.FC = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="账号密码将发送至此邮箱"
                     disabled={user && user.email ? true : false}
-                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${user && user.email ? 'bg-gray-50' : ''}`}
+                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent ${user && user.email ? 'bg-gray-50' : ''}`}
                   />
                 </div>
                 
@@ -234,7 +230,7 @@ const AccountDetailPage: React.FC = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="填写您于自身记忆的查询密码"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                   />
                 </div>
                 
@@ -244,7 +240,7 @@ const AccountDetailPage: React.FC = () => {
                     id="agreement"
                     checked={agreed}
                     onChange={(e) => setAgreed(e.target.checked)}
-                    className="mr-2 h-4 w-4 text-gray-700 focus:ring-gray-500 border-gray-300 rounded"
+                    className="mr-2 h-4 w-4 text-[#009688] focus:ring-[#009688] border-gray-300 rounded"
                   />
                   <label htmlFor="agreement" className="text-sm text-gray-600">
                     我已阅读并承诺遵守本站 
@@ -256,7 +252,7 @@ const AccountDetailPage: React.FC = () => {
                 <div className="flex space-x-4 mt-6">
                   <button
                     onClick={handleBuyNow}
-                    className="w-full py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors duration-300 flex items-center justify-center"
+                    className="w-full py-3 bg-[#009688] text-white rounded-lg hover:bg-[#00897b] transition-colors duration-300 flex items-center justify-center"
                   >
                     <FaTag className="mr-2" />
                     立即购买

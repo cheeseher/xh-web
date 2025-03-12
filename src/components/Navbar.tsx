@@ -39,8 +39,8 @@ const Navbar: React.FC = () => {
   };
 
   const VipBadge = () => (
-    <div className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-2 py-0.5 rounded-md shadow-sm">
-      <FaCrown className="text-yellow-300 mr-1" />
+    <div className="flex items-center bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-800 px-2 py-0.5 rounded-md shadow-sm">
+      <FaCrown className="text-yellow-700 mr-1" />
       <span className="text-xs font-medium">VIP{user?.vipLevel}</span>
     </div>
   );
@@ -96,8 +96,8 @@ const Navbar: React.FC = () => {
                   >
                     <span className="mr-1">{user.username}</span>
                     {user.vipLevel > 0 && (
-                      <div className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-2 py-0.5 rounded-md shadow-sm mr-2">
-                        <FaCrown className="text-yellow-300 mr-1" />
+                      <div className="flex items-center bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-800 px-2 py-0.5 rounded-md shadow-sm mr-2">
+                        <FaCrown className="text-yellow-700 mr-1" />
                         <span className="text-xs font-medium">VIP{user.vipLevel}</span>
                       </div>
                     )}
@@ -112,8 +112,8 @@ const Navbar: React.FC = () => {
                         <div className="flex items-center space-x-2">
                           <p className="text-xs text-gray-500">余额: ¥{user.balance.toFixed(2)}</p>
                           {user.vipLevel > 0 && (
-                            <div className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-1.5 py-0.5 rounded-md shadow-sm">
-                              <FaCrown className="text-yellow-300 text-xs mr-0.5" />
+                            <div className="flex items-center bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-800 px-1.5 py-0.5 rounded-md shadow-sm">
+                              <FaCrown className="text-yellow-700 text-xs mr-0.5" />
                               <span className="text-xs font-medium">VIP{user.vipLevel}</span>
                             </div>
                           )}
@@ -206,8 +206,8 @@ const Navbar: React.FC = () => {
                     <div className="flex items-center space-x-2">
                       <p className="text-xs text-gray-500">余额: ¥{user.balance.toFixed(2)}</p>
                       {user.vipLevel > 0 && (
-                        <div className="flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-1.5 py-0.5 rounded-md shadow-sm">
-                          <FaCrown className="text-yellow-300 text-xs mr-0.5" />
+                        <div className="flex items-center bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-800 px-1.5 py-0.5 rounded-md shadow-sm">
+                          <FaCrown className="text-yellow-700 text-xs mr-0.5" />
                           <span className="text-xs font-medium">VIP{user.vipLevel}</span>
                         </div>
                       )}
