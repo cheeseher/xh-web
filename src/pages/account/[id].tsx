@@ -4,7 +4,7 @@ import Layout from '../../components/Layout';
 import { useUser } from '../../contexts/UserContext';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaInfoCircle, FaShoppingCart, FaTag, FaPercent } from 'react-icons/fa';
+import { FaInfoCircle, FaShoppingCart, FaTag, FaPercent, FaGoogle, FaMicrosoft, FaInstagram, FaTwitter, FaFacebook, FaDiscord, FaRobot, FaGlobe } from 'react-icons/fa';
 
 const AccountDetailPage: React.FC = () => {
   const router = useRouter();
@@ -161,14 +161,37 @@ const AccountDetailPage: React.FC = () => {
           {/* 左侧产品图片 */}
           <div className="md:w-1/4 flex-shrink-0">
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm h-full flex items-center justify-center">
-              <div className="w-full relative" style={{ aspectRatio: '1/1' }}>
-                <Image
-                  src={accountData.image}
-                  alt={accountData.title}
-                  fill
-                  style={{ objectFit: 'contain' }}
-                  className="drop-shadow-md transition-transform duration-300 hover:scale-105"
-                />
+              <div className="w-full aspect-square flex items-center justify-center">
+                {String(id).includes('gmail') && (
+                  <FaGoogle className="text-6xl sm:text-7xl text-red-500" />
+                )}
+                {String(id).includes('outlook') && (
+                  <FaMicrosoft className="text-6xl sm:text-7xl text-blue-500" />
+                )}
+                {String(id).includes('instagram') && (
+                  <FaInstagram className="text-6xl sm:text-7xl text-pink-500" />
+                )}
+                {String(id).includes('twitter') && (
+                  <FaTwitter className="text-6xl sm:text-7xl text-sky-400" />
+                )}
+                {String(id).includes('facebook') && (
+                  <FaFacebook className="text-6xl sm:text-7xl text-blue-600" />
+                )}
+                {String(id).includes('discord') && (
+                  <FaDiscord className="text-6xl sm:text-7xl text-indigo-500" />
+                )}
+                {String(id).includes('chatgpt') && (
+                  <FaRobot className="text-6xl sm:text-7xl text-teal-500" />
+                )}
+                {!String(id).includes('gmail') && 
+                 !String(id).includes('outlook') && 
+                 !String(id).includes('instagram') && 
+                 !String(id).includes('twitter') && 
+                 !String(id).includes('facebook') && 
+                 !String(id).includes('discord') && 
+                 !String(id).includes('chatgpt') && (
+                  <FaGlobe className="text-6xl sm:text-7xl text-gray-500" />
+                )}
               </div>
             </div>
           </div>
