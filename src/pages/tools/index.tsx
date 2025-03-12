@@ -9,24 +9,21 @@ import FieldCompleteTool from '../../components/FieldCompleteTool';
 import DataRemoveTool from '../../components/DataRemoveTool';
 import TwoFactorTool from '../../components/TwoFactorTool';
 import Base64Tool from '../../components/Base64Tool';
-import { 
-  FaShieldAlt, FaCode, FaFileCode, FaTable, FaSort, 
-  FaTrash, FaClipboard, FaCookie, FaTools, FaInfoCircle 
-} from 'react-icons/fa';
+import { FaInfoCircle } from 'react-icons/fa';
 
 const ToolsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('2fa');
 
   const tabs = [
-    { id: '2fa', name: '2FA验证码', icon: <FaShieldAlt /> },
-    { id: 'base64', name: 'BASE64编解码', icon: <FaCode /> },
-    { id: 'json-format', name: 'JSON格式化', icon: <FaFileCode /> },
-    { id: 'char-split', name: '字符分割', icon: <FaClipboard /> },
-    { id: 'data-to-csv', name: '数据转CSV', icon: <FaTable /> },
-    { id: 'field-order', name: '字段排序', icon: <FaSort /> },
-    { id: 'data-remove', name: '数据删除', icon: <FaTrash /> },
-    { id: 'field-complete', name: '字段补全', icon: <FaClipboard /> },
-    { id: 'cookie-json', name: 'Cookie转JSON', icon: <FaCookie /> },
+    { id: '2fa', name: '2FA验证码' },
+    { id: 'base64', name: 'BASE64编解码' },
+    { id: 'json-format', name: 'JSON格式化' },
+    { id: 'char-split', name: '字符分割' },
+    { id: 'data-to-csv', name: '数据转CSV' },
+    { id: 'field-order', name: '字段排序' },
+    { id: 'data-remove', name: '数据删除' },
+    { id: 'field-complete', name: '字段补全' },
+    { id: 'cookie-json', name: 'Cookie转JSON' },
   ];
 
   const renderTool = () => {
@@ -63,23 +60,20 @@ const ToolsPage: React.FC = () => {
           <p className="text-gray-600">一站式在线工具集，提高您的工作效率</p>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md">
           {/* 工具标签栏 */}
-          <div className="border-b border-gray-200 bg-gray-50">
+          <div className="border-b border-gray-200">
             <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex p-1">
+              <div className="flex -mb-px">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`
-                      relative px-4 py-3 text-sm font-medium transition-all duration-200 mx-1 rounded-t-lg flex items-center
-                      ${activeTab === tab.id
-                        ? 'bg-white text-gray-800 shadow-sm border-t border-l border-r border-gray-200'
-                        : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'}
+                      tool-tab
+                      ${activeTab === tab.id ? 'tool-tab-active' : 'tool-tab-inactive'}
                     `}
                   >
-                    <span className="mr-2">{tab.icon}</span>
                     {tab.name}
                   </button>
                 ))}
@@ -90,31 +84,18 @@ const ToolsPage: React.FC = () => {
           {/* 工具内容区域 */}
           <div className="p-6">
             <div className="mb-6">
-              <div className="flex items-center">
-                <span className="p-2 rounded-full bg-gray-100 mr-3">
-                  {tabs.find(tab => tab.id === activeTab)?.icon}
-                </span>
-                <div>
-                  <h2 className="text-xl font-bold text-gray-800">
-                    {tabs.find(tab => tab.id === activeTab)?.name}
-                  </h2>
-                  <p className="text-sm text-gray-600 mt-1">
-                    {getToolDescription(activeTab)}
-                  </p>
-                </div>
+              <div>
+                <h2 className="text-xl font-bold text-gray-800 mb-1">
+                  {tabs.find(tab => tab.id === activeTab)?.name}
+                </h2>
+                <p className="text-sm text-gray-600">
+                  {getToolDescription(activeTab)}
+                </p>
               </div>
             </div>
             
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 transition-all duration-300 hover:border-[#009688]/30">
               {renderTool()}
-            </div>
-            
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 flex items-start">
-              <FaInfoCircle className="text-gray-500 mt-1 mr-3 flex-shrink-0" />
-              <div className="text-sm text-gray-600">
-                <p className="font-medium mb-1">使用提示</p>
-                <p>{getToolTips(activeTab)}</p>
-              </div>
             </div>
           </div>
         </div>

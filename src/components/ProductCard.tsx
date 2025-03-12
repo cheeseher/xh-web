@@ -90,7 +90,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               <span className="mx-1 text-gray-300">|</span>
               <span className="text-gray-600">已售 {sales}</span>
             </div>
-            <span className="text-xs text-gray-500">库存: {stock}</span>
+            <span className="text-xs text-[#009688]">库存: {stock}</span>
           </div>
           {batchPrice && (
             <div className="mt-1 text-xs text-blue-600">

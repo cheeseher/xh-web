@@ -190,3 +190,36 @@ body {
 .search-icon {
   @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400;
 }
+
+/* 工具页面样式 */
+.tool-input {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all;
+}
+
+.tool-textarea {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] resize-none transition-all;
+}
+
+.tool-button {
+  @apply px-4 py-2 bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all;
+}
+
+.tool-tip {
+  @apply bg-[#009688]/5 p-4 rounded-md border border-[#009688]/20;
+}
+
+.tool-icon {
+  @apply text-[#009688];
+}
+
+.tool-tab {
+  @apply mr-4 py-3 px-4 text-sm font-medium border-b-2 transition-all duration-200 flex items-center;
+}
+
+.tool-tab-active {
+  @apply border-[#009688] text-[#009688];
+}
+
+.tool-tab-inactive {
+  @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300;
+}

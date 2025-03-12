@@ -33,7 +33,7 @@ const Base64Tool: React.FC = () => {
         <label className="text-sm font-medium text-gray-700">{label}</label>
         <button
           onClick={() => value && navigator.clipboard.writeText(value)}
-          className="px-4 py-1 bg-primary text-white rounded hover:bg-primary-dark transition-colors"
+          className="px-4 py-1 bg-[#009688] text-white rounded hover:bg-[#00796b] transition-all text-sm"
         >
           点击复制
         </button>
@@ -58,7 +58,7 @@ const Base64Tool: React.FC = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="输入卡密中BASE64代码/字符"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32 resize-none"
+          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] h-32 resize-none transition-all"
         />
       </div>
 
@@ -69,16 +69,19 @@ const Base64Tool: React.FC = () => {
       {/* 操作按钮 */}
       <button
         onClick={handleConvert}
-        className="w-full px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-colors"
+        className="w-full px-4 py-2 bg-[#009688] text-white rounded hover:bg-[#00796b] transition-all"
       >
         编码/解码
       </button>
 
-      {/* 友情提示 */}
-      <div className="bg-yellow-50 p-4 rounded-md">
-        <h3 className="text-yellow-800 font-medium mb-2">友情提示</h3>
-        <ol className="text-sm text-yellow-700 list-decimal list-inside">
-          <li>BASE64编解码工具，如果出现错误或者没有结果，请检查是否正确。</li>
+      {/* 使用提示 */}
+      <div className="bg-[#009688]/5 border border-[#009688]/20 rounded-lg p-4">
+        <h3 className="text-gray-800 font-medium mb-2">使用提示</h3>
+        <ol className="text-sm text-gray-700 list-decimal list-inside space-y-2">
+          <li>在输入框中粘贴需要编码或解码的文本内容</li>
+          <li>点击"编码/解码"按钮，系统会自动判断并进行相应操作</li>
+          <li>编码结果和解码结果会同时显示，您可以根据需要使用任意一个</li>
+          <li>如果出现错误或没有结果，请检查输入内容是否正确</li>
         </ol>
       </div>
     </div>

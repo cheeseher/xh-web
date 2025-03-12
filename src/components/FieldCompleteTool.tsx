@@ -154,15 +154,15 @@ const FieldCompleteTool: React.FC = () => {
         </button>
       </div>
 
-      {/* 友情提示 */}
-      <div className="mt-6 bg-yellow-50 p-4 rounded-md">
-        <h3 className="text-yellow-800 font-medium mb-2">友情提示</h3>
-        <ul className="text-sm text-yellow-700 list-disc list-inside space-y-1">
-          <li>分隔符为每个字段间分割字符串。</li>
-          <li>字段索引从0开始，比如两个字段，就是：01，三个就是：012。</li>
-          <li>如果想删除某一字段，例如3个字段想删除第二个字段 就在新索引顺序输入：02。</li>
-          <li>字段顺序工具，目的是将原有字段顺序进行调整，以及只保留指定字段。</li>
-        </ul>
+      {/* 使用提示 */}
+      <div className="mt-6 bg-[#009688]/5 border border-[#009688]/20 rounded-lg p-4">
+        <h3 className="text-gray-800 font-medium mb-2">使用提示</h3>
+        <ol className="text-sm text-gray-700 list-decimal list-inside space-y-2">
+          <li>分隔符为每个字段间分割字符串</li>
+          <li>字段索引从0开始，比如两个字段，就是：01，三个就是：012</li>
+          <li>如果想删除某一字段，例如3个字段想删除第二个字段 就在新索引顺序输入：02</li>
+          <li>字段顺序工具，目的是将原有字段顺序进行调整，以及只保留指定字段</li>
+        </ol>
       </div>
     </div>
   );

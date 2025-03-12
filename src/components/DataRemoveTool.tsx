@@ -122,12 +122,14 @@ const DataRemoveTool: React.FC = () => {
         </button>
       </div>
 
-      {/* 友情提示 */}
-      <div className="mt-6 bg-yellow-50 p-4 rounded-md">
-        <h3 className="text-yellow-800 font-medium mb-2">友情提示</h3>
-        <ul className="text-sm text-yellow-700 list-disc list-inside space-y-1">
-          <li>数据剔除工具，如果出现错误或者没有结果，请检查是否正确。</li>
-        </ul>
+      {/* 使用提示 */}
+      <div className="mt-6 bg-[#009688]/5 border border-[#009688]/20 rounded-lg p-4">
+        <h3 className="text-gray-800 font-medium mb-2">使用提示</h3>
+        <ol className="text-sm text-gray-700 list-decimal list-inside space-y-2">
+          <li>数据剔除工具，如果出现错误或者没有结果，请检查是否正确</li>
+          <li>请确保要剔除的数据格式与原始数据格式一致</li>
+          <li>剔除操作不可逆，请在操作前确认数据正确性</li>
+        </ol>
       </div>
     </div>
   );

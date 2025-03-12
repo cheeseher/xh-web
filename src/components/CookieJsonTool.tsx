@@ -136,14 +136,15 @@ const CookieJsonTool: React.FC = () => {
         </div>
       </div>
       
-      <div className="bg-blue-50 p-4 rounded-md text-sm text-blue-700">
-        <h3 className="font-medium mb-2">使用说明</h3>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>输入网站域名，例如 "example.com"</li>
-          <li>粘贴从浏览器中复制的Cookie字符串</li>
-          <li>点击"转换为JSON"按钮生成标准JSON格式</li>
-          <li>生成的JSON可用于各类浏览器插件或自动化工具</li>
-        </ul>
+      {/* 使用提示 */}
+      <div className="mt-6 bg-[#009688]/5 border border-[#009688]/20 rounded-lg p-4">
+        <h3 className="text-gray-800 font-medium mb-2">使用提示</h3>
+        <ol className="text-sm text-gray-700 list-decimal list-inside space-y-2">
+          <li>在输入框中粘贴需要转换的Cookie字符串</li>
+          <li>点击"转换"按钮，系统会自动将Cookie转换为JSON格式</li>
+          <li>转换后的JSON数据会显示在结果框中，可以直接复制使用</li>
+          <li>如果出现错误或没有结果，请检查Cookie格式是否正确</li>
+        </ol>
       </div>
     </div>
   );
