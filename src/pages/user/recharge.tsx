@@ -168,7 +168,8 @@ const RechargePage: React.FC = () => {
                 <tr className="bg-gray-50">
                   <th className="px-4 py-3 text-left text-sm font-medium text-gray-600 rounded-l-lg">会员等级</th>
                   <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">充值折扣</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-600 rounded-r-lg">升级条件</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">升级条件</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-600 rounded-r-lg">会员介绍</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -176,21 +177,25 @@ const RechargePage: React.FC = () => {
                   <td className="px-4 py-3 text-sm text-gray-600">普通用户</td>
                   <td className="px-4 py-3 text-sm text-gray-600">无折扣</td>
                   <td className="px-4 py-3 text-sm text-gray-600">默认</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">基础账户，可使用所有基本功能</td>
                 </tr>
                 <tr className="hover:bg-gray-50/50">
                   <td className="px-4 py-3 text-sm text-gray-600">VIP1</td>
                   <td className="px-4 py-3 text-sm text-gray-600">9.5折</td>
                   <td className="px-4 py-3 text-sm text-gray-600">累计充值 500 元</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">享受9.5折优惠，优先客服支持</td>
                 </tr>
                 <tr className="hover:bg-gray-50/50">
                   <td className="px-4 py-3 text-sm text-gray-600">VIP2</td>
                   <td className="px-4 py-3 text-sm text-gray-600">9折</td>
                   <td className="px-4 py-3 text-sm text-gray-600">累计充值 1000 元</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">享受9折优惠，专属客服通道</td>
                 </tr>
                 <tr className="hover:bg-gray-50/50">
                   <td className="px-4 py-3 text-sm text-gray-600">VIP3</td>
                   <td className="px-4 py-3 text-sm text-gray-600">8折</td>
                   <td className="px-4 py-3 text-sm text-gray-600">累计充值 5000 元</td>
+                  <td className="px-4 py-3 text-sm text-gray-600">享受8折优惠，专属客服和定制服务</td>
                 </tr>
               </tbody>
             </table>
