@@ -124,10 +124,6 @@ const LoginPage: React.FC = () => {
                     记住我
                   </label>
                 </div>
-
-                <div className="text-sm text-gray-400">
-                  暂不支持忘记密码
-                </div>
               </div>
 
               <button

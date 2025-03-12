@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   FaEnvelope, FaInstagram, FaTwitter, FaFacebook, FaDiscord, 
   FaGoogle, FaMicrosoft, FaYahoo, FaTiktok, FaRobot, 
@@ -182,16 +183,19 @@ const AccountCard: React.FC<AccountCardProps> = ({
   return (
     <Link href={`/account/${id}`}>
       <div className="border border-gray-200 rounded-lg hover:shadow-md transition-all duration-300 overflow-hidden bg-white">
-        {/* 商品图片区域 */}
-        <div className={`${brandStyle.bgColor} p-4 flex items-center justify-center h-40 relative`}>
+        {/* 商品图片区域 - 保持为正方形 */}
+        <div className={`${brandStyle.bgColor} p-4 flex items-center justify-center aspect-square relative`}>
           {brandStyle.logo ? (
-            <img 
-              src={brandStyle.logo} 
-              alt={title}
-              className="max-h-28 max-w-full object-contain"
-            />
+            <div className="relative w-28 h-28">
+              <Image 
+                src={brandStyle.logo} 
+                alt={title}
+                fill
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
           ) : (
-            <div className={`flex items-center justify-center w-24 h-24 rounded-full ${brandStyle.shadow}`}>
+            <div className={`flex items-center justify-center w-20 h-20 rounded-full ${brandStyle.shadow}`}>
               {brandStyle.icon}
             </div>
           )}
@@ -200,31 +204,23 @@ const AccountCard: React.FC<AccountCardProps> = ({
         {/* 商品信息区域 */}
         <div className="p-3">
           {/* 商品标题 */}
-          <h3 className="text-sm font-medium text-gray-800 mb-2 line-clamp-2 h-10">
+          <h3 className="text-base font-medium text-gray-800 mb-2 line-clamp-2 min-h-[3rem]">
             {title}
           </h3>
           
           {/* 价格区域 */}
-          <div className="flex items-baseline space-x-1">
-            <span className="text-red-500 text-lg font-bold">¥{price.toFixed(2)}</span>
+          <div className="flex items-baseline space-x-2 mb-2">
+            <span className="text-red-500 text-xl font-bold">¥{price.toFixed(2)}</span>
             {originalPrice && (
-              <span className="text-xs text-gray-400 line-through">¥{originalPrice.toFixed(2)}</span>
+              <span className="text-sm text-gray-400 line-through">¥{originalPrice.toFixed(2)}</span>
             )}
           </div>
           
           {/* 库存和自动发货标签 */}
-          <div className="mt-2 flex justify-between items-center">
-            <span className="text-xs text-green-600">库存: {stock}</span>
-            <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">自动发货</span>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-green-600">库存: {stock}</span>
+            <span className="text-xs bg-green-500 text-white px-2 py-1 rounded">自动发货</span>
           </div>
-          
-          {/* 批发价格标签 */}
-          {batchPrice && (
-            <div className="mt-2 flex items-center">
-              <span className="text-xs text-gray-500 mr-1">批发价:</span>
-              <span className="text-xs bg-red-500 text-white px-2 py-0.5 rounded">{batchPrice}</span>
-            </div>
-          )}
         </div>
       </div>
     </Link>

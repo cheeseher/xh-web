@@ -9,21 +9,20 @@ import FieldCompleteTool from '../../components/FieldCompleteTool';
 import DataRemoveTool from '../../components/DataRemoveTool';
 import TwoFactorTool from '../../components/TwoFactorTool';
 import Base64Tool from '../../components/Base64Tool';
-import { FaTools, FaKey, FaCode, FaFileAlt, FaTable, FaSort, FaTrash, FaPlus, FaCookie } from 'react-icons/fa';
 
 const ToolsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('2fa');
 
   const tabs = [
-    { id: '2fa', name: '2FA验证码', icon: <FaKey className="mr-2" /> },
-    { id: 'base64', name: 'BASE64编解码', icon: <FaCode className="mr-2" /> },
-    { id: 'json-format', name: 'JSON格式化', icon: <FaFileAlt className="mr-2" /> },
-    { id: 'char-split', name: '字符分割', icon: <FaCode className="mr-2" /> },
-    { id: 'data-to-csv', name: '数据转CSV', icon: <FaTable className="mr-2" /> },
-    { id: 'field-order', name: '字段排序', icon: <FaSort className="mr-2" /> },
-    { id: 'data-remove', name: '数据删除', icon: <FaTrash className="mr-2" /> },
-    { id: 'field-complete', name: '字段补全', icon: <FaPlus className="mr-2" /> },
-    { id: 'cookie-json', name: 'Cookie转JSON', icon: <FaCookie className="mr-2" /> },
+    { id: '2fa', name: '2FA验证码' },
+    { id: 'base64', name: 'BASE64编解码' },
+    { id: 'json-format', name: 'JSON格式化' },
+    { id: 'char-split', name: '字符分割' },
+    { id: 'data-to-csv', name: '数据转CSV' },
+    { id: 'field-order', name: '字段排序' },
+    { id: 'data-remove', name: '数据删除' },
+    { id: 'field-complete', name: '字段补全' },
+    { id: 'cookie-json', name: 'Cookie转JSON' },
   ];
 
   const renderTool = () => {
@@ -55,10 +54,7 @@ const ToolsPage: React.FC = () => {
     <Layout title="实用工具 - 星海账户" showAlert={false} hidePageTitle={true}>
       <div className="max-w-5xl mx-auto py-6 px-4">
         {/* 页面标题 */}
-        <div className="flex items-center mb-6">
-          <div className="bg-primary p-1.5 rounded-full mr-2">
-            <FaTools className="text-white text-sm" />
-          </div>
+        <div className="mb-6">
           <h1 className="text-xl font-bold">实用工具</h1>
         </div>
         
@@ -66,19 +62,17 @@ const ToolsPage: React.FC = () => {
           {/* 工具标签栏 */}
           <div className="border-b border-gray-200">
             <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex p-1 bg-gray-50">
+              <div className="flex p-1">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center px-3 py-2 text-xs font-medium rounded-md transition-all duration-200 mx-1 ${
-                      activeTab === tab.id
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'bg-white text-gray-700 hover:bg-gray-100'
-                    }`}
+                    className="relative px-3 py-2 text-xs font-medium transition-all duration-200 mx-1"
                   >
-                    {tab.icon}
-                    <span className="ml-1">{tab.name}</span>
+                    {tab.name}
+                    {activeTab === tab.id && (
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></span>
+                    )}
                   </button>
                 ))}
               </div>

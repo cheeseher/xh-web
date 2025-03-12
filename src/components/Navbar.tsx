@@ -117,7 +117,7 @@ const Navbar: React.FC = () => {
                         className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         <FaHistory className="mr-2 text-gray-400" />
-                        我的记录
+                        消费记录
                       </Link>
                       <button
                         onClick={handleLogout}
@@ -216,7 +216,7 @@ const Navbar: React.FC = () => {
                         onClick={() => setIsMenuOpen(false)}
                       >
                         <FaHistory className="mr-2 text-gray-400" />
-                        我的记录
+                        消费记录
                       </Link>
                     </div>
                   </div>

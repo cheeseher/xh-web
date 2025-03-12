@@ -26,34 +26,37 @@ const FloatingButtons: React.FC = () => {
   };
 
   return (
-    <div className="fixed right-6 bottom-6 flex flex-col gap-4 z-50">
+    <div className="fixed right-6 bottom-6 flex flex-col gap-3 z-50">
       {/* 在线客服按钮 */}
       <button
         onClick={handleCustomerService}
-        className="bg-primary hover:bg-primary-dark text-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+        className="bg-primary hover:bg-primary-dark text-white rounded-full p-2.5 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
         aria-label="在线客服"
+        style={{ width: '40px', height: '40px' }}
       >
-        <FaComments className="text-2xl" />
+        <FaComments className="text-xl" />
       </button>
 
       {/* Telegram按钮 */}
       <button
         onClick={handleTelegram}
-        className="bg-[#0088cc] hover:bg-[#0077b5] text-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+        className="bg-[#0088cc] hover:bg-[#0077b5] text-white rounded-full p-2.5 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
         aria-label="Telegram"
+        style={{ width: '40px', height: '40px' }}
       >
-        <FaTelegramPlane className="text-2xl" />
+        <FaTelegramPlane className="text-xl" />
       </button>
 
       {/* 回到顶部按钮 */}
       <button
         onClick={handleScrollTop}
-        className={`bg-gray-700 hover:bg-gray-800 text-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center ${
+        className={`bg-gray-700 hover:bg-gray-800 text-white rounded-full p-2.5 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center ${
           showScrollTop ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
         aria-label="回到顶部"
+        style={{ width: '40px', height: '40px' }}
       >
-        <FaArrowUp className="text-2xl" />
+        <FaArrowUp className="text-xl" />
       </button>
     </div>
   );

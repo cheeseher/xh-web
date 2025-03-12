@@ -64,10 +64,10 @@ const OrderQueryPage: React.FC = () => {
             
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                查询邮箱
+                查询密码
               </label>
               <input
-                type="email"
+                type="password"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

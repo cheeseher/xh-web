@@ -8,8 +8,8 @@ const AboutPage: React.FC = () => {
       <div className="max-w-4xl mx-auto py-8 px-4">
         <h1 className="text-2xl font-bold mb-6">关于我们</h1>
         
-        <div className="bg-white border border-gray-200 rounded-md p-6 mb-6">
-          <h2 className="text-xl font-bold mb-4">联系方式</h2>
+        <div className="mb-8">
+          <h2 className="text-xl font-bold mb-4 pb-2 border-b border-gray-200">联系方式</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li>
               在线客服: <span className="text-blue-500">网页在线客服</span> (网页右下角图标)
@@ -23,8 +23,8 @@ const AboutPage: React.FC = () => {
           </ul>
         </div>
         
-        <div className="bg-white border border-gray-200 rounded-md p-6 mb-6">
-          <h2 className="text-xl font-bold mb-4">售后咨询</h2>
+        <div className="mb-8">
+          <h2 className="text-xl font-bold mb-4 pb-2 border-b border-gray-200">售后咨询</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li>
               客服在线时间: <span className="text-blue-500">09:30 - 2:30（次日）</span> 非在线时间回复需等明天，次日会第一时间回复。
@@ -44,8 +44,8 @@ const AboutPage: React.FC = () => {
           </ul>
         </div>
         
-        <div className="bg-white border border-gray-200 rounded-md p-6">
-          <h2 className="text-xl font-bold mb-4">服务协议</h2>
+        <div>
+          <h2 className="text-xl font-bold mb-4 pb-2 border-b border-gray-200">服务协议</h2>
           <ol className="list-decimal pl-6 space-y-2">
             <li>本站不经营/提供/注册任何（中国）科技平台账号业务。</li>
             <li>本站所有账号为全球（非中国）各科技平台账号，中国地区无法使用，谨防区客户不要购买。</li>

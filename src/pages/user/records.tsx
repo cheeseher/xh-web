@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import { useUser } from '../../contexts/UserContext';
-import { FaShoppingBag, FaWallet, FaHistory, FaEye } from 'react-icons/fa';
+import { FaShoppingBag, FaWallet, FaHistory, FaEye, FaTimes, FaCopy } from 'react-icons/fa';
 
 // 模拟订单记录数据
 const mockOrderRecords = [
@@ -13,7 +13,10 @@ const mockOrderRecords = [
     quantity: 1,
     totalAmount: 50,
     orderTime: '2024-03-21 15:30:00',
-    status: 'success'
+    status: 'success',
+    email: 'user@example.com',
+    password: '123456',
+    cardInfo: 'gmail123@gmail.com----Password123----backup@example.com'
   },
   {
     orderNumber: 'ORD202403210002',
@@ -22,7 +25,10 @@ const mockOrderRecords = [
     quantity: 2,
     totalAmount: 90,
     orderTime: '2024-03-21 16:45:00',
-    status: 'pending'
+    status: 'pending',
+    email: 'user2@example.com',
+    password: '654321',
+    cardInfo: 'outlook123@outlook.com----Password456----backup2@example.com'
   },
   {
     orderNumber: 'ORD202403210003',
@@ -31,7 +37,10 @@ const mockOrderRecords = [
     quantity: 1,
     totalAmount: 80,
     orderTime: '2024-03-21 18:20:00',
-    status: 'failed'
+    status: 'failed',
+    email: 'user3@example.com',
+    password: 'abcdef',
+    cardInfo: 'instagram123@gmail.com----Password789----backup3@example.com'
   }
 ];
 
@@ -95,6 +104,9 @@ const RecordsPage: React.FC = () => {
   const router = useRouter();
   const { user } = useUser();
   const [activeTab, setActiveTab] = useState('order');
+  const [showOrderModal, setShowOrderModal] = useState(false);
+  const [currentOrder, setCurrentOrder] = useState<any>(null);
+  const [copySuccess, setCopySuccess] = useState('');
 
   const getStatusText = (status: string) => {
     switch (status) {
@@ -123,7 +135,22 @@ const RecordsPage: React.FC = () => {
   };
 
   const handleViewOrder = (orderNumber: string) => {
-    router.push(`/user/orders/${orderNumber}`);
+    const order = mockOrderRecords.find(order => order.orderNumber === orderNumber);
+    if (order) {
+      setCurrentOrder(order);
+      setShowOrderModal(true);
+    }
+  };
+
+  const handleCopyText = (text: string) => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        setCopySuccess('复制成功!');
+        setTimeout(() => setCopySuccess(''), 2000);
+      })
+      .catch(err => {
+        console.error('复制失败: ', err);
+      });
   };
 
   const handleViewRelatedOrder = (orderId: string) => {
@@ -426,6 +453,97 @@ const RecordsPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* 订单详情弹窗 */}
+      {showOrderModal && currentOrder && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+            <div className="flex justify-between items-center p-4 border-b border-gray-200">
+              <h3 className="text-lg font-medium">订单详情</h3>
+              <button 
+                onClick={() => setShowOrderModal(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <FaTimes className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <div className="p-4 space-y-4">
+              <div>
+                <div className="text-sm text-gray-500 mb-1">订单号</div>
+                <div className="flex items-center">
+                  <span className="text-gray-800">{currentOrder.orderNumber}</span>
+                  <button 
+                    onClick={() => handleCopyText(currentOrder.orderNumber)}
+                    className="ml-2 text-primary hover:text-primary-dark"
+                  >
+                    <FaCopy className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-sm text-gray-500 mb-1">接收账户邮箱</div>
+                <div className="flex items-center">
+                  <span className="text-gray-800">{currentOrder.email}</span>
+                  <button 
+                    onClick={() => handleCopyText(currentOrder.email)}
+                    className="ml-2 text-primary hover:text-primary-dark"
+                  >
+                    <FaCopy className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-sm text-gray-500 mb-1">查询密码</div>
+                <div className="flex items-center">
+                  <span className="text-gray-800">{currentOrder.password}</span>
+                  <button 
+                    onClick={() => handleCopyText(currentOrder.password)}
+                    className="ml-2 text-primary hover:text-primary-dark"
+                  >
+                    <FaCopy className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-sm text-gray-500 mb-1">卡密信息</div>
+                <div className="bg-gray-50 p-3 rounded-md border border-gray-200">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-gray-500"></span>
+                    <button 
+                      onClick={() => handleCopyText(currentOrder.cardInfo)}
+                      className="text-primary hover:text-primary-dark"
+                    >
+                      <FaCopy className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="text-sm text-gray-800 break-all font-mono">
+                    {currentOrder.cardInfo}
+                  </div>
+                </div>
+              </div>
+              
+              {copySuccess && (
+                <div className="text-center text-green-500 text-sm mt-2">
+                  {copySuccess}
+                </div>
+              )}
+            </div>
+            
+            <div className="border-t border-gray-200 p-4 flex justify-end">
+              <button
+                onClick={() => setShowOrderModal(false)}
+                className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+              >
+                关闭
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 };
