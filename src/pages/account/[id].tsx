@@ -134,18 +134,18 @@ const AccountDetailPage: React.FC = () => {
 
   return (
     <Layout title={accountData.title + ' - 星海账户'}>
-      <div className="max-w-6xl mx-auto py-4 px-4">
+      <div className="max-w-6xl mx-auto py-4 px-2 sm:px-4">
         {/* 面包屑导航 */}
-        <div className="mb-4 flex items-center justify-between">
-          <div className="flex items-center text-sm">
-            <span className="bg-[#009688] text-white text-xs px-2 py-1 rounded-md mr-2">自动发货</span>
+        <div className="mb-4">
+          <div className="flex items-center text-sm mb-2">
             <Link href="/" className="text-gray-600 hover:text-gray-800">谷歌邮箱</Link>
             <span className="text-gray-400 mx-2">›</span>
             <span className="text-gray-700">{accountData.title}</span>
           </div>
-          <div className="flex items-center text-sm">
+          <div className="flex items-center text-sm space-x-3">
+            <span className="bg-[#009688] text-white text-xs px-2 py-1 rounded-md">自动发货</span>
             <span className="text-gray-700 font-medium">库存: <span className="text-green-600">{accountData.stock}</span></span>
-            <span className="mx-3 text-gray-300">|</span>
+            <span className="text-gray-300">|</span>
             <span 
               className="text-gray-700 hover:text-gray-900 cursor-pointer hover:underline flex items-center" 
               onClick={() => setShowNotifyModal(true)}
