@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
   );
 
   return (
-    <header className="bg-gray-800 shadow-md sticky top-0 z-50">
+    <header className="bg-gray-800 shadow-md z-40">
       {/* 主导航栏 */}
       <div className="max-w-6xl mx-auto px-3 sm:px-6">
         <div className="flex justify-between items-center h-16">

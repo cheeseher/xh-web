@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -25,6 +25,12 @@ const Layout: React.FC<LayoutProps> = ({
   const router = useRouter();
   const isHomePage = router.pathname === '/';
   const [showTip, setShowTip] = useState(true);
+  
+  console.log('Layout渲染:', { isHomePage, showAlert, showTip, pathname: router.pathname });
+
+  useEffect(() => {
+    setShowTip(true);
+  }, []);
 
   return (
     <>
@@ -35,45 +41,45 @@ const Layout: React.FC<LayoutProps> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex flex-col min-h-screen">
-        <Navbar />
-        
         {/* 只在首页显示提示信息 - 新设计 */}
         {isHomePage && showAlert && showTip && (
-          <div className="bg-gray-50 border-b border-gray-200">
-            <div className="container-custom py-2">
+          <div className="bg-[#009688]/10 border-b border-[#009688] py-3 transition-all duration-300">
+            <div className="container-custom">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2 flex-1">
-                  <FaInfoCircle className="text-primary text-sm flex-shrink-0" />
-                  <p className="text-gray-700 text-xs md:text-sm truncate">
-                    <span className="font-medium text-primary">提示：</span>
+                  <FaInfoCircle className="text-[#009688] text-base flex-shrink-0" />
+                  <p className="text-gray-700 text-sm md:text-base">
+                    <span className="font-medium text-[#009688]">提示：</span>
                     购买本站商品须遵守法律法规及平台规则，非法用途后果自负
                   </p>
                 </div>
                 <div className="flex items-center space-x-3 ml-2">
                   <div className="hidden md:flex items-center">
-                    <Link href="#" className="text-xs text-gray-600 hover:text-primary flex items-center">
-                      <FaHeadset className="text-primary mr-1 text-xs" />
+                    <Link href="#" className="text-xs text-gray-600 hover:text-[#009688] flex items-center transition-colors duration-200">
+                      <FaHeadset className="text-[#009688] mr-1 text-xs" />
                       <span>网页客服</span>
                     </Link>
                     <span className="mx-2 text-gray-300">|</span>
-                    <Link href="#" className="text-xs text-gray-600 hover:text-[#0088cc] flex items-center">
+                    <Link href="#" className="text-xs text-gray-600 hover:text-[#0088cc] flex items-center transition-colors duration-200">
                       <FaTelegramPlane className="text-[#0088cc] mr-1 text-xs" />
                       <span>飞机客服</span>
                     </Link>
                   </div>
                   <button 
                     onClick={() => setShowTip(false)}
-                    className="text-gray-400 hover:text-gray-600 p-1"
+                    className="text-gray-400 hover:text-gray-600 p-1 transition-colors duration-200"
                     aria-label="关闭提示"
                   >
-                    <FaTimes size={12} />
+                    <FaTimes size={14} />
                   </button>
                 </div>
               </div>
             </div>
           </div>
         )}
-
+        
+        <Navbar />
+        
         {/* 页面标题 - 非首页显示，且hidePageTitle为false时显示 */}
         {!isHomePage && !hidePageTitle && (
           <div className="bg-white border-b">

@@ -4,6 +4,7 @@
 
 :root {
   --primary-color: #009688;
+  --primary-color-rgb: 0, 150, 136; /* RGB格式的主题色 */
   --primary-dark: #00796b;
   --primary-light: #26a69a;
   --success-color: #10b981;

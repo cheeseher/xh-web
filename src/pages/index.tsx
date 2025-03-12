@@ -4,7 +4,7 @@ import AccountCard from '../components/AccountCard';
 import CategoryIndex from '../components/CategoryIndex';
 import { accounts, categories } from '../utils/mockData';
 import Link from 'next/link';
-import { FaCheckCircle, FaClock, FaHeadset, FaSearch, FaChevronRight, FaShieldAlt, FaBolt, FaRegThumbsUp, FaTimes } from 'react-icons/fa';
+import { FaCheckCircle, FaClock, FaHeadset, FaSearch, FaChevronRight, FaShieldAlt, FaBolt, FaRegThumbsUp } from 'react-icons/fa';
 import Image from 'next/image';
 
 // 按照指定顺序排列分类
@@ -34,7 +34,6 @@ const orderedCategories = [
 const HomePage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('');
-  const [showAlert, setShowAlert] = useState(true);
   const categoryRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
   // 处理分类数据
@@ -123,41 +122,19 @@ const HomePage: React.FC = () => {
   const sectionTitleStyle = "text-xl font-bold text-gray-800 border-l-4 border-indigo-600 pl-3";
 
   return (
-    <Layout>
+    <Layout showAlert={true}>
       <div className="bg-gray-100 min-h-screen">
-        {/* 提醒区域 */}
-        {showAlert && (
-          <div className="bg-[#009688]/10 border-l-4 border-[#009688] px-4 py-3 relative">
-            <div className="flex items-center">
-              <div className="flex-shrink-0 text-[#009688]">
-                <FaCheckCircle className="h-5 w-5" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm text-gray-700">
-                  欢迎来到星海账号商城！我们提供优质的账号服务，支持批发和零售。
-                </p>
-              </div>
-              <button 
-                onClick={() => setShowAlert(false)}
-                className="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700"
-              >
-                <FaTimes className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        )}
-        
         {/* 搜索栏 - 大面积深色带渐变效果 */}
-        <div className={`${showAlert ? '' : '-mt-4 sm:-mt-8'} px-3 sm:px-6 pt-16 pb-8 sm:pt-20 sm:pb-12 bg-gradient-to-b from-gray-900 to-gray-800 shadow-md`}>
+        <div className="px-3 sm:px-6 pt-12 pb-8 sm:pt-16 sm:pb-12 bg-gradient-to-b from-gray-900 to-gray-800 shadow-md">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-6">寻找优质账号，从这里开始</h2>
             <div className="relative max-w-xl mx-auto">
               <input
                 type="text"
-                placeholder="搜索账号类型、品牌或关键词..."
+                placeholder="搜索商品..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 pr-10 rounded-2xl border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#009688] shadow-lg"
+                className="w-full px-4 py-3 pr-10 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 shadow-lg"
               />
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                 <FaSearch className="text-gray-500" />
@@ -180,7 +157,6 @@ const HomePage: React.FC = () => {
               >
                 <div className="flex items-center justify-between mb-3">
                   <h2 className="text-lg sm:text-xl font-bold text-gray-800 border-l-4 border-gray-700 pl-2">{categoryAccount.category.name}</h2>
-                  <span className="text-sm text-gray-500 hidden sm:block">{categoryAccount.category.description}</span>
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
