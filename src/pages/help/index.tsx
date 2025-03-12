@@ -71,7 +71,7 @@ const FaqPage: React.FC = () => {
 
   return (
     <Layout title="常见问题 - 星海账户" description="浏览星海账户的常见问题解答" hidePageTitle={true}>
-      <div className="max-w-4xl mx-auto py-8 px-4">
+      <div className="max-w-4xl mx-auto py-8 px-2 sm:px-4">
         <h1 className="text-2xl font-bold mb-6">常见问题</h1>
 
         {/* 标签栏样式的分类 */}
@@ -94,7 +94,7 @@ const FaqPage: React.FC = () => {
         </div>
 
         {/* 显示当前选中分类的内容 */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6 mt-6 sm:mt-4">
           {faqCategories.find(cat => cat.id === activeCategory)?.items.map((item) => (
             <Link
               key={item.id}

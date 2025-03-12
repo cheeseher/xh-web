@@ -85,7 +85,7 @@ const ToolsPage: React.FC = () => {
           </div>
 
           {/* 工具内容区域 */}
-          <div className="p-3 sm:p-6">
+          <div className="p-3 sm:p-6 pt-6 sm:pt-6">
             <div className="mb-4 sm:mb-6">
               <div>
                 <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-1">

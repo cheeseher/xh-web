@@ -28,7 +28,7 @@ const PasswordPage: React.FC = () => {
 
   return (
     <Layout title="修改密码 - 星海账户">
-      <div className="container-custom py-8">
+      <div className="container-custom py-8 px-2 sm:px-4">
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             {/* 头部信息 */}

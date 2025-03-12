@@ -43,7 +43,7 @@ const RechargePage: React.FC = () => {
 
   return (
     <Layout title="账户充值 - 星海账户" hidePageTitle={true}>
-      <div className="max-w-4xl mx-auto py-8 px-4">
+      <div className="max-w-4xl mx-auto py-8 px-2 sm:px-4">
         {/* 页面头部 */}
         <div className="flex items-center mb-6">
           <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">

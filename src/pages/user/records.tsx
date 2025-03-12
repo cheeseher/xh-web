@@ -170,7 +170,7 @@ const RecordsPage: React.FC = () => {
 
   return (
     <Layout title="消费记录 - 星海账户">
-      <div className="container-custom py-8">
+      <div className="container-custom py-8 px-2 sm:px-4">
         <div className="max-w-6xl mx-auto">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             {/* 头部信息 */}
@@ -226,7 +226,7 @@ const RecordsPage: React.FC = () => {
             </div>
 
             {/* 内容区域 */}
-            <div className="p-6">
+            <div className="p-6 pt-8 sm:pt-6">
               {/* 订单记录 */}
               {activeTab === 'order' && (
                 <>
