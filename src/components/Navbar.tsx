@@ -107,13 +107,8 @@ const Navbar: React.FC = () => {
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                       <div className="px-4 py-2 border-b border-gray-100">
                         <p className="text-sm font-medium text-gray-900">{user.username}</p>
-                        <div className="flex items-center space-x-2">
-                          <p className="text-xs text-gray-500">余额: ¥{user.balance.toFixed(2)}</p>
-                          {user.vipLevel > 0 && (
-                            <div className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-xs font-medium">
-                              VIP{user.vipLevel}
-                            </div>
-                          )}
+                        <div className="flex items-center justify-between mt-1">
+                          <p className="text-base font-semibold text-primary">余额：¥{user.balance.toFixed(2)}</p>
                         </div>
                       </div>
                       <Link

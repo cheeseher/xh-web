@@ -45,13 +45,13 @@ const RechargePage: React.FC = () => {
     <Layout title="账户充值 - 星海账户" hidePageTitle={true}>
       <div className="max-w-4xl mx-auto py-8 px-4">
         {/* 页面头部 */}
-        <div className="bg-gradient-to-r from-primary to-primary-dark p-6 rounded-xl text-white mb-6">
-          <div className="flex items-center space-x-3">
-            <FaWallet className="text-2xl opacity-90" />
-            <div>
-              <h1 className="text-2xl font-bold">账户充值</h1>
-              <p className="mt-1 text-sm text-white/90">为您的账户充值以享受更多服务</p>
-            </div>
+        <div className="flex items-center mb-6">
+          <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">
+            <FaWallet className="text-primary text-xl" />
+          </div>
+          <div className="ml-4">
+            <h1 className="text-xl font-bold text-gray-900">账户充值</h1>
+            <p className="text-sm text-gray-500">为账户余额充值</p>
           </div>
         </div>
 

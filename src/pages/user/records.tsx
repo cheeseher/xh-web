@@ -174,58 +174,54 @@ const RecordsPage: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             {/* 头部信息 */}
-            <div className="bg-gradient-to-r from-primary to-primary-dark p-8 text-white">
-              <div className="flex items-center space-x-4">
-                {activeTab === 'order' && <FaShoppingBag className="text-3xl opacity-90" />}
-                {activeTab === 'recharge' && <FaWallet className="text-3xl opacity-90" />}
-                {activeTab === 'bill' && <FaHistory className="text-3xl opacity-90" />}
-                <div>
-                  <h1 className="text-3xl font-bold">消费记录</h1>
-                  <p className="mt-2 text-lg text-white/90">
-                    {activeTab === 'order' && '查看您的购买历史记录'}
-                    {activeTab === 'recharge' && '查看您的账户充值历史'}
-                    {activeTab === 'bill' && '查看您的账户收支明细'}
-                  </p>
+            <div className="px-6 pt-6 pb-4">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">
+                  <FaHistory className="text-primary text-xl" />
+                </div>
+                <div className="ml-4">
+                  <h1 className="text-xl font-bold text-gray-900">消费记录</h1>
+                  <p className="text-sm text-gray-500">查看您的账户交易记录</p>
                 </div>
               </div>
-            </div>
 
-            {/* 标签栏 */}
-            <div className="border-b border-gray-200">
-              <div className="flex px-6">
-                <button
-                  onClick={() => setActiveTab('order')}
-                  className={`px-8 py-4 text-sm font-medium transition-colors relative ${
-                    activeTab === 'order'
-                      ? 'border-b-2 border-primary text-primary'
-                      : 'text-gray-600 hover:text-primary'
-                  }`}
-                >
-                  订单记录
-                  {activeTab === 'order' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></div>}
-                </button>
-                <button
-                  onClick={() => setActiveTab('recharge')}
-                  className={`px-8 py-4 text-sm font-medium transition-colors relative ${
-                    activeTab === 'recharge'
-                      ? 'border-b-2 border-primary text-primary'
-                      : 'text-gray-600 hover:text-primary'
-                  }`}
-                >
-                  充值记录
-                  {activeTab === 'recharge' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></div>}
-                </button>
-                <button
-                  onClick={() => setActiveTab('bill')}
-                  className={`px-8 py-4 text-sm font-medium transition-colors relative ${
-                    activeTab === 'bill'
-                      ? 'border-b-2 border-primary text-primary'
-                      : 'text-gray-600 hover:text-primary'
-                  }`}
-                >
-                  账单记录
-                  {activeTab === 'bill' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></div>}
-                </button>
+              {/* 标签栏 */}
+              <div className="border-b border-gray-200">
+                <div className="flex px-6">
+                  <button
+                    onClick={() => setActiveTab('order')}
+                    className={`px-8 py-4 text-sm font-medium transition-colors relative ${
+                      activeTab === 'order'
+                        ? 'border-b-2 border-primary text-primary'
+                        : 'text-gray-600 hover:text-primary'
+                    }`}
+                  >
+                    订单记录
+                    {activeTab === 'order' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></div>}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('recharge')}
+                    className={`px-8 py-4 text-sm font-medium transition-colors relative ${
+                      activeTab === 'recharge'
+                        ? 'border-b-2 border-primary text-primary'
+                        : 'text-gray-600 hover:text-primary'
+                    }`}
+                  >
+                    充值记录
+                    {activeTab === 'recharge' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></div>}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('bill')}
+                    className={`px-8 py-4 text-sm font-medium transition-colors relative ${
+                      activeTab === 'bill'
+                        ? 'border-b-2 border-primary text-primary'
+                        : 'text-gray-600 hover:text-primary'
+                    }`}
+                  >
+                    账单记录
+                    {activeTab === 'bill' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></div>}
+                  </button>
+                </div>
               </div>
             </div>
 
