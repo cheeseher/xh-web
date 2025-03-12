@@ -136,7 +136,7 @@ const RecordsPage: React.FC = () => {
 
   const handleViewOrder = (orderNumber: string) => {
     const order = mockOrderRecords.find(order => order.orderNumber === orderNumber);
-    if (order) {
+    if (order && order.status === 'success') {
       setCurrentOrder(order);
       setShowOrderModal(true);
     }
@@ -169,19 +169,19 @@ const RecordsPage: React.FC = () => {
   }
 
   return (
-    <Layout title="我的记录 - 星海账户">
+    <Layout title="消费记录 - 星海账户">
       <div className="container-custom py-8">
         <div className="max-w-6xl mx-auto">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             {/* 头部信息 */}
-            <div className="bg-gradient-to-r from-primary to-primary-dark p-6 text-white">
-              <div className="flex items-center space-x-3">
-                {activeTab === 'order' && <FaShoppingBag className="text-2xl" />}
-                {activeTab === 'recharge' && <FaWallet className="text-2xl" />}
-                {activeTab === 'bill' && <FaHistory className="text-2xl" />}
+            <div className="bg-gradient-to-r from-primary to-primary-dark p-8 text-white">
+              <div className="flex items-center space-x-4">
+                {activeTab === 'order' && <FaShoppingBag className="text-3xl opacity-90" />}
+                {activeTab === 'recharge' && <FaWallet className="text-3xl opacity-90" />}
+                {activeTab === 'bill' && <FaHistory className="text-3xl opacity-90" />}
                 <div>
-                  <h1 className="text-2xl font-bold">我的记录</h1>
-                  <p className="mt-1 text-white/80">
+                  <h1 className="text-3xl font-bold">消费记录</h1>
+                  <p className="mt-2 text-lg text-white/90">
                     {activeTab === 'order' && '查看您的购买历史记录'}
                     {activeTab === 'recharge' && '查看您的账户充值历史'}
                     {activeTab === 'bill' && '查看您的账户收支明细'}
@@ -192,36 +192,39 @@ const RecordsPage: React.FC = () => {
 
             {/* 标签栏 */}
             <div className="border-b border-gray-200">
-              <div className="flex">
+              <div className="flex px-6">
                 <button
                   onClick={() => setActiveTab('order')}
-                  className={`px-6 py-3 text-sm font-medium transition-colors ${
+                  className={`px-8 py-4 text-sm font-medium transition-colors relative ${
                     activeTab === 'order'
                       ? 'border-b-2 border-primary text-primary'
-                      : 'text-gray-700 hover:text-primary'
+                      : 'text-gray-600 hover:text-primary'
                   }`}
                 >
                   订单记录
+                  {activeTab === 'order' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></div>}
                 </button>
                 <button
                   onClick={() => setActiveTab('recharge')}
-                  className={`px-6 py-3 text-sm font-medium transition-colors ${
+                  className={`px-8 py-4 text-sm font-medium transition-colors relative ${
                     activeTab === 'recharge'
                       ? 'border-b-2 border-primary text-primary'
-                      : 'text-gray-700 hover:text-primary'
+                      : 'text-gray-600 hover:text-primary'
                   }`}
                 >
                   充值记录
+                  {activeTab === 'recharge' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></div>}
                 </button>
                 <button
                   onClick={() => setActiveTab('bill')}
-                  className={`px-6 py-3 text-sm font-medium transition-colors ${
+                  className={`px-8 py-4 text-sm font-medium transition-colors relative ${
                     activeTab === 'bill'
                       ? 'border-b-2 border-primary text-primary'
-                      : 'text-gray-700 hover:text-primary'
+                      : 'text-gray-600 hover:text-primary'
                   }`}
                 >
                   账单记录
+                  {activeTab === 'bill' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"></div>}
                 </button>
               </div>
             </div>
@@ -232,40 +235,40 @@ const RecordsPage: React.FC = () => {
               {activeTab === 'order' && (
                 <>
                   {mockOrderRecords.length > 0 ? (
-                    <div className="overflow-x-auto">
+                    <div className="overflow-x-auto rounded-lg border border-gray-200">
                       <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
                           <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               订单号
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               商品名
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               单价
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               数量
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               金额
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               下单时间
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               状态
                             </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                               操作
                             </th>
                           </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
                           {mockOrderRecords.map((order) => (
-                            <tr key={order.orderNumber} className="hover:bg-gray-50">
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <tr key={order.orderNumber} className="hover:bg-gray-50 transition-colors">
+                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 {order.orderNumber}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -284,18 +287,25 @@ const RecordsPage: React.FC = () => {
                                 {order.orderTime}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap">
-                                <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusStyle(order.status)}`}>
+                                <span className={`px-3 py-1.5 inline-flex items-center justify-center text-xs font-medium rounded-full ${getStatusStyle(order.status)}`}>
                                   {getStatusText(order.status)}
                                 </span>
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <button
-                                  onClick={() => handleViewOrder(order.orderNumber)}
-                                  className="text-primary hover:text-primary-dark flex items-center"
-                                >
-                                  <FaEye className="mr-1" />
-                                  查看
-                                </button>
+                                {order.status === 'success' ? (
+                                  <button
+                                    onClick={() => handleViewOrder(order.orderNumber)}
+                                    className="text-primary hover:text-primary-dark flex items-center transition-colors"
+                                  >
+                                    <FaEye className="mr-1" />
+                                    查看
+                                  </button>
+                                ) : (
+                                  <span className="text-gray-400 flex items-center cursor-not-allowed">
+                                    <FaEye className="mr-1" />
+                                    查看
+                                  </span>
+                                )}
                               </td>
                             </tr>
                           ))}
@@ -303,9 +313,9 @@ const RecordsPage: React.FC = () => {
                       </table>
                     </div>
                   ) : (
-                    <div className="text-center py-8">
-                      <FaShoppingBag className="mx-auto text-4xl text-gray-400" />
-                      <p className="mt-4 text-gray-500">暂无订单记录</p>
+                    <div className="text-center py-12 bg-gray-50 rounded-lg">
+                      <FaShoppingBag className="mx-auto text-5xl text-gray-400 mb-4" />
+                      <p className="text-gray-500 text-lg">暂无订单记录</p>
                     </div>
                   )}
                 </>
@@ -457,25 +467,25 @@ const RecordsPage: React.FC = () => {
       {/* 订单详情弹窗 */}
       {showOrderModal && currentOrder && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
-            <div className="flex justify-between items-center p-4 border-b border-gray-200">
-              <h3 className="text-lg font-medium">订单详情</h3>
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+            <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200 bg-gray-50">
+              <h3 className="text-lg font-semibold text-gray-900">订单详情</h3>
               <button 
                 onClick={() => setShowOrderModal(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-400 hover:text-gray-600 transition-colors"
               >
                 <FaTimes className="h-5 w-5" />
               </button>
             </div>
             
-            <div className="p-4 space-y-4">
+            <div className="p-6 space-y-6">
               <div>
-                <div className="text-sm text-gray-500 mb-1">订单号</div>
-                <div className="flex items-center">
-                  <span className="text-gray-800">{currentOrder.orderNumber}</span>
+                <div className="text-sm text-gray-500 mb-2">订单号</div>
+                <div className="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <span className="text-gray-900 font-medium">{currentOrder.orderNumber}</span>
                   <button 
                     onClick={() => handleCopyText(currentOrder.orderNumber)}
-                    className="ml-2 text-primary hover:text-primary-dark"
+                    className="ml-2 text-primary hover:text-primary-dark transition-colors"
                   >
                     <FaCopy className="h-4 w-4" />
                   </button>
@@ -483,12 +493,12 @@ const RecordsPage: React.FC = () => {
               </div>
               
               <div>
-                <div className="text-sm text-gray-500 mb-1">接收账户邮箱</div>
-                <div className="flex items-center">
-                  <span className="text-gray-800">{currentOrder.email}</span>
+                <div className="text-sm text-gray-500 mb-2">接收账户邮箱</div>
+                <div className="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <span className="text-gray-900 font-medium">{currentOrder.email}</span>
                   <button 
                     onClick={() => handleCopyText(currentOrder.email)}
-                    className="ml-2 text-primary hover:text-primary-dark"
+                    className="ml-2 text-primary hover:text-primary-dark transition-colors"
                   >
                     <FaCopy className="h-4 w-4" />
                   </button>
@@ -496,12 +506,12 @@ const RecordsPage: React.FC = () => {
               </div>
               
               <div>
-                <div className="text-sm text-gray-500 mb-1">查询密码</div>
-                <div className="flex items-center">
-                  <span className="text-gray-800">{currentOrder.password}</span>
+                <div className="text-sm text-gray-500 mb-2">查询密码</div>
+                <div className="flex items-center bg-gray-50 p-3 rounded-lg">
+                  <span className="text-gray-900 font-medium">{currentOrder.password}</span>
                   <button 
                     onClick={() => handleCopyText(currentOrder.password)}
-                    className="ml-2 text-primary hover:text-primary-dark"
+                    className="ml-2 text-primary hover:text-primary-dark transition-colors"
                   >
                     <FaCopy className="h-4 w-4" />
                   </button>
@@ -509,34 +519,34 @@ const RecordsPage: React.FC = () => {
               </div>
               
               <div>
-                <div className="text-sm text-gray-500 mb-1">卡密信息</div>
-                <div className="bg-gray-50 p-3 rounded-md border border-gray-200">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-gray-500"></span>
+                <div className="text-sm text-gray-500 mb-2">卡密信息</div>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs text-gray-500">请妥善保管以下信息</span>
                     <button 
                       onClick={() => handleCopyText(currentOrder.cardInfo)}
-                      className="text-primary hover:text-primary-dark"
+                      className="text-primary hover:text-primary-dark transition-colors"
                     >
                       <FaCopy className="h-4 w-4" />
                     </button>
                   </div>
-                  <div className="text-sm text-gray-800 break-all font-mono">
+                  <div className="text-sm text-gray-900 break-all font-mono bg-white p-3 rounded border border-gray-200">
                     {currentOrder.cardInfo}
                   </div>
                 </div>
               </div>
               
               {copySuccess && (
-                <div className="text-center text-green-500 text-sm mt-2">
+                <div className="text-center text-green-500 text-sm bg-green-50 py-2 px-4 rounded-lg">
                   {copySuccess}
                 </div>
               )}
             </div>
             
-            <div className="border-t border-gray-200 p-4 flex justify-end">
+            <div className="border-t border-gray-200 p-6 bg-gray-50">
               <button
                 onClick={() => setShowOrderModal(false)}
-                className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+                className="w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors font-medium"
               >
                 关闭
               </button>

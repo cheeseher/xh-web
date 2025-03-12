@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
   };
 
   const VipBadge = () => (
-    <div className="px-2 py-0.5 bg-yellow-400/20 text-yellow-700 rounded text-sm font-medium">
+    <div className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium">
       VIP{user?.vipLevel}
     </div>
   );
@@ -95,7 +95,7 @@ const Navbar: React.FC = () => {
                   >
                     <span className="mr-1">{user.username}</span>
                     {user.vipLevel > 0 && (
-                      <div className="px-2 py-0.5 bg-yellow-400/20 text-yellow-700 rounded text-sm font-medium mr-2">
+                      <div className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium mr-2">
                         VIP{user.vipLevel}
                       </div>
                     )}
@@ -110,7 +110,7 @@ const Navbar: React.FC = () => {
                         <div className="flex items-center space-x-2">
                           <p className="text-xs text-gray-500">余额: ¥{user.balance.toFixed(2)}</p>
                           {user.vipLevel > 0 && (
-                            <div className="px-2 py-0.5 bg-yellow-400/20 text-yellow-700 rounded text-xs font-medium">
+                            <div className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-xs font-medium">
                               VIP{user.vipLevel}
                             </div>
                           )}
@@ -203,7 +203,7 @@ const Navbar: React.FC = () => {
                     <div className="flex items-center space-x-2">
                       <p className="text-xs text-gray-500">余额: ¥{user.balance.toFixed(2)}</p>
                       {user.vipLevel > 0 && (
-                        <div className="px-2 py-0.5 bg-yellow-400/20 text-yellow-700 rounded text-sm font-medium">
+                        <div className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium">
                           VIP{user.vipLevel}
                         </div>
                       )}
