@@ -179,7 +179,7 @@ const AccountDetailPage: React.FC = () => {
             <h1 className="text-2xl font-bold text-gray-800 mb-4">{accountData.title}</h1>
             
             {/* 价格信息卡片 */}
-            <div className="bg-gray-50 p-5 rounded-lg border border-gray-200 shadow-sm mb-5">
+            <div className="bg-[#fff2e8] p-5 rounded-lg shadow-sm mb-5">
               <div className="flex items-baseline mb-3">
                 <span className="text-gray-600 mr-3 font-medium">价格</span>
                 <span className="text-red-500 text-3xl font-bold">¥{accountData.price.toFixed(2)}</span>
@@ -187,7 +187,7 @@ const AccountDetailPage: React.FC = () => {
               </div>
               <div className="flex items-center mt-2">
                 <span className="text-gray-600 mr-3 font-medium">批发价</span>
-                <span className="bg-[#009688] text-white text-xs px-3 py-1 rounded-md">{accountData.batchPrice}</span>
+                <span className="bg-[#ef4444] text-white text-xs px-3 py-1 rounded-md">{accountData.batchPrice}</span>
                 <span 
                   className="ml-3 text-gray-700 cursor-pointer hover:text-gray-900 flex items-center"
                   onClick={() => setShowDiscountModal(true)}

@@ -182,9 +182,9 @@ const AccountCard: React.FC<AccountCardProps> = ({
 
   return (
     <Link href={`/account/${id}`}>
-      <div className="bg-white rounded-lg overflow-hidden flex flex-row sm:flex-col h-full">
+      <div className="bg-white rounded-lg overflow-hidden flex flex-row sm:flex-col h-full border border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
         {/* 商品图片区域 */}
-        <div className={`${brandStyle.bgColor} w-24 h-24 sm:w-full sm:aspect-square flex items-center justify-center flex-shrink-0`}>
+        <div className={`${brandStyle.bgColor} w-24 h-24 sm:w-full sm:h-auto sm:aspect-square flex items-center justify-center flex-shrink-0`}>
           {brandStyle.logo ? (
             <div className="relative w-16 h-16 sm:w-28 sm:h-28 transition-transform duration-300 hover:scale-110">
               <Image 
@@ -213,7 +213,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
           </div>
           
           {/* 价格和库存区域 */}
-          <div className="flex items-center justify-between mt-auto pt-1 sm:pt-2">
+          <div className="flex items-center justify-between mt-auto pt-1 sm:pt-2 sm:border-t sm:border-gray-100">
             <div className="flex items-baseline gap-1.5">
               <span className="text-red-500 text-base sm:text-xl font-bold">¥{price.toFixed(2)}</span>
               {originalPrice && (

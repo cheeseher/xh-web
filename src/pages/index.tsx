@@ -155,8 +155,9 @@ const HomePage: React.FC = () => {
                 ref={setCategoryRef(categoryAccount.category.id)}
                 id={`category-${categoryAccount.category.id}`}
               >
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex flex-col mb-3">
                   <h2 className="text-lg sm:text-xl font-bold text-gray-800 border-l-4 border-gray-700 pl-2">{categoryAccount.category.name}</h2>
+                  <p className="text-sm text-gray-500 mt-1 pl-2">{categoryAccount.category.description}</p>
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
