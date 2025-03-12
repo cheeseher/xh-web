@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
   );
 
   return (
-    <header className="bg-gray-800 shadow-md z-40">
+    <header className="bg-gray-800 shadow-md relative z-40">
       {/* 主导航栏 */}
       <div className="max-w-6xl mx-auto px-3 sm:px-6">
         <div className="flex justify-between items-center h-16">
@@ -175,15 +175,15 @@ const Navbar: React.FC = () => {
 
       {/* 移动端侧边菜单 */}
       <div
-        className={`fixed inset-0 z-50 ${isMenuOpen ? 'block' : 'hidden'}`}
+        className={`fixed inset-0 z-[999] ${isMenuOpen ? 'block' : 'hidden'}`}
         onClick={() => setIsMenuOpen(false)}
       >
         {/* 背景遮罩 */}
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
+        <div className="fixed inset-0 bg-black bg-opacity-50" />
 
         {/* 侧边栏内容 */}
         <div
-          className="relative bg-white z-50 h-full w-72 transform transition-transform duration-300 ease-in-out shadow-2xl"
+          className="fixed left-0 top-0 bg-white h-full w-72 transform transition-transform duration-300 ease-in-out shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="px-4 pt-6 pb-6 space-y-6">

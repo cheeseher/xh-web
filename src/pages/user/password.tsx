@@ -27,23 +27,25 @@ const PasswordPage: React.FC = () => {
   }
 
   return (
-    <Layout title="修改密码 - 账户商城">
+    <Layout title="修改密码 - 星海账户">
       <div className="container-custom py-8">
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             {/* 头部信息 */}
-            <div className="bg-gradient-to-r from-primary to-primary-dark p-6 text-white">
-              <div className="flex items-center space-x-3">
-                <FaKey className="text-2xl" />
-                <div>
-                  <h1 className="text-2xl font-bold">修改密码</h1>
-                  <p className="mt-1 text-white/80">设置您的账户密码</p>
+            <div className="px-6 pt-6 pb-4">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">
+                  <FaKey className="text-primary text-xl" />
+                </div>
+                <div className="ml-4">
+                  <h1 className="text-xl font-bold text-gray-900">修改密码</h1>
+                  <p className="text-sm text-gray-500">设置您的账户密码</p>
                 </div>
               </div>
             </div>
 
             {/* 表单 */}
-            <form onSubmit={handleSubmit} className="p-6">
+            <form onSubmit={handleSubmit} className="px-6 pb-6">
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">

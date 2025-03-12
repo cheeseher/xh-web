@@ -91,16 +91,16 @@ const CategoryIndex: React.FC<CategoryIndexProps> = ({ onCategoryClick, activeCa
   // 移动端水平滚动栏
   const renderMobileScrollbar = () => {
     return (
-      <div className="overflow-x-auto whitespace-nowrap py-2 px-4 bg-white shadow-sm">
+      <div className="overflow-x-auto whitespace-nowrap py-2 px-3">
         {getOrderedCategories().map((category) => (
           category && (
             <button
               key={category.id}
               onClick={() => onCategoryClick(category.id)}
-              className={`inline-block px-3 py-1.5 mx-1 text-sm rounded-full ${
+              className={`inline-block px-3 py-1.5 first:ml-0 last:mr-0 mx-0.5 text-sm rounded-full ${
                 activeCategory === category.id
                   ? 'bg-gray-800 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-gray-100/80 backdrop-blur-sm text-gray-700 hover:bg-gray-200'
               }`}
             >
               {category.name}
@@ -147,7 +147,7 @@ const CategoryIndex: React.FC<CategoryIndexProps> = ({ onCategoryClick, activeCa
   return (
     <>
       {/* 移动端分类选择 */}
-      <div className="sticky top-0 z-40 md:hidden">
+      <div className="sticky top-0 z-30 md:hidden">
         {renderMobileScrollbar()}
       </div>
       

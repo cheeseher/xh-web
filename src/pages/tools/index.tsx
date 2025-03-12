@@ -53,25 +53,28 @@ const ToolsPage: React.FC = () => {
 
   return (
     <Layout title="实用工具 - 星海账户" showAlert={false} hidePageTitle={true}>
-      <div className="max-w-5xl mx-auto py-10 px-4">
+      <div className="max-w-5xl mx-auto py-6 sm:py-10 px-2 sm:px-4">
         {/* 页面标题 */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">实用工具</h1>
-          <p className="text-gray-600">一站式在线工具集，提高您的工作效率</p>
+        <div className="text-center mb-4 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-1 sm:mb-2">实用工具</h1>
+          <p className="text-sm sm:text-base text-gray-600">一站式在线工具集，提高您的工作效率</p>
         </div>
         
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md">
           {/* 工具标签栏 */}
           <div className="border-b border-gray-200">
-            <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex -mb-px">
+            <div className="overflow-x-auto hide-scrollbar">
+              <div className="flex whitespace-nowrap">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`
-                      tool-tab
-                      ${activeTab === tab.id ? 'tool-tab-active' : 'tool-tab-inactive'}
+                      flex-shrink-0 px-3 sm:px-4 py-2.5 sm:py-3 text-sm font-medium transition-colors
+                      ${activeTab === tab.id 
+                        ? 'border-b-2 border-primary text-primary' 
+                        : 'text-gray-500 hover:text-gray-700 hover:border-gray-300 border-b-2 border-transparent'
+                      }
                     `}
                   >
                     {tab.name}
@@ -82,19 +85,19 @@ const ToolsPage: React.FC = () => {
           </div>
 
           {/* 工具内容区域 */}
-          <div className="p-6">
-            <div className="mb-6">
+          <div className="p-3 sm:p-6">
+            <div className="mb-4 sm:mb-6">
               <div>
-                <h2 className="text-xl font-bold text-gray-800 mb-1">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-1">
                   {tabs.find(tab => tab.id === activeTab)?.name}
                 </h2>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600">
                   {getToolDescription(activeTab)}
                 </p>
               </div>
             </div>
             
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 transition-all duration-300 hover:border-[#009688]/30">
+            <div className="bg-gray-50 p-3 sm:p-6 rounded-lg border border-gray-200 transition-all duration-300 hover:border-[#009688]/30">
               {renderTool()}
             </div>
           </div>

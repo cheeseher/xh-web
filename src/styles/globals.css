@@ -72,6 +72,28 @@ body {
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
+/* 隐藏滚动条但保持可滚动 */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* 移动端标签栏优化 */
+@media (max-width: 768px) {
+  .tab-bar-mobile {
+    @apply overflow-x-auto whitespace-nowrap hide-scrollbar;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .tab-item-mobile {
+    @apply inline-block px-4 py-2 text-sm font-medium;
+  }
+}
+
 /* 标签样式 */
 .tag {
   @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;

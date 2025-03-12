@@ -187,10 +187,10 @@ const RecordsPage: React.FC = () => {
 
               {/* 标签栏 */}
               <div className="border-b border-gray-200">
-                <div className="flex px-6">
+                <div className="flex overflow-x-auto whitespace-nowrap hide-scrollbar">
                   <button
                     onClick={() => setActiveTab('order')}
-                    className={`px-8 py-4 text-sm font-medium transition-colors relative ${
+                    className={`px-6 py-4 text-sm font-medium transition-colors relative flex-shrink-0 ${
                       activeTab === 'order'
                         ? 'border-b-2 border-primary text-primary'
                         : 'text-gray-600 hover:text-primary'
@@ -201,7 +201,7 @@ const RecordsPage: React.FC = () => {
                   </button>
                   <button
                     onClick={() => setActiveTab('recharge')}
-                    className={`px-8 py-4 text-sm font-medium transition-colors relative ${
+                    className={`px-6 py-4 text-sm font-medium transition-colors relative flex-shrink-0 ${
                       activeTab === 'recharge'
                         ? 'border-b-2 border-primary text-primary'
                         : 'text-gray-600 hover:text-primary'
@@ -212,7 +212,7 @@ const RecordsPage: React.FC = () => {
                   </button>
                   <button
                     onClick={() => setActiveTab('bill')}
-                    className={`px-8 py-4 text-sm font-medium transition-colors relative ${
+                    className={`px-6 py-4 text-sm font-medium transition-colors relative flex-shrink-0 ${
                       activeTab === 'bill'
                         ? 'border-b-2 border-primary text-primary'
                         : 'text-gray-600 hover:text-primary'

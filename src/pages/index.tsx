@@ -89,7 +89,7 @@ const HomePage: React.FC = () => {
       const scrollPosition = window.scrollY + scrollOffset;
       
       // 找到当前在视口中的分类
-      let currentCategory = categories[0]?.id;
+      let currentCategory = orderedCategories[0];
       for (const categoryId in categoryRefs.current) {
         const element = categoryRefs.current[categoryId];
         if (element) {
@@ -109,14 +109,14 @@ const HomePage: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     
     // 初始化时设置第一个分类为活动状态
-    if (filteredCategoryAccounts.length > 0 && !activeCategory) {
-      setActiveCategory(filteredCategoryAccounts[0].category.id);
+    if (!activeCategory) {
+      setActiveCategory(orderedCategories[0]);
     }
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [activeCategory, filteredCategoryAccounts]);
+  }, [activeCategory]);
 
   // 标题样式
   const sectionTitleStyle = "text-xl font-bold text-gray-800 border-l-4 border-indigo-600 pl-3";

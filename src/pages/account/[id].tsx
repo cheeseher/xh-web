@@ -133,8 +133,8 @@ const AccountDetailPage: React.FC = () => {
   };
 
   return (
-    <Layout title={`${accountData.title} - 星海账户`}>
-      <div className="max-w-6xl mx-auto py-8 px-4">
+    <Layout title={accountData.title + ' - 星海账户'}>
+      <div className="max-w-6xl mx-auto py-4 px-4">
         {/* 面包屑导航 */}
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center text-sm">
@@ -347,7 +347,7 @@ const AccountDetailPage: React.FC = () => {
               <div className="flex space-x-3 pt-2">
                 <button
                   onClick={handleSubmitNotify}
-                  className="flex-1 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                  className="flex-1 py-2 bg-[#009688] text-white rounded-lg hover:bg-[#00897b] transition-colors"
                 >
                   提交
                 </button>

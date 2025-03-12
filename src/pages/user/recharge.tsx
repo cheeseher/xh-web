@@ -63,17 +63,17 @@ const RechargePage: React.FC = () => {
               <h2 className="text-lg font-semibold text-gray-900">账号信息</h2>
             </div>
             <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">账户昵称</span>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                <span className="text-sm text-gray-500 mb-1 sm:mb-0">账户昵称</span>
                 <span className="font-medium text-gray-900">{user.username}</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">账户邮箱</span>
-                <span className="font-medium text-gray-900">{user.email || 'dbadmin@qq.com'}</span>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                <span className="text-sm text-gray-500 mb-1 sm:mb-0">账户邮箱</span>
+                <span className="font-medium text-gray-900 break-all">{user.email || 'dbadmin@qq.com'}</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">会员等级</span>
-                <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                <span className="text-sm text-gray-500 mb-1 sm:mb-0">会员等级</span>
+                <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium w-fit">
                   VIP{user.vipLevel || 1}
                 </span>
               </div>
