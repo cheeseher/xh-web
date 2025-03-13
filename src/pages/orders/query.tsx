@@ -31,6 +31,7 @@ const OrderQueryPage: React.FC = () => {
         payTime: '2024-03-10 15:31:22',
         account: 'example@gmail.com',
         password: '********',
+        backupEmail: 'backup@example.com',
       });
       setLoading(false);
     }, 800);
@@ -208,36 +209,19 @@ const OrderQueryPage: React.FC = () => {
               
               <div className="border-t pt-4 mt-4">
                 <h3 className="text-lg font-medium text-gray-800 mb-3">账号信息</h3>
-                
-                <div className="bg-gray-50 p-4 rounded-md mb-3">
+                <div className="bg-gray-50 p-4 rounded-md">
                   <div className="flex justify-between items-center">
-                    <div>
-                      <div className="text-sm text-gray-500 mb-1">账号</div>
-                      <div className="font-medium">{searchResult.account}</div>
-                    </div>
+                    <div className="font-medium break-all">{searchResult.account}----{searchResult.password}----{searchResult.backupEmail || 'backup@example.com'}</div>
                     <button 
-                      className="text-[#009688] hover:text-[#00796b] text-sm flex items-center"
-                      onClick={() => navigator.clipboard.writeText(searchResult.account)}
+                      className="text-[#009688] hover:text-[#00796b] text-sm flex items-center ml-4"
+                      onClick={() => navigator.clipboard.writeText(`${searchResult.account}----${searchResult.password}----${searchResult.backupEmail || 'backup@example.com'}`)}
                     >
                       <FaClipboard className="mr-1" />
                       复制
                     </button>
                   </div>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-md">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="text-sm text-gray-500 mb-1">密码</div>
-                      <div className="font-medium">{searchResult.password}</div>
-                    </div>
-                    <button 
-                      className="text-[#009688] hover:text-[#00796b] text-sm flex items-center"
-                      onClick={() => navigator.clipboard.writeText('实际密码会在这里显示')}
-                    >
-                      <FaClipboard className="mr-1" />
-                      复制
-                    </button>
+                  <div className="text-xs text-gray-500 mt-2">
+                    格式：账号----密码----辅助邮箱（用于登录确认输入）
                   </div>
                 </div>
               </div>
