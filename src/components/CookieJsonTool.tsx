@@ -68,8 +68,8 @@ const CookieJsonTool: React.FC = () => {
           id="domain"
           value={domain}
           onChange={(e) => setDomain(e.target.value)}
-          placeholder="例如: example.com"
-          className="w-full px-4 h-[42px] border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+          placeholder="输入域名，例如：instagram.com,facebook.com,twitter.com"
+          className="w-full px-4 h-[42px] border rounded-md focus:outline-none focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
         />
       </div>
       
@@ -82,8 +82,8 @@ const CookieJsonTool: React.FC = () => {
           id="cookieText"
           value={cookieText}
           onChange={(e) => setCookieText(e.target.value)}
-          placeholder="粘贴Cookie字符串，例如: name=value; name2=value2"
-          className="w-full px-4 py-[10.5px] border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none h-32"
+          placeholder="输入Cookies串，exp:aaa=xxx;bbb=xxx;"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:outline-none focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all resize-none h-32"
         />
       </div>
       
@@ -100,7 +100,7 @@ const CookieJsonTool: React.FC = () => {
           <button
             onClick={handleCopy}
             disabled={!outputText}
-            className={`text-sm flex items-center ${outputText ? 'text-primary hover:text-primary-dark' : 'text-gray-400 cursor-not-allowed'}`}
+            className={`text-sm flex items-center ${outputText ? 'text-[#009688] hover:text-[#00796b]' : 'text-gray-400 cursor-not-allowed'}`}
           >
             {copied ? (
               <>
@@ -120,7 +120,7 @@ const CookieJsonTool: React.FC = () => {
           value={outputText}
           readOnly
           className="w-full px-4 py-[10.5px] border rounded-md bg-gray-50 focus:outline-none resize-none h-32"
-          placeholder="转换后的JSON将显示在这里"
+          placeholder="新卡密"
         />
       </div>
       
@@ -128,7 +128,7 @@ const CookieJsonTool: React.FC = () => {
       <div className="flex">
         <button
           onClick={handleConvert}
-          className="h-[42px] px-6 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+          className="h-[42px] px-6 bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all"
         >
           转换为JSON
         </button>

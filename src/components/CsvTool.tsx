@@ -74,7 +74,7 @@ const CsvTool: React.FC = () => {
         <input
           type="text"
           placeholder="输入分隔符，默认为逗号"
-          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
           value={delimiter}
           onChange={(e) => setDelimiter(e.target.value || ',')}
         />
@@ -89,8 +89,8 @@ const CsvTool: React.FC = () => {
         </div>
         <input
           type="text"
-          placeholder="输入CSV表头，用分隔符分隔，留空则使用第一行作为表头"
-          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          placeholder="CSV表头 示例：账号 密码 辅助（空格分割）"
+          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
           value={csvHeader}
           onChange={(e) => setCsvHeader(e.target.value)}
         />
@@ -105,7 +105,7 @@ const CsvTool: React.FC = () => {
         </div>
         <textarea
           placeholder="输入需要转换为CSV的文本，每行一条记录"
-          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32 resize-none"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] h-32 resize-none transition-all"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
         />
@@ -154,14 +154,14 @@ const CsvTool: React.FC = () => {
       <div className="flex space-x-4">
         <button
           onClick={handleConvert}
-          className="h-[42px] px-6 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+          className="h-[42px] px-6 bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all"
         >
           转换
         </button>
         {csvData.length > 0 && (
           <button
             onClick={handleExport}
-            className="h-[42px] px-6 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors flex items-center"
+            className="h-[42px] px-6 bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all flex items-center"
           >
             <FaDownload className="mr-2" />
             导出CSV
@@ -170,7 +170,7 @@ const CsvTool: React.FC = () => {
       </div>
 
       {/* 友情提示 */}
-      <div className="mt-6 bg-primary/5 p-4 rounded-md border border-primary/20">
+      <div className="mt-6 bg-[#009688]/5 p-4 rounded-md border border-[#009688]/20">
         <h3 className="text-gray-800 font-medium mb-2">友情提示</h3>
         <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
           <li>分隔符默认为逗号，可根据需要修改。</li>
