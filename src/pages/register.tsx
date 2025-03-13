@@ -134,7 +134,7 @@ const RegisterPage = () => {
                     name="nickname"
                     value={formData.nickname}
                     onChange={handleChange}
-                    className={`appearance-none block w-full px-4 py-3 border ${errors.nickname ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    className={`appearance-none block w-full px-4 py-[10.5px] border ${errors.nickname ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
                     placeholder="请输入昵称"
                   />
                   <FaUser className="absolute right-3 top-3.5 text-gray-400" />
@@ -156,7 +156,7 @@ const RegisterPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`appearance-none block w-full px-4 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    className={`appearance-none block w-full px-4 py-[10.5px] border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
                     placeholder="请输入邮箱"
                   />
                   <FaEnvelope className="absolute right-3 top-3.5 text-gray-400" />
@@ -178,7 +178,7 @@ const RegisterPage = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`appearance-none block w-full px-4 py-3 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    className={`appearance-none block w-full px-4 py-[10.5px] border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
                     placeholder="6-16个字符"
                   />
                   <FaLock className="absolute right-3 top-3.5 text-gray-400" />
@@ -200,7 +200,7 @@ const RegisterPage = () => {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className={`appearance-none block w-full px-4 py-3 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    className={`appearance-none block w-full px-4 py-[10.5px] border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
                     placeholder="请再次输入密码"
                   />
                   <FaLock className="absolute right-3 top-3.5 text-gray-400" />
@@ -223,7 +223,7 @@ const RegisterPage = () => {
                       name="captcha"
                       value={formData.captcha}
                       onChange={handleChange}
-                      className={`appearance-none block w-full px-4 py-3 border ${errors.captcha ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                      className={`appearance-none block w-full px-4 py-[10.5px] border ${errors.captcha ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
                       placeholder="请输入验证码"
                     />
                   </div>
@@ -238,7 +238,7 @@ const RegisterPage = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
+                className={`w-full flex justify-center py-[10.5px] px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
                   isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
                 }`}
               >

@@ -57,89 +57,85 @@ const CookieJsonTool: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* 输入区域 */}
-        <div className="space-y-4">
-          <div>
-            <label htmlFor="domain" className="block text-sm font-medium text-gray-700 mb-1">
-              域名
-            </label>
-            <input
-              type="text"
-              id="domain"
-              value={domain}
-              onChange={(e) => setDomain(e.target.value)}
-              placeholder="例如: example.com"
-              className="w-full px-4 py-[10.5px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="cookieText" className="block text-sm font-medium text-gray-700 mb-1">
-              Cookie字符串
-            </label>
-            <textarea
-              id="cookieText"
-              value={cookieText}
-              onChange={(e) => setCookieText(e.target.value)}
-              placeholder="粘贴Cookie字符串，例如: name=value; name2=value2"
-              rows={8}
-              className="w-full px-4 py-[10.5px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
-            />
-          </div>
-          
-          {error && (
-            <div className="text-red-500 text-sm">{error}</div>
-          )}
-          
-          <div className="flex">
-            <button
-              onClick={handleConvert}
-              className="px-6 py-[10.5px] bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
-            >
-              转换为JSON
-            </button>
-          </div>
+    <div className="space-y-6">
+      {/* 域名 */}
+      <div className="mb-4">
+        <label htmlFor="domain" className="block text-sm font-medium text-gray-700 mb-2">
+          域名
+        </label>
+        <input
+          type="text"
+          id="domain"
+          value={domain}
+          onChange={(e) => setDomain(e.target.value)}
+          placeholder="例如: example.com"
+          className="w-full px-4 h-[42px] border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+        />
+      </div>
+      
+      {/* Cookie字符串 */}
+      <div className="mb-6">
+        <label htmlFor="cookieText" className="block text-sm font-medium text-gray-700 mb-2">
+          Cookie字符串
+        </label>
+        <textarea
+          id="cookieText"
+          value={cookieText}
+          onChange={(e) => setCookieText(e.target.value)}
+          placeholder="粘贴Cookie字符串，例如: name=value; name2=value2"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none h-32"
+        />
+      </div>
+      
+      {error && (
+        <div className="text-red-500 text-sm mb-4">{error}</div>
+      )}
+      
+      {/* JSON结果 */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-2">
+          <label htmlFor="outputText" className="block text-sm font-medium text-gray-700">
+            JSON结果
+          </label>
+          <button
+            onClick={handleCopy}
+            disabled={!outputText}
+            className={`text-sm flex items-center ${outputText ? 'text-primary hover:text-primary-dark' : 'text-gray-400 cursor-not-allowed'}`}
+          >
+            {copied ? (
+              <>
+                <FaCheck className="mr-1" />
+                <span>已复制</span>
+              </>
+            ) : (
+              <>
+                <FaCopy className="mr-1" />
+                <span>复制</span>
+              </>
+            )}
+          </button>
         </div>
-        
-        {/* 输出区域 */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <label htmlFor="outputText" className="block text-sm font-medium text-gray-700">
-              JSON结果
-            </label>
-            <button
-              onClick={handleCopy}
-              disabled={!outputText}
-              className={`text-sm flex items-center ${outputText ? 'text-primary hover:text-primary-dark' : 'text-gray-400 cursor-not-allowed'}`}
-            >
-              {copied ? (
-                <>
-                  <FaCheck className="mr-1" />
-                  <span>已复制</span>
-                </>
-              ) : (
-                <>
-                  <FaCopy className="mr-1" />
-                  <span>复制</span>
-                </>
-              )}
-            </button>
-          </div>
-          <textarea
-            id="outputText"
-            value={outputText}
-            readOnly
-            rows={12}
-            className="w-full px-4 py-[10.5px] border border-gray-300 rounded-md bg-gray-50 focus:outline-none resize-none"
-            placeholder="转换后的JSON将显示在这里"
-          />
-        </div>
+        <textarea
+          id="outputText"
+          value={outputText}
+          readOnly
+          className="w-full px-4 py-[10.5px] border rounded-md bg-gray-50 focus:outline-none resize-none h-32"
+          placeholder="转换后的JSON将显示在这里"
+        />
+      </div>
+      
+      {/* 操作按钮 */}
+      <div className="flex">
+        <button
+          onClick={handleConvert}
+          className="h-[42px] px-6 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+        >
+          转换为JSON
+        </button>
       </div>
       
       {/* 使用提示 */}
-      <div className="mt-6 bg-[#009688]/5 border border-[#009688]/20 rounded-lg p-4">
+      <div className="mt-6 bg-[#009688]/5 border border-[#009688]/20 rounded-md p-4">
         <h3 className="text-gray-800 font-medium mb-2">使用提示</h3>
         <ol className="text-sm text-gray-700 list-decimal list-inside space-y-2">
           <li>在输入框中粘贴需要转换的Cookie字符串</li>

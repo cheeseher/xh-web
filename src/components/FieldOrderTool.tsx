@@ -53,7 +53,7 @@ const FieldOrderTool: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="space-y-6">
       {/* 原分隔符 */}
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
@@ -64,7 +64,7 @@ const FieldOrderTool: React.FC = () => {
         <input
           type="text"
           placeholder="----"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
           value={originalDelimiter}
           onChange={(e) => setOriginalDelimiter(e.target.value)}
         />
@@ -79,7 +79,7 @@ const FieldOrderTool: React.FC = () => {
         </div>
         <textarea
           placeholder="输入平台卡密字符"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32 resize-none"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] h-32 resize-none transition-all"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
         />
@@ -95,7 +95,7 @@ const FieldOrderTool: React.FC = () => {
         <input
           type="text"
           placeholder="输入新索引顺序 EXP (0 2 1 3) 空格间隔"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
           value={newOrder}
           onChange={(e) => setNewOrder(e.target.value)}
         />
@@ -109,7 +109,7 @@ const FieldOrderTool: React.FC = () => {
           </label>
           <button
             onClick={() => handleCopy(outputText)}
-            className="text-primary hover:text-primary-dark text-sm flex items-center"
+            className="text-[#009688] hover:text-[#00796b] text-sm transition-all flex items-center"
           >
             <FaCopy className="mr-1" />
             点击复制
@@ -117,26 +117,26 @@ const FieldOrderTool: React.FC = () => {
         </div>
         <textarea
           placeholder="新卡密"
-          className="w-full px-4 py-2 border rounded-md bg-gray-50 h-32 resize-none"
+          className="w-full px-4 py-[10.5px] border rounded-md bg-gray-50 h-32 resize-none"
           value={outputText}
           readOnly
         />
       </div>
 
       {/* 操作按钮 */}
-      <div className="flex space-x-4">
+      <div className="flex">
         <button
           onClick={handleConvert}
-          className="flex-1 py-2 px-4 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+          className="h-[42px] px-6 bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all"
         >
           格式化
         </button>
       </div>
 
       {/* 友情提示 */}
-      <div className="mt-6 bg-yellow-50 p-4 rounded-md">
-        <h3 className="text-yellow-800 font-medium mb-2">友情提示</h3>
-        <ul className="text-sm text-yellow-700 list-disc list-inside space-y-1">
+      <div className="mt-6 bg-[#009688]/5 p-4 rounded-md border border-[#009688]/20">
+        <h3 className="text-gray-800 font-medium mb-2">友情提示</h3>
+        <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
           <li>分隔符为每个字段间分割字符串。</li>
           <li>字段索引从0开始，比如两个字段，就是：01，三个就是：012。</li>
           <li>如果指定除第二个字段外的所有字段，例如3个字段想删除第二个字段 就在新索引顺序输入：02。</li>

@@ -86,7 +86,7 @@ const LoginPage: React.FC = () => {
                     required
                     value={formData.username}
                     onChange={handleInputChange}
-                    className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="appearance-none block w-full px-4 py-[10.5px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="请输入用户名"
                   />
                   <FaUser className="absolute right-3 top-3.5 text-gray-400" />
@@ -105,7 +105,7 @@ const LoginPage: React.FC = () => {
                     required
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="appearance-none block w-full px-4 py-[10.5px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="请输入密码"
                   />
                   <FaLock className="absolute right-3 top-3.5 text-gray-400" />
@@ -129,7 +129,7 @@ const LoginPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
+                className={`w-full flex justify-center py-[10.5px] px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
                   isLoading ? 'opacity-75 cursor-not-allowed' : ''
                 }`}
               >

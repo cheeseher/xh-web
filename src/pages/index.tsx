@@ -134,7 +134,7 @@ const HomePage: React.FC = () => {
                 placeholder="搜索商品..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 pr-10 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 shadow-lg"
+                className="w-full px-4 py-[10.5px] pr-10 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 shadow-lg"
               />
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                 <FaSearch className="text-gray-500" />

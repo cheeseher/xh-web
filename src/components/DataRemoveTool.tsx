@@ -43,7 +43,7 @@ const DataRemoveTool: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="space-y-6">
       {/* 分隔符 */}
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
@@ -54,7 +54,7 @@ const DataRemoveTool: React.FC = () => {
         <input
           type="text"
           placeholder="----"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
           value={delimiter}
           onChange={(e) => setDelimiter(e.target.value)}
         />
@@ -69,7 +69,7 @@ const DataRemoveTool: React.FC = () => {
         </div>
         <textarea
           placeholder="输入原始数据"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32 resize-none"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] h-32 resize-none transition-all"
           value={originalData}
           onChange={(e) => setOriginalData(e.target.value)}
         />
@@ -84,7 +84,7 @@ const DataRemoveTool: React.FC = () => {
         </div>
         <textarea
           placeholder="输入需要被删除的数据"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32 resize-none"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] h-32 resize-none transition-all"
           value={removeData}
           onChange={(e) => setRemoveData(e.target.value)}
         />
@@ -98,7 +98,7 @@ const DataRemoveTool: React.FC = () => {
           </label>
           <button
             onClick={() => handleCopy(resultData)}
-            className="text-primary hover:text-primary-dark text-sm flex items-center"
+            className="text-[#009688] hover:text-[#00796b] text-sm transition-all flex items-center"
           >
             <FaCopy className="mr-1" />
             点击复制
@@ -106,24 +106,24 @@ const DataRemoveTool: React.FC = () => {
         </div>
         <textarea
           placeholder="结果数据"
-          className="w-full px-4 py-2 border rounded-md bg-gray-50 h-32 resize-none"
+          className="w-full px-4 py-[10.5px] border rounded-md bg-gray-50 h-32 resize-none"
           value={resultData}
           readOnly
         />
       </div>
 
       {/* 操作按钮 */}
-      <div className="flex space-x-4">
+      <div className="flex">
         <button
           onClick={handleRemove}
-          className="flex-1 py-2 px-4 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+          className="h-[42px] px-6 bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all"
         >
           剔除数据
         </button>
       </div>
 
       {/* 使用提示 */}
-      <div className="mt-6 bg-[#009688]/5 border border-[#009688]/20 rounded-lg p-4">
+      <div className="mt-6 bg-[#009688]/5 p-4 rounded-md border border-[#009688]/20">
         <h3 className="text-gray-800 font-medium mb-2">使用提示</h3>
         <ol className="text-sm text-gray-700 list-decimal list-inside space-y-2">
           <li>数据剔除工具，如果出现错误或者没有结果，请检查是否正确</li>

@@ -81,7 +81,7 @@ const FaqPage: React.FC = () => {
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`mr-4 py-3 px-4 text-sm font-medium border-b-2 transition-colors duration-200 ${
+                className={`mr-4 py-[10.5px] px-4 text-sm font-medium border-b-2 transition-colors duration-200 ${
                   activeCategory === category.id 
                     ? 'border-[#009688] text-[#009688]' 
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'

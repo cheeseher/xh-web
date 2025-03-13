@@ -289,7 +289,7 @@ const AccountDetailPage: React.FC = () => {
                     min="1"
                     value={quantity}
                     onChange={handleQuantityChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                    className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                   />
                 </div>
                 
@@ -301,7 +301,7 @@ const AccountDetailPage: React.FC = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="账号密码将发送至此邮箱"
                     disabled={user && user.email ? true : false}
-                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent ${user && user.email ? 'bg-gray-50' : ''}`}
+                    className={`w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent ${user && user.email ? 'bg-gray-50' : ''}`}
                   />
                 </div>
                 
@@ -312,7 +312,7 @@ const AccountDetailPage: React.FC = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="填写您于自身记忆的查询密码"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                    className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                   />
                 </div>
                 
@@ -333,7 +333,7 @@ const AccountDetailPage: React.FC = () => {
                 <div className="flex space-x-4 mt-6">
                   <button
                     onClick={handleBuyNow}
-                    className="w-full py-3 bg-[#009688] text-white rounded-lg hover:bg-[#00897b] transition-colors duration-300 flex items-center justify-center"
+                    className="w-full py-[10.5px] bg-[#009688] text-white rounded-lg hover:bg-[#00897b] transition-colors duration-300 flex items-center justify-center"
                   >
                     <FaTag className="mr-2" />
                     立即购买
@@ -396,7 +396,7 @@ const AccountDetailPage: React.FC = () => {
                   value={notifyEmail}
                   onChange={(e) => setNotifyEmail(e.target.value)}
                   placeholder="请输入您的邮箱"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                  className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                 />
               </div>
               <div>
@@ -409,7 +409,7 @@ const AccountDetailPage: React.FC = () => {
                   value={notifyQuantity}
                   onChange={handleNotifyQuantityChange}
                   placeholder="请输入需要的数量"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                  className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                 />
               </div>
               <div>
@@ -422,19 +422,19 @@ const AccountDetailPage: React.FC = () => {
                   onChange={(e) => setNotifyDescription(e.target.value)}
                   placeholder="请输入补充说明"
                   rows={3}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                  className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                 />
               </div>
               <div className="flex space-x-3 pt-2">
                 <button
                   onClick={handleSubmitNotify}
-                  className="flex-1 py-2 bg-[#009688] text-white rounded-lg hover:bg-[#00897b] transition-colors"
+                  className="flex-1 py-[10.5px] bg-[#009688] text-white rounded-lg hover:bg-[#00897b] transition-colors"
                 >
                   提交
                 </button>
                 <button
                   onClick={() => setShowNotifyModal(false)}
-                  className="flex-1 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+                  className="flex-1 py-[10.5px] bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
                 >
                   取消
                 </button>
@@ -522,7 +522,7 @@ const AccountDetailPage: React.FC = () => {
               <button
                 onClick={handleAgree}
                 disabled={!canAgree}
-                className={`px-8 py-2 rounded-md ${
+                className={`px-8 py-[10.5px] rounded-md ${
                   canAgree 
                     ? 'bg-[#009688] text-white hover:bg-[#00796b]' 
                     : 'bg-gray-300 text-gray-700'
@@ -532,7 +532,7 @@ const AccountDetailPage: React.FC = () => {
               </button>
               <button
                 onClick={() => setShowAgreementModal(false)}
-                className="px-8 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all min-w-[120px]"
+                className="px-8 py-[10.5px] rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all min-w-[120px]"
               >
                 我不同意
               </button>

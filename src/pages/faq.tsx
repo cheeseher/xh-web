@@ -117,7 +117,7 @@ const FaqPage: React.FC = () => {
               placeholder="搜索问题..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-[10.5px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <svg
               className="absolute right-3 top-3 h-6 w-6 text-gray-400"
@@ -142,7 +142,7 @@ const FaqPage: React.FC = () => {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium ${
+              className={`px-4 py-[10.5px] rounded-full text-sm font-medium ${
                 activeCategory === category
                   ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -201,7 +201,7 @@ const FaqPage: React.FC = () => {
           </p>
           <a
             href="/contact"
-            className="btn btn-primary inline-block"
+            className="btn btn-primary inline-block py-[10.5px] px-6"
           >
             联系我们
           </a>

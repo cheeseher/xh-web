@@ -68,7 +68,7 @@ const TwoFactorTool: React.FC = () => {
             value={secret}
             onChange={(e) => setSecret(e.target.value.toUpperCase())}
             placeholder="输入卡密中2FA代码"
-            className={`w-full px-4 py-[10.5px] border ${verificationResult === '密钥格式错误，请输入正确的2FA密钥' ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all`}
+            className={`w-full px-4 h-[42px] border ${verificationResult === '密钥格式错误，请输入正确的2FA密钥' ? 'border-red-500' : ''} rounded-md focus:outline-none focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all`}
           />
           <p className="mt-1 text-xs text-gray-500">输入您的2FA密钥，通常是一串字母和数字的组合</p>
           
@@ -94,7 +94,7 @@ const TwoFactorTool: React.FC = () => {
                 value={code}
                 readOnly
                 placeholder="点击下方按钮获取验证码"
-                className={`w-full px-4 py-[10.5px] border ${code ? 'border-[#009688] bg-white font-bold' : 'border-gray-300 bg-gray-50'} rounded-l-lg focus:outline-none font-mono text-lg text-center tracking-widest`}
+                className={`w-full px-4 h-[42px] border ${code ? 'border-[#009688] bg-white font-bold' : 'bg-gray-50'} rounded-l-md focus:outline-none font-mono text-lg text-center tracking-widest`}
               />
               {code && (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -107,13 +107,13 @@ const TwoFactorTool: React.FC = () => {
             <button
               onClick={copyCode}
               disabled={!code}
-              className={`px-4 py-[10.5px] ${
+              className={`px-4 h-[42px] ${
                 copied 
                   ? 'bg-green-600 text-white' 
                   : code 
                     ? 'bg-[#009688] text-white hover:bg-[#00796b]' 
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              } rounded-r-lg transition-all min-w-[100px]`}
+              } rounded-r-md transition-all min-w-[100px]`}
             >
               {copied ? '已复制' : '复制'}
             </button>
@@ -124,7 +124,7 @@ const TwoFactorTool: React.FC = () => {
         <div className="pt-2 flex">
           <button
             onClick={generateCode}
-            className="px-6 py-[10.5px] bg-[#009688] text-white rounded-lg hover:bg-[#00796b] transition-all"
+            className="px-6 h-[42px] bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all"
           >
             {code ? '重新获取' : '立即获取'}
           </button>
@@ -132,7 +132,7 @@ const TwoFactorTool: React.FC = () => {
       </div>
       
       {/* 提示信息 */}
-      <div className="bg-[#009688]/5 border border-[#009688]/20 rounded-lg p-4">
+      <div className="bg-[#009688]/5 border border-[#009688]/20 rounded-md p-4">
         <h3 className="text-gray-800 font-medium mb-2">使用提示</h3>
         <ol className="text-sm text-gray-700 list-decimal list-inside space-y-2">
           <li>2FA验证码每30秒自动更新一次，请在有效期内使用</li>

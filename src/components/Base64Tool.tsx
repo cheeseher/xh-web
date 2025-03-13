@@ -1,90 +1,122 @@
 import React, { useState } from 'react';
+import { FaCopy } from 'react-icons/fa';
 
 const Base64Tool: React.FC = () => {
-  const [input, setInput] = useState('');
-  const [encoded, setEncoded] = useState('');
-  const [decoded, setDecoded] = useState('');
+  const [inputText, setInputText] = useState('');
+  const [outputText, setOutputText] = useState('');
+  const [mode, setMode] = useState<'encode' | 'decode'>('encode');
 
-  // 处理编码和解码
+  // 编码或解码函数
   const handleConvert = () => {
-    if (!input.trim()) return;
-    
     try {
-      // 尝试解码，如果失败则进行编码
-      try {
-        const result = atob(input);
-        setDecoded(result);
-        setEncoded(input);
-      } catch {
-        const result = btoa(input);
-        setEncoded(result);
-        setDecoded(input);
+      if (mode === 'encode') {
+        // 编码为Base64
+        const encoded = btoa(inputText);
+        setOutputText(encoded);
+      } else {
+        // 从Base64解码
+        const decoded = atob(inputText);
+        setOutputText(decoded);
       }
     } catch (error) {
-      setEncoded('处理失败，请检查输入');
-      setDecoded('处理失败，请检查输入');
+      setOutputText('转换失败，请检查输入是否正确');
     }
   };
 
-  // 文本框和复制按钮组件
-  const ResultField = ({ label, value }: { label: string; value: string }) => (
-    <div>
-      <div className="flex items-center justify-between mb-1">
-        <label className="text-sm font-medium text-gray-700">{label}</label>
-        <button
-          onClick={() => value && navigator.clipboard.writeText(value)}
-          className="px-4 py-1 bg-[#009688] text-white rounded hover:bg-[#00796b] transition-all text-sm"
-        >
-          点击复制
-        </button>
-      </div>
-      <textarea
-        value={value}
-        readOnly
-        placeholder={`${label}将显示在这里`}
-        className="w-full px-4 py-[10.5px] border rounded-md bg-gray-50 h-32 resize-none"
-      />
-    </div>
-  );
+  // 复制函数
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
 
   return (
-    <div className="space-y-4">
-      {/* 输入区域 */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          原始编码
-        </label>
+    <div className="space-y-6">
+      {/* 模式选择 - 标签栏样式 */}
+      <div className="mb-6 border-b border-gray-200">
+        <div className="flex">
+          <button
+            onClick={() => setMode('encode')}
+            className={`py-2 px-6 font-medium text-sm focus:outline-none ${
+              mode === 'encode'
+                ? 'text-primary border-b-2 border-primary'
+                : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            编码
+          </button>
+          <button
+            onClick={() => setMode('decode')}
+            className={`py-2 px-6 font-medium text-sm focus:outline-none ${
+              mode === 'decode'
+                ? 'text-primary border-b-2 border-primary'
+                : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            解码
+          </button>
+        </div>
+      </div>
+
+      {/* 输入文本 */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-sm font-medium text-gray-700">
+            {mode === 'encode' ? '原始文本' : 'Base64文本'}
+          </label>
+        </div>
         <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="输入卡密中BASE64代码/字符"
-          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] h-32 resize-none transition-all"
+          placeholder={
+            mode === 'encode' ? '输入需要编码的文本' : '输入需要解码的Base64文本'
+          }
+          className="w-full px-4 py-[10.5px] border rounded-md bg-gray-50 h-32 resize-none"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
         />
       </div>
 
-      {/* 结果区域 */}
-      <ResultField label="编码结果" value={encoded} />
-      <ResultField label="解码结果" value={decoded} />
+      {/* 转换结果 */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-sm font-medium text-gray-700">
+            {mode === 'encode' ? 'Base64编码结果' : '解码结果'}
+          </label>
+          <button
+            onClick={() => handleCopy(outputText)}
+            className="text-[#009688] hover:text-[#00796b] text-sm transition-all flex items-center"
+          >
+            <FaCopy className="mr-1" />
+            点击复制
+          </button>
+        </div>
+        <textarea
+          placeholder={
+            mode === 'encode' ? 'Base64编码结果' : '解码后的文本将显示在这里'
+          }
+          className="w-full px-4 py-[10.5px] border rounded-md bg-gray-50 h-32 resize-none"
+          value={outputText}
+          readOnly
+        />
+      </div>
 
       {/* 操作按钮 */}
       <div className="flex">
         <button
           onClick={handleConvert}
-          className="px-6 py-[10.5px] bg-[#009688] text-white rounded hover:bg-[#00796b] transition-all"
+          className="h-[42px] px-6 bg-[#009688] text-white rounded hover:bg-[#00796b] transition-all"
         >
-          编码/解码
+          {mode === 'encode' ? '编码' : '解码'}
         </button>
       </div>
 
-      {/* 使用提示 */}
-      <div className="bg-[#009688]/5 border border-[#009688]/20 rounded-lg p-4">
-        <h3 className="text-gray-800 font-medium mb-2">使用提示</h3>
-        <ol className="text-sm text-gray-700 list-decimal list-inside space-y-2">
-          <li>在输入框中粘贴需要编码或解码的文本内容</li>
-          <li>点击"编码/解码"按钮，系统会自动判断并进行相应操作</li>
-          <li>编码结果和解码结果会同时显示，您可以根据需要使用任意一个</li>
-          <li>如果出现错误或没有结果，请检查输入内容是否正确</li>
-        </ol>
+      {/* 友情提示 */}
+      <div className="mt-6 bg-[#009688]/5 p-4 rounded-md border border-[#009688]/20">
+        <h3 className="text-gray-800 font-medium mb-2">友情提示</h3>
+        <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+          <li>Base64编码可以将二进制数据转换为ASCII字符串格式。</li>
+          <li>解码时请确保输入的是有效的Base64编码字符串。</li>
+          <li>
+            Base64编码通常用于在HTTP环境下传输二进制数据，如图片、音频等。
+          </li>
+        </ul>
       </div>
     </div>
   );

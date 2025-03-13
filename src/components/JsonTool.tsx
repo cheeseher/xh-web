@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaCopy } from 'react-icons/fa';
 
 const JsonTool: React.FC = () => {
   const [inputText, setInputText] = useState('');
@@ -44,7 +45,7 @@ const JsonTool: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="space-y-6">
       {/* 分隔符 */}
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
@@ -55,7 +56,7 @@ const JsonTool: React.FC = () => {
         <input
           type="text"
           placeholder="输入分隔符，例如逗号、空格等"
-          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
+          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
           value={delimiter}
           onChange={(e) => setDelimiter(e.target.value)}
         />
@@ -71,7 +72,7 @@ const JsonTool: React.FC = () => {
         <input
           type="text"
           placeholder="输入字段名，以空格分割 (EXP: account password)"
-          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
+          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
           value={fieldName}
           onChange={(e) => setFieldName(e.target.value)}
         />
@@ -100,8 +101,9 @@ const JsonTool: React.FC = () => {
           </label>
           <button
             onClick={() => handleCopy(outputText)}
-            className="text-[#009688] hover:text-[#00796b] text-sm transition-all"
+            className="text-[#009688] hover:text-[#00796b] text-sm transition-all flex items-center"
           >
+            <FaCopy className="mr-1" />
             点击复制
           </button>
         </div>
@@ -117,7 +119,7 @@ const JsonTool: React.FC = () => {
       <div className="flex">
         <button
           onClick={handleFormat}
-          className="py-[10.5px] px-6 bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all"
+          className="h-[42px] px-6 bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all"
         >
           格式化
         </button>
@@ -129,7 +131,7 @@ const JsonTool: React.FC = () => {
         <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
           <li>字段是对应下方位置字段名称。</li>
           <li>分隔符为每个字段间分割字符串。</li>
-          <li>JSON格式化工具，如果出现错误或者没有结果，请检查是否正确。</li>
+          <li>如果出现错误或者没有结果，请检查输入是否正确。</li>
         </ul>
       </div>
     </div>

@@ -33,7 +33,7 @@ const SplitTool: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="space-y-6">
       {/* 原分隔符 */}
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
@@ -44,7 +44,7 @@ const SplitTool: React.FC = () => {
         <input
           type="text"
           placeholder="----"
-          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
           value={originalDelimiter}
           onChange={(e) => setOriginalDelimiter(e.target.value)}
         />
@@ -75,7 +75,7 @@ const SplitTool: React.FC = () => {
         <input
           type="text"
           placeholder="输入新分割符 EXP (:)"
-          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 h-[42px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
           value={newDelimiter}
           onChange={(e) => setNewDelimiter(e.target.value)}
         />
@@ -107,14 +107,14 @@ const SplitTool: React.FC = () => {
       <div className="flex">
         <button
           onClick={handleConvert}
-          className="py-[10.5px] px-6 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+          className="h-[42px] px-6 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
         >
           格式化
         </button>
       </div>
 
       {/* 使用提示 */}
-      <div className="mt-6 bg-[#009688]/5 border border-[#009688]/20 rounded-lg p-4">
+      <div className="mt-6 bg-[#009688]/5 border border-[#009688]/20 rounded-md p-4">
         <h3 className="text-gray-800 font-medium mb-2">使用提示</h3>
         <ol className="text-sm text-gray-700 list-decimal list-inside space-y-2">
           <li>分隔符为每个字段间分割字符串</li>

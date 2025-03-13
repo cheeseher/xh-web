@@ -50,7 +50,7 @@ const OrderQueryPage: React.FC = () => {
         </div>
         
         {/* 通知提示区域 */}
-        <div className="bg-[#009688]/10 border-l-4 border-[#009688] px-4 py-3 mb-6 rounded-md">
+        <div className="bg-[#009688]/10 border-l-4 border-[#009688] px-4 py-[10.5px] mb-6 rounded-md">
           <div className="flex items-center">
             <div className="flex-shrink-0 text-[#009688]">
               <FaInfoCircle className="h-5 w-5" />
@@ -79,7 +79,7 @@ const OrderQueryPage: React.FC = () => {
                   value={orderId}
                   onChange={(e) => setOrderId(e.target.value)}
                   placeholder="请输入您的订单号"
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                 />
               </div>
             </div>
@@ -98,7 +98,7 @@ const OrderQueryPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="请输入查询密码"
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                 />
               </div>
             </div>
@@ -118,11 +118,11 @@ const OrderQueryPage: React.FC = () => {
                     value={verificationCode}
                     onChange={(e) => setVerificationCode(e.target.value)}
                     placeholder="请输入验证码"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                   />
                 </div>
                 <div 
-                  className="h-12 w-32 bg-gray-100 rounded-lg flex items-center justify-center cursor-pointer overflow-hidden border border-gray-200 hover:border-gray-300 transition-colors"
+                  className="h-[42px] w-32 bg-gray-100 rounded-lg flex items-center justify-center cursor-pointer overflow-hidden border border-gray-200 hover:border-gray-300 transition-colors"
                   onClick={handleRefreshVerificationCode}
                 >
                   <img src="/images/captcha.png" alt="验证码" className="h-full object-cover" />
@@ -148,7 +148,7 @@ const OrderQueryPage: React.FC = () => {
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-3 bg-[#009688] text-white rounded-lg hover:bg-[#00796b] transition-colors flex items-center justify-center"
+                className="w-full py-[10.5px] bg-[#009688] text-white rounded-lg hover:bg-[#00796b] transition-colors flex items-center justify-center"
                 disabled={loading}
               >
                 <FaSearch className="mr-2" />
