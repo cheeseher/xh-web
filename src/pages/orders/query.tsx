@@ -79,7 +79,7 @@ const OrderQueryPage: React.FC = () => {
                   value={orderId}
                   onChange={(e) => setOrderId(e.target.value)}
                   placeholder="请输入您的订单号"
-                  className="w-full pl-10 pr-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                  className="w-full pl-10 pr-4 h-[42px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                 />
               </div>
             </div>
@@ -98,7 +98,7 @@ const OrderQueryPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="请输入查询密码"
-                  className="w-full pl-10 pr-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                  className="w-full pl-10 pr-4 h-[42px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                 />
               </div>
             </div>
@@ -107,7 +107,7 @@ const OrderQueryPage: React.FC = () => {
               <label htmlFor="verificationCode" className="block text-sm font-medium text-gray-700 mb-1">
                 验证码
               </label>
-              <div className="flex items-center space-x-3">
+              <div className="flex space-x-2">
                 <div className="relative flex-1">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <FaShieldAlt className="h-5 w-5 text-gray-400" />
@@ -118,14 +118,14 @@ const OrderQueryPage: React.FC = () => {
                     value={verificationCode}
                     onChange={(e) => setVerificationCode(e.target.value)}
                     placeholder="请输入验证码"
-                    className="w-full pl-10 pr-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                    className="w-full pl-10 pr-4 h-[42px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                   />
                 </div>
                 <div 
-                  className="h-[42px] w-32 bg-gray-100 rounded-lg flex items-center justify-center cursor-pointer overflow-hidden border border-gray-200 hover:border-gray-300 transition-colors"
+                  className="w-32 h-[42px] bg-gray-100 rounded-lg flex items-center justify-center cursor-pointer"
                   onClick={handleRefreshVerificationCode}
                 >
-                  <img src="/images/captcha.png" alt="验证码" className="h-full object-cover" />
+                  <span className="text-sm text-gray-500">点击刷新</span>
                 </div>
               </div>
             </div>
@@ -134,8 +134,8 @@ const OrderQueryPage: React.FC = () => {
               <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <svg className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div className="ml-3">
@@ -145,83 +145,99 @@ const OrderQueryPage: React.FC = () => {
               </div>
             )}
             
-            <div className="pt-2">
+            <div>
               <button
                 type="submit"
-                className="w-full py-[10.5px] bg-[#009688] text-white rounded-lg hover:bg-[#00796b] transition-colors flex items-center justify-center"
                 disabled={loading}
+                className={`w-full h-[42px] flex items-center justify-center rounded-lg ${
+                  loading ? 'bg-gray-400' : 'bg-[#009688] hover:bg-[#00796b]'
+                } text-white transition-colors`}
               >
-                <FaSearch className="mr-2" />
-                {loading ? '查询中...' : '查询订单'}
+                {loading ? (
+                  <span>查询中...</span>
+                ) : (
+                  <>
+                    <FaSearch className="mr-2" />
+                    <span>查询订单</span>
+                  </>
+                )}
               </button>
-              <p className="mt-3 text-sm text-gray-500 flex items-center justify-center">
-                <FaInfoCircle className="mr-1" />
-                查询不到订单？请检查输入信息是否正确
-              </p>
             </div>
           </form>
         </div>
         
+        {/* 查询结果 */}
         {searchResult && (
-          <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
-            <div className="flex items-center border-b border-gray-200 pb-4 mb-6">
-              <FaShoppingBag className="text-[#009688] text-xl mr-3" />
-              <h2 className="text-xl font-bold text-gray-800">订单详情</h2>
-            </div>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+              <FaShoppingBag className="mr-2 text-[#009688]" />
+              订单详情
+            </h2>
             
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 p-4 rounded-lg hover:shadow-md transition-shadow">
-                  <p className="text-sm text-gray-500 mb-1">订单号</p>
-                  <p className="font-medium text-gray-800 flex items-center">
-                    <FaClipboard className="text-[#009688] mr-2" />
-                    {searchResult.orderId}
-                  </p>
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-gray-50 p-4 rounded-md">
+                  <div className="text-sm text-gray-500 mb-1 flex items-center">
+                    <FaClipboard className="mr-1" />
+                    订单号
+                  </div>
+                  <div className="font-medium">{searchResult.orderId}</div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg hover:shadow-md transition-shadow">
-                  <p className="text-sm text-gray-500 mb-1">商品名称</p>
-                  <p className="font-medium text-gray-800 flex items-center">
-                    <FaShoppingBag className="text-[#009688] mr-2" />
-                    {searchResult.productName}
-                  </p>
+                
+                <div className="bg-gray-50 p-4 rounded-md">
+                  <div className="text-sm text-gray-500 mb-1">商品名称</div>
+                  <div className="font-medium">{searchResult.productName}</div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg hover:shadow-md transition-shadow">
-                  <p className="text-sm text-gray-500 mb-1">订单金额</p>
-                  <p className="font-medium text-[#009688]">¥{searchResult.price.toFixed(2)}</p>
+                
+                <div className="bg-gray-50 p-4 rounded-md">
+                  <div className="text-sm text-gray-500 mb-1 flex items-center">
+                    <FaCalendarAlt className="mr-1" />
+                    创建时间
+                  </div>
+                  <div className="font-medium">{searchResult.createTime}</div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg hover:shadow-md transition-shadow">
-                  <p className="text-sm text-gray-500 mb-1">订单状态</p>
-                  <p className="font-medium text-green-600">{searchResult.status}</p>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg hover:shadow-md transition-shadow">
-                  <p className="text-sm text-gray-500 mb-1">创建时间</p>
-                  <p className="font-medium text-gray-800 flex items-center">
-                    <FaCalendarAlt className="text-[#009688] mr-2" />
-                    {searchResult.createTime}
-                  </p>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg hover:shadow-md transition-shadow">
-                  <p className="text-sm text-gray-500 mb-1">支付时间</p>
-                  <p className="font-medium text-gray-800 flex items-center">
-                    <FaClock className="text-[#009688] mr-2" />
-                    {searchResult.payTime}
-                  </p>
+                
+                <div className="bg-gray-50 p-4 rounded-md">
+                  <div className="text-sm text-gray-500 mb-1 flex items-center">
+                    <FaClock className="mr-1" />
+                    支付时间
+                  </div>
+                  <div className="font-medium">{searchResult.payTime}</div>
                 </div>
               </div>
               
-              <div className="bg-[#009688]/10 p-6 rounded-lg border-l-4 border-[#009688]">
-                <h3 className="font-medium text-gray-800 mb-4 flex items-center">
-                  <FaShieldAlt className="text-[#009688] mr-2" />
-                  账号信息
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-white p-3 rounded-md shadow-sm">
-                    <p className="text-sm text-gray-500 mb-1">账号</p>
-                    <p className="font-medium text-gray-800">{searchResult.account}</p>
+              <div className="border-t pt-4 mt-4">
+                <h3 className="text-lg font-medium text-gray-800 mb-3">账号信息</h3>
+                
+                <div className="bg-gray-50 p-4 rounded-md mb-3">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="text-sm text-gray-500 mb-1">账号</div>
+                      <div className="font-medium">{searchResult.account}</div>
+                    </div>
+                    <button 
+                      className="text-[#009688] hover:text-[#00796b] text-sm flex items-center"
+                      onClick={() => navigator.clipboard.writeText(searchResult.account)}
+                    >
+                      <FaClipboard className="mr-1" />
+                      复制
+                    </button>
                   </div>
-                  <div className="bg-white p-3 rounded-md shadow-sm">
-                    <p className="text-sm text-gray-500 mb-1">密码</p>
-                    <p className="font-medium text-gray-800">{searchResult.password}</p>
+                </div>
+                
+                <div className="bg-gray-50 p-4 rounded-md">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="text-sm text-gray-500 mb-1">密码</div>
+                      <div className="font-medium">{searchResult.password}</div>
+                    </div>
+                    <button 
+                      className="text-[#009688] hover:text-[#00796b] text-sm flex items-center"
+                      onClick={() => navigator.clipboard.writeText('实际密码会在这里显示')}
+                    >
+                      <FaClipboard className="mr-1" />
+                      复制
+                    </button>
                   </div>
                 </div>
               </div>

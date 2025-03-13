@@ -108,7 +108,7 @@ const RegisterPage = () => {
               </h2>
               <p className="mt-2 text-sm text-gray-600">
                 已有账号？
-                <Link href="/login" className="text-primary hover:text-primary-dark ml-1">
+                <Link href="/login" className="text-[#009688] hover:text-[#00796b] ml-1">
                   立即登录
                 </Link>
               </p>
@@ -134,7 +134,7 @@ const RegisterPage = () => {
                     name="nickname"
                     value={formData.nickname}
                     onChange={handleChange}
-                    className={`appearance-none block w-full px-4 py-[10.5px] border ${errors.nickname ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    className={`appearance-none block w-full px-4 h-[42px] border ${errors.nickname ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent`}
                     placeholder="请输入昵称"
                   />
                   <FaUser className="absolute right-3 top-3.5 text-gray-400" />
@@ -156,7 +156,7 @@ const RegisterPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`appearance-none block w-full px-4 py-[10.5px] border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    className={`appearance-none block w-full px-4 h-[42px] border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent`}
                     placeholder="请输入邮箱"
                   />
                   <FaEnvelope className="absolute right-3 top-3.5 text-gray-400" />
@@ -178,7 +178,7 @@ const RegisterPage = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`appearance-none block w-full px-4 py-[10.5px] border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    className={`appearance-none block w-full px-4 h-[42px] border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent`}
                     placeholder="6-16个字符"
                   />
                   <FaLock className="absolute right-3 top-3.5 text-gray-400" />
@@ -200,7 +200,7 @@ const RegisterPage = () => {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className={`appearance-none block w-full px-4 py-[10.5px] border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    className={`appearance-none block w-full px-4 h-[42px] border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent`}
                     placeholder="请再次输入密码"
                   />
                   <FaLock className="absolute right-3 top-3.5 text-gray-400" />
@@ -215,7 +215,7 @@ const RegisterPage = () => {
                 <label htmlFor="captcha" className="block text-sm font-medium text-gray-700">
                   验证码
                 </label>
-                <div className="mt-1 flex items-center space-x-4">
+                <div className="mt-1 flex space-x-2">
                   <div className="relative flex-1">
                     <input
                       type="text"
@@ -223,27 +223,47 @@ const RegisterPage = () => {
                       name="captcha"
                       value={formData.captcha}
                       onChange={handleChange}
-                      className={`appearance-none block w-full px-4 py-[10.5px] border ${errors.captcha ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                      className={`appearance-none block w-full px-4 h-[42px] border ${errors.captcha ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent`}
                       placeholder="请输入验证码"
                     />
+                    {errors.captcha && (
+                      <p className="text-red-500 text-sm mt-1">{errors.captcha}</p>
+                    )}
                   </div>
-                  <Captcha onRefresh={handleCaptchaRefresh} />
+                  <div className="w-32 h-[42px] bg-gray-100 rounded-md overflow-hidden">
+                    <Captcha onRefresh={handleCaptchaRefresh} />
+                  </div>
                 </div>
-                {errors.captcha && (
-                  <p className="text-red-500 text-sm mt-1">{errors.captcha}</p>
-                )}
               </div>
 
-              {/* 提交按钮 */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full flex justify-center py-[10.5px] px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
-                  isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
-                }`}
-              >
-                {isSubmitting ? '注册中...' : '立即注册'}
-              </button>
+              {/* 服务条款 */}
+              <div className="flex items-center">
+                <input
+                  id="terms"
+                  name="terms"
+                  type="checkbox"
+                  className="h-4 w-4 text-[#009688] focus:ring-[#009688] border-gray-300 rounded"
+                />
+                <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
+                  我已阅读并同意
+                  <a href="#" className="text-[#009688] hover:text-[#00796b]">《服务条款》</a>
+                  和
+                  <a href="#" className="text-[#009688] hover:text-[#00796b]">《隐私政策》</a>
+                </label>
+              </div>
+
+              {/* 注册按钮 */}
+              <div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full flex justify-center h-[42px] px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#009688] hover:bg-[#00796b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#009688] ${
+                    isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
+                  }`}
+                >
+                  {isSubmitting ? '注册中...' : '注册'}
+                </button>
+              </div>
             </form>
           </div>
         </div>

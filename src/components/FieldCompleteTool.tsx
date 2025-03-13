@@ -63,7 +63,7 @@ const FieldCompleteTool: React.FC = () => {
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
           <label className="block text-sm font-medium text-gray-700">
-            请填写地字段
+            原分割符
           </label>
         </div>
         <input
