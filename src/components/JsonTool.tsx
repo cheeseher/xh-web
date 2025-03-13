@@ -55,7 +55,7 @@ const JsonTool: React.FC = () => {
         <input
           type="text"
           placeholder="输入分隔符，例如逗号、空格等"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
           value={delimiter}
           onChange={(e) => setDelimiter(e.target.value)}
         />
@@ -71,7 +71,7 @@ const JsonTool: React.FC = () => {
         <input
           type="text"
           placeholder="输入字段名，以空格分割 (EXP: account password)"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
           value={fieldName}
           onChange={(e) => setFieldName(e.target.value)}
         />
@@ -86,7 +86,7 @@ const JsonTool: React.FC = () => {
         </div>
         <textarea
           placeholder="输入平台卡密字符"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] h-32 resize-none transition-all"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] h-32 resize-none transition-all"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
         />
@@ -107,17 +107,17 @@ const JsonTool: React.FC = () => {
         </div>
         <textarea
           placeholder="JSON格式化结果"
-          className="w-full px-4 py-2 border rounded-md bg-gray-50 h-32 resize-none"
+          className="w-full px-4 py-[10.5px] border rounded-md bg-gray-50 h-32 resize-none"
           value={outputText}
           readOnly
         />
       </div>
 
       {/* 操作按钮 */}
-      <div className="flex space-x-4">
+      <div className="flex">
         <button
           onClick={handleFormat}
-          className="flex-1 py-2 px-4 bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all"
+          className="py-[10.5px] px-6 bg-[#009688] text-white rounded-md hover:bg-[#00796b] transition-all"
         >
           格式化
         </button>

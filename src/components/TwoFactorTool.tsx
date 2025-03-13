@@ -22,7 +22,7 @@ const TwoFactorTool: React.FC = () => {
         period: 30
       });
       setCode(totp.generate());
-      setVerificationResult('有效期30秒,请期间点击重新获取');
+      setVerificationResult('有效期 30 秒，过期请点击重新获取');
     } catch (error) {
       setCode('');
       setVerificationResult('密钥格式错误，请输入正确的2FA密钥');
@@ -68,9 +68,18 @@ const TwoFactorTool: React.FC = () => {
             value={secret}
             onChange={(e) => setSecret(e.target.value.toUpperCase())}
             placeholder="输入卡密中2FA代码"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all"
+            className={`w-full px-4 py-[10.5px] border ${verificationResult === '密钥格式错误，请输入正确的2FA密钥' ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] transition-all`}
           />
           <p className="mt-1 text-xs text-gray-500">输入您的2FA密钥，通常是一串字母和数字的组合</p>
+          
+          {/* 错误提示 */}
+          {verificationResult === '密钥格式错误，请输入正确的2FA密钥' && (
+            <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded-md">
+              <p className="text-sm text-red-600 font-medium">
+                密钥格式错误，请输入正确的2FA密钥
+              </p>
+            </div>
+          )}
         </div>
         
         {/* 验证码显示区域 */}
@@ -85,7 +94,7 @@ const TwoFactorTool: React.FC = () => {
                 value={code}
                 readOnly
                 placeholder="点击下方按钮获取验证码"
-                className="w-full px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none bg-gray-50 font-mono text-lg text-center tracking-widest"
+                className={`w-full px-4 py-[10.5px] border ${code ? 'border-[#009688] bg-white font-bold' : 'border-gray-300 bg-gray-50'} rounded-l-lg focus:outline-none font-mono text-lg text-center tracking-widest`}
               />
               {code && (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -98,7 +107,7 @@ const TwoFactorTool: React.FC = () => {
             <button
               onClick={copyCode}
               disabled={!code}
-              className={`px-4 py-3 ${
+              className={`px-4 py-[10.5px] ${
                 copied 
                   ? 'bg-green-600 text-white' 
                   : code 
@@ -112,10 +121,10 @@ const TwoFactorTool: React.FC = () => {
         </div>
         
         {/* 操作按钮 */}
-        <div className="pt-2">
+        <div className="pt-2 flex">
           <button
             onClick={generateCode}
-            className="w-full px-6 py-3 bg-[#009688] text-white rounded-lg hover:bg-[#00796b] transition-all"
+            className="px-6 py-[10.5px] bg-[#009688] text-white rounded-lg hover:bg-[#00796b] transition-all"
           >
             {code ? '重新获取' : '立即获取'}
           </button>
@@ -129,7 +138,7 @@ const TwoFactorTool: React.FC = () => {
           <li>2FA验证码每30秒自动更新一次，请在有效期内使用</li>
           <li>如果验证失败，请检查密钥是否正确，或尝试重新获取验证码</li>
           <li>验证码使用标准TOTP协议生成，与Google Authenticator等应用兼容</li>
-          {verificationResult && verificationResult !== '有效期30秒,请期间点击重新获取' && (
+          {verificationResult && verificationResult !== '有效期 30 秒，过期请点击重新获取' && verificationResult !== '密钥格式错误，请输入正确的2FA密钥' && (
             <li className="text-red-500">{verificationResult}</li>
           )}
         </ol>

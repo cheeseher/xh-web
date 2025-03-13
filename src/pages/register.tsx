@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Layout from '@/components/Layout';
 import Captcha from '@/components/Captcha';
-import { FaUser } from 'react-icons/fa';
+import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -96,113 +97,136 @@ const RegisterPage = () => {
   };
 
   return (
-    <Layout title="注册 - 星海账户" hidePageTitle={true}>
-      <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
-          {/* 页面头部 */}
-          <div className="flex items-center justify-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">
-              <FaUser className="text-primary text-xl" />
+    <Layout title="注册 - 账户商城">
+      <div className="min-h-[600px] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-md w-full">
+          <div className="bg-white rounded-lg shadow-md p-8">
+            {/* 标题 */}
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900">
+                账户注册
+              </h2>
+              <p className="mt-2 text-sm text-gray-600">
+                已有账号？
+                <Link href="/login" className="text-primary hover:text-primary-dark ml-1">
+                  立即登录
+                </Link>
+              </p>
             </div>
-            <div className="ml-4">
-              <h1 className="text-xl font-bold text-gray-900">账户注册</h1>
-              <p className="text-sm text-gray-500">创建您的账户</p>
-            </div>
-          </div>
-          
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <form onSubmit={handleSubmit} className="space-y-4">
+            
+            {/* 注册表单 */}
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              {errors.submit && (
+                <div className="bg-red-50 text-red-700 p-4 rounded-md text-sm">
+                  {errors.submit}
+                </div>
+              )}
+
               {/* 昵称 */}
               <div>
-                <label htmlFor="nickname" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="nickname" className="block text-sm font-medium text-gray-700">
                   昵称
                 </label>
-                <input
-                  type="text"
-                  id="nickname"
-                  name="nickname"
-                  value={formData.nickname}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${errors.nickname ? 'border-red-500' : 'border-gray-300'}`}
-                  placeholder="请输入昵称"
-                />
-                {errors.nickname && (
-                  <p className="text-red-500 text-sm mt-1">{errors.nickname}</p>
-                )}
+                <div className="mt-1 relative">
+                  <input
+                    type="text"
+                    id="nickname"
+                    name="nickname"
+                    value={formData.nickname}
+                    onChange={handleChange}
+                    className={`appearance-none block w-full px-4 py-3 border ${errors.nickname ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    placeholder="请输入昵称"
+                  />
+                  <FaUser className="absolute right-3 top-3.5 text-gray-400" />
+                  {errors.nickname && (
+                    <p className="text-red-500 text-sm mt-1">{errors.nickname}</p>
+                  )}
+                </div>
               </div>
 
               {/* 邮箱 */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   邮箱
                 </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
-                  placeholder="请输入邮箱"
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-                )}
+                <div className="mt-1 relative">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`appearance-none block w-full px-4 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    placeholder="请输入邮箱"
+                  />
+                  <FaEnvelope className="absolute right-3 top-3.5 text-gray-400" />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                  )}
+                </div>
               </div>
 
               {/* 密码 */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   密码
                 </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
-                  placeholder="6-16个字符"
-                />
-                {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-                )}
+                <div className="mt-1 relative">
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className={`appearance-none block w-full px-4 py-3 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    placeholder="6-16个字符"
+                  />
+                  <FaLock className="absolute right-3 top-3.5 text-gray-400" />
+                  {errors.password && (
+                    <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                  )}
+                </div>
               </div>
 
               {/* 确认密码 */}
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
                   确认密码
                 </label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
-                  placeholder="请再次输入密码"
-                />
-                {errors.confirmPassword && (
-                  <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
-                )}
+                <div className="mt-1 relative">
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    className={`appearance-none block w-full px-4 py-3 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                    placeholder="请再次输入密码"
+                  />
+                  <FaLock className="absolute right-3 top-3.5 text-gray-400" />
+                  {errors.confirmPassword && (
+                    <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
+                  )}
+                </div>
               </div>
 
               {/* 验证码 */}
               <div>
-                <label htmlFor="captcha" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="captcha" className="block text-sm font-medium text-gray-700">
                   验证码
                 </label>
-                <div className="flex items-center space-x-4">
-                  <input
-                    type="text"
-                    id="captcha"
-                    name="captcha"
-                    value={formData.captcha}
-                    onChange={handleChange}
-                    className={`flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${errors.captcha ? 'border-red-500' : 'border-gray-300'}`}
-                    placeholder="请输入验证码"
-                  />
+                <div className="mt-1 flex items-center space-x-4">
+                  <div className="relative flex-1">
+                    <input
+                      type="text"
+                      id="captcha"
+                      name="captcha"
+                      value={formData.captcha}
+                      onChange={handleChange}
+                      className={`appearance-none block w-full px-4 py-3 border ${errors.captcha ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                      placeholder="请输入验证码"
+                    />
+                  </div>
                   <Captcha onRefresh={handleCaptchaRefresh} />
                 </div>
                 {errors.captcha && (
@@ -213,16 +237,13 @@ const RegisterPage = () => {
               {/* 提交按钮 */}
               <button
                 type="submit"
-                className="w-full py-2 px-4 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 disabled={isSubmitting}
+                className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
+                  isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
+                }`}
               >
                 {isSubmitting ? '注册中...' : '立即注册'}
               </button>
-
-              {/* 提交错误信息 */}
-              {errors.submit && (
-                <p className="text-red-500 text-sm text-center">{errors.submit}</p>
-              )}
             </form>
           </div>
         </div>

@@ -54,7 +54,7 @@ const CsvTool: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="space-y-4">
       {/* 分隔符 */}
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
@@ -65,7 +65,7 @@ const CsvTool: React.FC = () => {
         <input
           type="text"
           placeholder="----"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
           value={delimiter}
           onChange={(e) => setDelimiter(e.target.value)}
         />
@@ -81,7 +81,7 @@ const CsvTool: React.FC = () => {
         <input
           type="text"
           placeholder="CSV表头 示例: 账号 密码 辅助 (空格分割)"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
           value={csvHeader}
           onChange={(e) => setCsvHeader(e.target.value)}
         />
@@ -96,17 +96,17 @@ const CsvTool: React.FC = () => {
         </div>
         <textarea
           placeholder="输入平台卡密字符"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32 resize-none"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32 resize-none"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
         />
       </div>
 
       {/* 操作按钮 */}
-      <div className="flex space-x-4">
+      <div className="flex">
         <button
           onClick={handleExportCsv}
-          className="flex-1 py-2 px-4 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors flex items-center justify-center"
+          className="py-[10.5px] px-6 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors flex items-center"
         >
           <FaDownload className="mr-2" />
           导出CSV

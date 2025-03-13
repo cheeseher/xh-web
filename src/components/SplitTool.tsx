@@ -44,7 +44,7 @@ const SplitTool: React.FC = () => {
         <input
           type="text"
           placeholder="----"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
           value={originalDelimiter}
           onChange={(e) => setOriginalDelimiter(e.target.value)}
         />
@@ -59,7 +59,7 @@ const SplitTool: React.FC = () => {
         </div>
         <textarea
           placeholder="输入平台卡密字符"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32 resize-none"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32 resize-none"
           value={originalText}
           onChange={(e) => setOriginalText(e.target.value)}
         />
@@ -75,7 +75,7 @@ const SplitTool: React.FC = () => {
         <input
           type="text"
           placeholder="输入新分割符 EXP (:)"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
           value={newDelimiter}
           onChange={(e) => setNewDelimiter(e.target.value)}
         />
@@ -97,17 +97,17 @@ const SplitTool: React.FC = () => {
         </div>
         <textarea
           placeholder="新卡密"
-          className="w-full px-4 py-2 border rounded-md bg-gray-50 h-32 resize-none"
+          className="w-full px-4 py-[10.5px] border rounded-md bg-gray-50 h-32 resize-none"
           value={outputText}
           readOnly
         />
       </div>
 
       {/* 操作按钮 */}
-      <div className="flex space-x-4">
+      <div className="flex">
         <button
           onClick={handleConvert}
-          className="flex-1 py-2 px-4 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+          className="py-[10.5px] px-6 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
         >
           格式化
         </button>

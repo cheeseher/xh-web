@@ -57,7 +57,7 @@ const CookieJsonTool: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* 输入区域 */}
         <div className="space-y-4">
@@ -71,7 +71,7 @@ const CookieJsonTool: React.FC = () => {
               value={domain}
               onChange={(e) => setDomain(e.target.value)}
               placeholder="例如: example.com"
-              className="input"
+              className="w-full px-4 py-[10.5px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
           
@@ -85,7 +85,7 @@ const CookieJsonTool: React.FC = () => {
               onChange={(e) => setCookieText(e.target.value)}
               placeholder="粘贴Cookie字符串，例如: name=value; name2=value2"
               rows={8}
-              className="input"
+              className="w-full px-4 py-[10.5px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
             />
           </div>
           
@@ -93,12 +93,14 @@ const CookieJsonTool: React.FC = () => {
             <div className="text-red-500 text-sm">{error}</div>
           )}
           
-          <button
-            onClick={handleConvert}
-            className="btn btn-primary w-full"
-          >
-            转换为JSON
-          </button>
+          <div className="flex">
+            <button
+              onClick={handleConvert}
+              className="px-6 py-[10.5px] bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+            >
+              转换为JSON
+            </button>
+          </div>
         </div>
         
         {/* 输出区域 */}
@@ -130,7 +132,7 @@ const CookieJsonTool: React.FC = () => {
             value={outputText}
             readOnly
             rows={12}
-            className="input bg-gray-50"
+            className="w-full px-4 py-[10.5px] border border-gray-300 rounded-md bg-gray-50 focus:outline-none resize-none"
             placeholder="转换后的JSON将显示在这里"
           />
         </div>

@@ -85,21 +85,17 @@ const ToolsPage: React.FC = () => {
           </div>
 
           {/* 工具内容区域 */}
-          <div className="p-3 sm:p-6 pt-6 sm:pt-6">
-            <div className="mb-4 sm:mb-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-1">
-                  {tabs.find(tab => tab.id === activeTab)?.name}
-                </h2>
-                <p className="text-xs sm:text-sm text-gray-600">
-                  {getToolDescription(activeTab)}
-                </p>
-              </div>
+          <div className="p-4 sm:p-6">
+            <div className="mb-4">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-1">
+                {tabs.find(tab => tab.id === activeTab)?.name}
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-600">
+                {getToolDescription(activeTab)}
+              </p>
             </div>
             
-            <div className="bg-gray-50 p-3 sm:p-6 rounded-lg border border-gray-200 transition-all duration-300 hover:border-[#009688]/30">
-              {renderTool()}
-            </div>
+            {renderTool()}
           </div>
         </div>
       </div>

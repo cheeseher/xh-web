@@ -42,7 +42,7 @@ const Base64Tool: React.FC = () => {
         value={value}
         readOnly
         placeholder={`${label}将显示在这里`}
-        className="w-full px-4 py-2 border rounded-md bg-gray-50 h-32 resize-none"
+        className="w-full px-4 py-[10.5px] border rounded-md bg-gray-50 h-32 resize-none"
       />
     </div>
   );
@@ -58,7 +58,7 @@ const Base64Tool: React.FC = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="输入卡密中BASE64代码/字符"
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] h-32 resize-none transition-all"
+          className="w-full px-4 py-[10.5px] border rounded-md focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688] h-32 resize-none transition-all"
         />
       </div>
 
@@ -67,12 +67,14 @@ const Base64Tool: React.FC = () => {
       <ResultField label="解码结果" value={decoded} />
 
       {/* 操作按钮 */}
-      <button
-        onClick={handleConvert}
-        className="w-full px-4 py-2 bg-[#009688] text-white rounded hover:bg-[#00796b] transition-all"
-      >
-        编码/解码
-      </button>
+      <div className="flex">
+        <button
+          onClick={handleConvert}
+          className="px-6 py-[10.5px] bg-[#009688] text-white rounded hover:bg-[#00796b] transition-all"
+        >
+          编码/解码
+        </button>
+      </div>
 
       {/* 使用提示 */}
       <div className="bg-[#009688]/5 border border-[#009688]/20 rounded-lg p-4">

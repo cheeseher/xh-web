@@ -23,6 +23,12 @@ const AccountDetailPage: React.FC = () => {
   
   // 折扣信息弹窗状态
   const [showDiscountModal, setShowDiscountModal] = useState(false);
+  
+  // 协议弹窗状态
+  const [showAgreementModal, setShowAgreementModal] = useState(false);
+  const [agreementTimer, setAgreementTimer] = useState<NodeJS.Timeout | null>(null);
+  const [canAgree, setCanAgree] = useState(false);
+  const [countdown, setCountdown] = useState(3);
 
   // 模拟账号数据
   const accountData = {
@@ -131,6 +137,59 @@ const AccountDetailPage: React.FC = () => {
       setNotifyQuantity(value);
     }
   };
+
+  const handleShowAgreement = () => {
+    setShowAgreementModal(true);
+    setCanAgree(false);
+    setCountdown(3);
+    
+    // 倒计时
+    const countdownInterval = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(countdownInterval);
+          setCanAgree(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    
+    // 保存定时器引用以便清除
+    setAgreementTimer(countdownInterval);
+  };
+  
+  const handleAgree = () => {
+    setAgreed(true);
+    setShowAgreementModal(false);
+    
+    // 清除定时器
+    if (agreementTimer) {
+      clearTimeout(agreementTimer);
+    }
+  };
+  
+  // 处理复选框点击
+  const handleCheckboxClick = (e: React.MouseEvent) => {
+    e.preventDefault(); // 阻止默认的复选框切换行为
+    
+    if (!agreed) {
+      // 如果尚未同意，显示协议弹窗
+      handleShowAgreement();
+    } else {
+      // 如果已经同意，直接取消同意
+      setAgreed(false);
+    }
+  };
+
+  useEffect(() => {
+    // 组件卸载时清除定时器
+    return () => {
+      if (agreementTimer) {
+        clearTimeout(agreementTimer);
+      }
+    };
+  }, [agreementTimer]);
 
   return (
     <Layout title={accountData.title + ' - 星海账户'}>
@@ -262,13 +321,12 @@ const AccountDetailPage: React.FC = () => {
                     type="checkbox"
                     id="agreement"
                     checked={agreed}
-                    onChange={(e) => setAgreed(e.target.checked)}
-                    className="mr-2 h-4 w-4 text-[#009688] focus:ring-[#009688] border-gray-300 rounded"
+                    onChange={(e) => {}} // 空的onChange处理器，实际逻辑在点击事件中处理
+                    className="mr-2 h-4 w-4 text-[#009688] focus:ring-[#009688] border-gray-300 rounded cursor-pointer"
+                    onClick={handleCheckboxClick}
                   />
-                  <label htmlFor="agreement" className="text-sm text-gray-600">
-                    我已阅读并承诺遵守本站 
-                    <Link href="/terms" className="text-gray-700 font-medium hover:underline">服务协议</Link> 及 
-                    <Link href="/privacy" className="text-gray-700 font-medium hover:underline">售后协议</Link>
+                  <label htmlFor="agreement" className="text-sm text-gray-600 cursor-pointer" onClick={handleCheckboxClick}>
+                    我已阅读并承诺遵守本站<span className="text-[#009688] font-medium">服务协议</span>及<span className="text-[#009688] font-medium">售后协议</span>
                   </label>
                 </div>
                 
@@ -425,6 +483,59 @@ const AccountDetailPage: React.FC = () => {
             </div>
             <div className="mt-4 text-sm text-gray-500">
               <p>注：批发价格会在结算时自动计算，无需手动输入优惠码。</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 协议弹窗 */}
+      {showAgreementModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-md shadow-xl w-full max-w-3xl max-h-[85vh] overflow-hidden">
+            <div className="p-4 border-b border-gray-200 flex justify-center items-center bg-white">
+              <h3 className="text-xl font-bold text-red-500">服务协议</h3>
+            </div>
+            
+            <div className="p-5 overflow-y-auto max-h-[65vh] bg-white">
+              <div className="space-y-4 text-gray-700">
+                <p>1. 本站不经营/提供/注册任何（中国）科技平台账号业务。</p>
+                <p>2. 本站所有账号为全球（非中国）各科技平台账号，中国地区无法使用，该地区客户不要购买。</p>
+                <p>3. 本站商品为虚拟卡密类的商品；一旦售出且账号均符合产品描述，概不退换退款，亦不会回收已售出账号；如不同意请不要购买，感谢理解。</p>
+                <p>4. 本站只是代注册国外各科技平台账号，账号所有权归账号官网所有，使用需遵守各科技平台规则；我们只保证账号密码正确且符合产品描述。</p>
+                <p>5. 本站所有账号均为国外各大科技平台于正常代注册；所有账号均不包含任何实名信息；如科技平台需要实名认证/手机认证等，请自行完善个人实名信息；</p>
+                <p>6. 请自行保管购买卡密信息，所有商品质保首登，首登后请自行保证卡密安全，本站没有卡密保管义务，本站定期清理；另本站不提供任何商品使用咨询（谢谢理解）。</p>
+                <p>7. 售后请确保符合商品售后规则（详见商品页-售后说明）、且在售后规定时间内进行售后反馈；对于所有商品售后规则以外的使用而导致的问题，不负责售后（谢谢理解）。</p>
+                <p>8. 邮箱账号购买后请尽快登录、检查使用，购买超过售后时间都默认为已经使用，因使用而产生任的何问题均不售后；用途自测，不包长久登录；如使用一段时间出现封号或者其他问题风险自担，不负责售后。</p>
+                <p>9. 售后不做任何技术/方法指导，售后只做邮箱账号是否首登有效，售后不包含邮箱账号使用后遇到的各种问题，使用遇到问题请自行阅读各大官网使用说明（谢谢理解）。</p>
+                <p>10. 客户付款提货后为保证安全，请自行更改密码及密码保护资料等一切可以修改的信息。售后时间内，账号登录出现问题只退换有问题的账号，不对因使用账号产生的问题账号做任何售后。</p>
+                <p>11. 请合法使用购买的账号，对非法使用造成的后果由购买人自行承担一切后果及法律责任，本站不承担任何法律及连带责任！。</p>
+                <p>12. 严禁利用本站所购买之账号用于任何非法用途！其中包括：（诈骗信息推广，赌博信息推广，违规信息推广，虚假信息推广，影响网络环境，黄赌毒等以及其他任何非法用途等）。</p>
+                <p>13. 严禁使用本站任何账号用于任何营销类、群发类、发信类、中国业务，该类业务客户请勿购买，一旦发现立马封号；只可用于游戏、娱乐、学习等其他个人正常合法用途。</p>
+                <p>14. 本站出售账号仅可用于个人正规合法业务，严禁使用本站购买账号用于非法用途，请遵守各国地区法律法规。</p>
+                <p>15. 本站所有商品禁止未成年用户购买，如未满足各个国家法定成年标准年龄，请自觉离开，感谢理解。</p>
+                <p>16. 凡在本站购买的用户，一旦本站发现用于非法用途，本站将全力配合有关部门予以打击！</p>
+                <p>17. 除非您已充分阅读、完全理解并接受本协议所有条款，否则您无权购买本站商品以及使用本站服务。您点击勾选同意，或您使用本站服务，或者以其他任何明示或者默示方式表示接受本协议的，均视为您已阅读并同意签署本协议。本协议即在您与本站之间产生法律效力，成为对双方均具有约束力的法律文件。</p>
+              </div>
+            </div>
+            
+            <div className="p-4 border-t border-gray-200 flex justify-center items-center space-x-4">
+              <button
+                onClick={handleAgree}
+                disabled={!canAgree}
+                className={`px-8 py-2 rounded-md ${
+                  canAgree 
+                    ? 'bg-[#009688] text-white hover:bg-[#00796b]' 
+                    : 'bg-gray-300 text-gray-700'
+                } transition-all min-w-[120px]`}
+              >
+                {!canAgree ? `阅读剩余${countdown}秒` : '我同意'}
+              </button>
+              <button
+                onClick={() => setShowAgreementModal(false)}
+                className="px-8 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all min-w-[120px]"
+              >
+                我不同意
+              </button>
             </div>
           </div>
         </div>
