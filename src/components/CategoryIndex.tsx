@@ -91,13 +91,13 @@ const CategoryIndex: React.FC<CategoryIndexProps> = ({ onCategoryClick, activeCa
   // 移动端水平滚动栏
   const renderMobileScrollbar = () => {
     return (
-      <div className="overflow-x-auto whitespace-nowrap py-2 px-3">
+      <div className="overflow-x-auto whitespace-nowrap py-3 px-4">
         {getOrderedCategories().map((category) => (
           category && (
             <button
               key={category.id}
               onClick={() => onCategoryClick(category.id)}
-              className={`inline-block px-3 py-1.5 first:ml-0 last:mr-0 mx-0.5 text-sm rounded-full ${
+              className={`inline-block px-4 py-2 first:ml-0 last:mr-0 mx-1 text-sm rounded-full ${
                 activeCategory === category.id
                   ? 'bg-gray-800 text-white'
                   : 'bg-gray-100/80 backdrop-blur-sm text-gray-700 hover:bg-gray-200'
@@ -114,31 +114,30 @@ const CategoryIndex: React.FC<CategoryIndexProps> = ({ onCategoryClick, activeCa
   // 桌面端垂直索引
   const renderDesktopIndex = () => {
     return (
-      <div className="fixed top-[45%] transform -translate-y-1/2 z-50 hidden md:block" style={{ right: '28px' }}>
+      <div className="fixed top-[45%] transform -translate-y-1/2 z-50 hidden md:block" style={{ right: '16px' }}>
         <div 
-          className="bg-white/90 backdrop-blur-sm rounded-lg shadow-md p-2 max-h-[70vh] overflow-y-auto hover:bg-white transition-colors duration-200"
-          style={{ width: '130px' }}
+          className="bg-white/90 backdrop-blur-sm rounded-lg shadow-md p-2 max-h-[650px] overflow-y-auto hover:bg-white transition-colors duration-200"
+          style={{ width: '150px' }}
         >
-          <div className="p-1 border-b border-gray-100 text-center">
-            <h3 className="text-xs font-medium">索引</h3>
+          <div className="p-1 border-b border-gray-100 text-center mb-1">
+            <h3 className="text-sm font-medium">索引</h3>
           </div>
-          <ul className="space-y-0.5 pt-1">
+          <div className="grid grid-cols-1 gap-0.5">
             {getOrderedCategories().map((category) => (
               category && (
-                <li key={category.id} className="px-1">
+                <div 
+                  key={category.id}
+                  className={`flex items-center cursor-pointer px-2 py-[5px] rounded hover:bg-gray-50 ${activeCategory === category.id ? 'text-[#009688] font-medium' : 'text-gray-600'}`}
+                  onClick={() => onCategoryClick(category.id)}
+                >
                   <div 
-                    className={`flex items-center cursor-pointer py-1 ${activeCategory === category.id ? 'text-[#009688] font-medium' : 'text-gray-600'}`}
-                    onClick={() => onCategoryClick(category.id)}
-                  >
-                    <div 
-                      className={`w-1 h-1 rounded-full mr-1.5 flex-shrink-0 ${activeCategory === category.id ? 'bg-[#009688]' : 'bg-gray-700'}`}
-                    ></div>
-                    <span className="text-xs">{category.name}</span>
-                  </div>
-                </li>
+                    className={`w-1.5 h-1.5 rounded-full mr-1.5 flex-shrink-0 ${activeCategory === category.id ? 'bg-[#009688]' : 'bg-gray-700'}`}
+                  ></div>
+                  <span className="text-sm truncate">{category.name}</span>
+                </div>
               )
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     );
