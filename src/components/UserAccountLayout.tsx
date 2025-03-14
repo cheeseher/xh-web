@@ -59,7 +59,7 @@ const InfoContent = () => {
       </div>
       
       {/* 账户信息卡片 - 与充值页面保持一致 */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-6">
+      <div className="bg-white sm:p-6 p-3 rounded-xl shadow-sm sm:border sm:border-gray-100 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* 账号信息 */}
           <div>
@@ -67,7 +67,7 @@ const InfoContent = () => {
               <FaUser className="text-gray-400" />
               <h2 className="text-lg font-semibold text-gray-900">账号信息</h2>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg space-y-4">
+            <div className="bg-transparent sm:bg-gray-50 p-2 sm:p-4 rounded-lg space-y-4">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
                 <span className="text-sm text-gray-500 mb-1 sm:mb-0">账户昵称</span>
                 <span className="font-medium text-gray-900">{userAccount.username}</span>
@@ -76,11 +76,13 @@ const InfoContent = () => {
                 <span className="text-sm text-gray-500 mb-1 sm:mb-0">账户邮箱</span>
                 <span className="font-medium text-gray-900 break-all">{userAccount.email}</span>
               </div>
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                <span className="text-sm text-gray-500 mb-1 sm:mb-0">会员等级</span>
-                <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium">
-                  VIP{userAccount.vipLevel}
-                </span>
+              <div className="flex flex-row justify-between items-center">
+                <span className="text-sm text-gray-500">会员等级</span>
+                <div className="flex justify-end">
+                  <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium">
+                    VIP{userAccount.vipLevel}
+                  </span>
+                </div>
               </div>
               
               {/* VIP等级进度条 */}
@@ -116,7 +118,7 @@ const InfoContent = () => {
               <FaWallet className="text-gray-400" />
               <h2 className="text-lg font-semibold text-gray-900">余额信息</h2>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg space-y-4 flex-grow">
+            <div className="bg-transparent sm:bg-gray-50 p-2 sm:p-4 rounded-lg space-y-4 flex-grow">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-500">当前余额</span>
                 <span className="font-medium text-2xl text-primary">{userAccount.balance} 元</span>
@@ -1374,7 +1376,7 @@ const UserAccountLayout: React.FC<UserAccountLayoutProps> = ({
           </div>
           
           {/* 右侧内容区域 - 统一宽度 */}
-          <div className="w-full bg-white rounded-lg shadow-sm p-2 md:p-6 h-[calc(100vh-200px)] md:h-[calc(100vh-200px)] overflow-auto pb-20 md:pb-6">
+          <div className="w-full bg-white rounded-lg shadow-sm p-2 md:p-6 h-auto md:h-[calc(100vh-200px)] overflow-visible md:overflow-auto pb-20 md:pb-6">
             {renderContent()}
           </div>
         </div>
