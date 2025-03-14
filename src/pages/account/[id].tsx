@@ -226,7 +226,7 @@ const AccountDetailPage: React.FC = () => {
 
   return (
     <Layout title={accountData.title + ' - 星海账户'}>
-      <div className="max-w-6xl mx-auto py-4 px-2 sm:px-4">
+      <div className="max-w-6xl mx-auto py-4 px-[8px] sm:px-4">
         {/* 面包屑导航 */}
         <div className="mb-4">
           <div className="flex items-center text-sm mb-2">
@@ -311,50 +311,56 @@ const AccountDetailPage: React.FC = () => {
             <h1 className="text-2xl font-bold text-gray-800 mb-4">{accountData.title}</h1>
             
             {/* 价格信息卡片 */}
-            <div className="bg-[#fff2e8] p-5 rounded-lg shadow-sm mb-5 relative">
-              <div className="absolute top-5 right-5 flex items-center text-sm space-x-3">
-                <span className="text-gray-700 font-medium">库存: <span className="text-green-600">{accountData.stock}</span></span>
-                <span className="text-gray-300">|</span>
-                <span 
-                  className="text-gray-700 hover:text-gray-900 cursor-pointer hover:underline flex items-center" 
-                  onClick={handleNotifyClick}
-                >
-                  <FaInfoCircle className="mr-1" />
-                  通知补货
-                </span>
+            <div className="bg-[#fff2e8] p-4 rounded-lg shadow-sm mb-5">
+              {/* 价格和库存信息 */}
+              <div className="flex justify-between items-start mb-3">
+                <div className="flex flex-col">
+                  <div className="flex items-baseline">
+                    <span className="text-gray-600 mr-2 font-medium">价格</span>
+                    <span className="text-red-500 text-2xl font-bold">¥{accountData.price.toFixed(2)}</span>
+                    <span className="text-gray-400 line-through ml-2 text-sm">¥{accountData.originalPrice.toFixed(2)}</span>
+                  </div>
+                </div>
+                <div className="text-sm">
+                  <span className="text-gray-700 font-medium">库存: <span className="text-green-600">{accountData.stock}</span></span>
+                  <button 
+                    className="ml-2 text-gray-700 hover:text-gray-900 text-sm underline"
+                    onClick={handleNotifyClick}
+                  >
+                    通知补货
+                  </button>
+                </div>
               </div>
-              <div className="flex items-baseline mb-3">
-                <span className="text-gray-600 mr-3 font-medium">价格</span>
-                <span className="text-red-500 text-3xl font-bold">¥{accountData.price.toFixed(2)}</span>
-                <span className="text-gray-400 line-through ml-3">¥{accountData.originalPrice.toFixed(2)}</span>
-              </div>
-              <div className="flex items-center mt-2">
-                <span className="text-gray-600 mr-3 font-medium">批发价</span>
-                <span className="bg-[#ef4444] text-white text-xs px-3 py-1 rounded-md">{accountData.batchPrice}</span>
-                <span className="bg-[#ef4444] text-white text-xs px-3 py-1 rounded-md ml-2">大于1000单价¥3.78</span>
-                <span 
-                  className="ml-3 text-gray-700 cursor-pointer hover:text-gray-900 flex items-center"
-                  onClick={() => setShowDiscountModal(true)}
-                >
-                  <span className="underline">查看详细批发价格</span>
-                </span>
+              
+              {/* 批发价信息 */}
+              <div className="mt-3">
+                <div className="flex flex-wrap gap-2">
+                  <span className="bg-[#ef4444] text-white text-xs px-2 py-1 rounded-md">大于500单价¥3.99</span>
+                  <span className="bg-[#ef4444] text-white text-xs px-2 py-1 rounded-md">大于1000单价¥3.78</span>
+                  <button 
+                    className="text-gray-700 hover:text-gray-900 text-xs underline"
+                    onClick={() => setShowDiscountModal(true)}
+                  >
+                    查看详细批发价格
+                  </button>
+                </div>
               </div>
             </div>
             
             {/* 购买信息表单 */}
             <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
               <div className="space-y-5">
-                <div className="flex items-center">
-                  <span className="text-gray-700 w-24 font-medium">数量</span>
-                  <div className="flex-1 flex items-center">
+                <div className="flex flex-col sm:flex-row sm:items-center">
+                  <span className="text-gray-700 w-24 font-medium mb-2 sm:mb-0">数量</span>
+                  <div className="flex-1 flex flex-col sm:flex-row sm:items-center">
                     <input
                       type="number"
                       min="1"
                       value={quantity}
                       onChange={handleQuantityChange}
-                      className="w-2/3 px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                      className="w-full sm:w-2/3 px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                     />
-                    <div className="ml-4 relative">
+                    <div className="mt-2 sm:mt-0 sm:ml-4 relative">
                       <span className="text-gray-700 flex items-center">
                         <FaInfoCircle 
                           className="mr-1 text-gray-400 cursor-pointer" 
@@ -366,33 +372,33 @@ const AccountDetailPage: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center">
-                  <span className="text-gray-700 w-24 font-medium">接收邮箱</span>
-                  <div className="flex-1 flex items-center">
+                <div className="flex flex-col sm:flex-row sm:items-center">
+                  <span className="text-gray-700 w-24 font-medium mb-2 sm:mb-0">接收邮箱</span>
+                  <div className="flex-1 flex flex-col sm:flex-row sm:items-center">
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="账号密码将发送至此邮箱"
                       disabled={user && user.email ? true : false}
-                      className={`w-2/3 px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent ${user && user.email ? 'bg-gray-50' : ''}`}
+                      className={`w-full sm:w-2/3 px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent ${user && user.email ? 'bg-gray-50' : ''}`}
                     />
-                    <div className="ml-4 flex items-center space-x-2">
+                    <div className="mt-2 sm:mt-0 sm:ml-4 flex items-center space-x-2">
                       <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium">{getMemberLevel()}</span>
                       {user && <span className="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">{getMemberDiscountText()}</span>}
                     </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center">
-                  <span className="text-gray-700 w-24 font-medium">查询密码</span>
-                  <div className="flex-1 flex items-center">
+                <div className="flex flex-col sm:flex-row sm:items-center">
+                  <span className="text-gray-700 w-24 font-medium mb-2 sm:mb-0">查询密码</span>
+                  <div className="flex-1 flex flex-col sm:flex-row sm:items-center">
                     <input
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="填写您于自身记忆的查询密码"
-                      className="w-2/3 px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                      className="w-full sm:w-2/3 px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                     />
                   </div>
                 </div>
