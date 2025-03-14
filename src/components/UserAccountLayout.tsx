@@ -1339,7 +1339,7 @@ const UserAccountLayout: React.FC<UserAccountLayoutProps> = ({
   };
 
   return (
-    <Layout title={`${title} - 账户商城`}>
+    <Layout title={`${title} - 星海账户`} hidePageTitle={true}>
       <div className="max-w-6xl mx-0 md:mx-4 py-4">
         <div className="flex flex-col md:flex-row gap-4">
           {/* 左侧导航菜单 - 桌面端 */}

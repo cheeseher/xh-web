@@ -22,6 +22,39 @@ const RechargePage: React.FC = () => {
     return null;
   }
 
+  // 计算VIP等级进度
+  const calculateVipProgress = () => {
+    // VIP等级阈值
+    const vipThresholds = [0, 500, 2000];
+    
+    // 当前VIP等级
+    const currentVipLevel = user.vipLevel || 1;
+    
+    // 如果已经是最高等级
+    if (currentVipLevel >= vipThresholds.length - 1) {
+      return {
+        progress: 100,
+        nextLevelDiff: 0,
+        isMaxLevel: true
+      };
+    }
+    
+    // 假设当前累计充值为500元
+    const totalRecharge = 500;
+    const currentThreshold = vipThresholds[currentVipLevel - 1];
+    const nextThreshold = vipThresholds[currentVipLevel];
+    const progress = Math.min(100, Math.round((totalRecharge - currentThreshold) / (nextThreshold - currentThreshold) * 100));
+    const nextLevelDiff = nextThreshold - totalRecharge;
+    
+    return {
+      progress,
+      nextLevelDiff,
+      isMaxLevel: false
+    };
+  };
+  
+  const vipProgress = calculateVipProgress();
+
   const handleAmountSelect = (amount: number) => {
     setSelectedAmount(amount);
     setCustomAmount('');
@@ -43,9 +76,9 @@ const RechargePage: React.FC = () => {
 
   return (
     <Layout title="账户充值 - 星海账户" hidePageTitle={true}>
-      <div className="max-w-4xl mx-auto py-8 px-2 sm:px-4">
+      <div className="max-w-4xl mx-auto py-2 sm:py-4 px-2 sm:px-4">
         {/* 页面头部 */}
-        <div className="flex items-center mb-6">
+        <div className="flex items-center mb-4">
           <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">
             <FaWallet className="text-primary text-xl" />
           </div>
@@ -79,6 +112,31 @@ const RechargePage: React.FC = () => {
                     VIP{user.vipLevel || 1}
                   </span>
                 </div>
+                
+                {/* VIP等级进度条 */}
+                {!vipProgress.isMaxLevel ? (
+                  <div className="mt-2">
+                    <div className="flex justify-between items-center text-xs text-gray-500 mb-1">
+                      <span>VIP{user.vipLevel || 1}</span>
+                      <span>VIP{(user.vipLevel || 1) + 1}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                        <div 
+                          className="bg-yellow-500 h-2.5 rounded-full" 
+                          style={{ width: `${vipProgress.progress}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    <div className="text-right mt-1">
+                      <span className="text-xs text-gray-500">还差{vipProgress.nextLevelDiff}元升级</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-2 text-right">
+                    <span className="text-xs text-gray-500">已达最高等级</span>
+                  </div>
+                )}
               </div>
             </div>
 

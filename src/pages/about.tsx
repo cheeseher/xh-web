@@ -5,10 +5,10 @@ import Link from 'next/link';
 const AboutPage: React.FC = () => {
   return (
     <Layout title="关于我们 - 星海账户" description="了解星海账户的联系方式和服务协议" hidePageTitle={true}>
-      <div className="max-w-4xl mx-auto py-8 px-2 sm:px-4">
-        <h1 className="text-2xl font-bold mb-6">关于我们</h1>
+      <div className="max-w-4xl mx-auto py-2 sm:py-4 px-2 sm:px-4">
+        <h1 className="text-2xl font-bold mb-3 sm:mb-4">关于我们</h1>
         
-        <div className="mb-8">
+        <div className="mb-6">
           <h2 className="text-xl font-bold mb-4 pb-2 border-b border-gray-200">联系方式</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li>

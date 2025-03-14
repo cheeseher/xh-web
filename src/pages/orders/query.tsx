@@ -118,8 +118,8 @@ const OrderQueryPage: React.FC = () => {
 
   return (
     <Layout title="订单查询 - 星海账户" showAlert={false} hidePageTitle={true}>
-      <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
-        <h1 className="text-2xl font-bold mb-4 sm:mb-6">订单查询</h1>
+      <div className="max-w-6xl mx-auto py-2 sm:py-4 px-2 sm:px-4">
+        <h1 className="text-2xl font-bold mb-3 sm:mb-4">订单查询</h1>
         
         {/* 主内容区域 - 移动端无背景卡片，桌面端有背景卡片 */}
         <div className="lg:bg-white lg:rounded-lg lg:shadow-sm lg:p-6 lg:mt-4">
