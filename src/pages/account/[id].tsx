@@ -244,7 +244,7 @@ const AccountDetailPage: React.FC = () => {
         <div className="flex flex-col md:flex-row gap-6 mb-6">
           {/* 左侧产品图片 */}
           <div className="md:w-1/4 flex-shrink-0">
-            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm h-full flex items-center justify-center">
+            <div className="bg-white p-[6px] rounded-lg border border-gray-200 shadow-sm h-full flex items-center justify-center">
               <div className="w-full aspect-square flex items-center justify-center">
                 {String(id).includes('gmail') && (
                   <Image 
@@ -259,15 +259,25 @@ const AccountDetailPage: React.FC = () => {
                   <FaMicrosoft className="text-6xl sm:text-7xl text-blue-500" />
                 )}
                 {String(id).includes('instagram') && (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <Image 
-                      src="/images/instagram.png" 
-                      alt="Instagram账号" 
-                      width={180} 
-                      height={180}
-                      className="object-contain"
-                      priority
-                    />
+                  <div className="w-full h-full p-[6px]">
+                    <div className="w-full h-full border border-gray-300 border-dashed rounded-lg grid grid-cols-3 grid-rows-3 bg-gray-100">
+                      <div className="border-b border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                      <div className="border-b border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                      <div className="border-b border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                      <div className="border-b border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                      <div className="border-b border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center">
+                        <div className="text-center">
+                          <FaInstagram className="text-5xl text-gray-500 mx-auto mb-1" />
+                          <div className="text-sm text-gray-500">
+                            正方形图片
+                          </div>
+                        </div>
+                      </div>
+                      <div className="border-b border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                      <div className="border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                      <div className="border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                      <div className="flex items-center justify-center"></div>
+                    </div>
                   </div>
                 )}
                 {String(id).includes('twitter') && (
