@@ -778,51 +778,76 @@ const OrderContent = () => {
               </button>
             </div>
             <div className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <div>
-                  <p className="text-sm text-gray-500">订单号</p>
-                  <p className="font-medium">{currentOrder.orderNumber}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">下单时间</p>
-                  <p className="font-medium">{currentOrder.orderTime}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">商品名称</p>
-                  <p className="font-medium">{currentOrder.productName}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">订单金额</p>
-                  <p className="font-medium text-[#009688]">¥{currentOrder.totalAmount.toFixed(2)}</p>
-                </div>
-              </div>
-              
-              <div className="border-t border-gray-200 pt-4 mb-6">
-                <h4 className="font-medium mb-3">账号信息</h4>
-                <div className="bg-gray-50 p-4 rounded-md mb-4 relative">
-                  <pre className="text-sm whitespace-pre-wrap break-all">{currentOrder.cardInfo}</pre>
+              <div className="mb-6">
+                <div className="flex justify-end mb-2">
                   <button 
                     onClick={() => handleCopyText(currentOrder.cardInfo)}
-                    className="absolute top-2 right-2 text-[#009688] hover:text-[#00796b]"
+                    className="flex items-center text-sm text-[#009688] hover:text-[#00796b]"
                     title="复制"
                   >
-                    <FaCopy />
+                    <FaCopy className="mr-1" />
+                    复制
                   </button>
                   {copySuccess && (
-                    <div className="absolute top-2 right-8 bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
+                    <div className="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
                       {copySuccess}
                     </div>
                   )}
                 </div>
-              </div>
-              
-              <div className="flex justify-start">
-                <button
-                  onClick={() => setShowOrderModal(false)}
-                  className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
-                >
-                  关闭
-                </button>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full">
+                    <thead>
+                      <tr className="bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-4 py-2 w-16">序号</th>
+                        <th className="px-4 py-2">卡密信息</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      <tr className="bg-gray-50">
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                          1
+                        </td>
+                        <td className="px-4 py-3">
+                          <div className="font-medium break-all text-sm">
+                            {currentOrder.cardInfo} 格式：账号----密码----辅助邮箱（用于登录确认输入）
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                {/* Element UI 风格的分页器 */}
+                <div className="flex justify-end items-center mt-4">
+                  <div className="flex border border-gray-300 rounded-md overflow-hidden">
+                    <button 
+                      className="px-3 py-1 flex items-center text-gray-700 hover:bg-gray-100 border-r border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed"
+                      disabled={true}
+                    >
+                      <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    
+                    <button
+                      className="px-3 py-1 bg-[#009688] text-white"
+                    >
+                      1
+                    </button>
+                    
+                    <button 
+                      className="px-3 py-1 flex items-center text-gray-700 hover:bg-gray-100 border-l border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed"
+                      disabled={true}
+                    >
+                      <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                  <span className="ml-2 text-gray-500 text-xs">
+                    共 1 条，1 页
+                  </span>
+                </div>
               </div>
             </div>
           </div>
