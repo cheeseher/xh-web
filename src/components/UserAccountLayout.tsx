@@ -1269,20 +1269,24 @@ const UserAccountLayout: React.FC<UserAccountLayoutProps> = ({
   defaultTab = 'info'
 }) => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState(defaultTab);
+  const [activeTab, setActiveTab] = useState('info');
   const { logout } = useUser();
 
   // 初始化activeTab
   useEffect(() => {
     // 从URL中获取tab参数
     const { tab } = router.query;
-    if (tab) {
-      setActiveTab(tab as string);
+    if (tab && typeof tab === 'string') {
+      setActiveTab(tab);
     } else {
-      // 如果URL中没有tab参数，默认设置为'info'
+      // 如果URL中没有tab参数，确保设置为'info'
       setActiveTab('info');
+      // 可选：更新URL以反映默认标签
+      if (router.isReady) {
+        router.replace('/user/account?tab=info', undefined, { shallow: true });
+      }
     }
-  }, [router.query, defaultTab]);
+  }, [router.query, router.isReady]);
 
   const menuItems = [
     { id: 'info', name: '我的信息', icon: <FaInfoCircle className="mr-2" />, mobileIcon: <FaInfoCircle />, path: '/user/account?tab=info' },

@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
                         <p className="text-xs text-gray-500 mt-1"></p>
                       </div>
                       <Link
-                        href="/user/account?tab=profile"
+                        href="/user/account"
                         className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         <FaUser className="mr-2 text-gray-500" /> 我的账户
@@ -259,7 +259,7 @@ const Navbar: React.FC = () => {
             {user && (
               <div className="border-t border-gray-200 pt-4 space-y-1">
                 <Link
-                  href="/user/account?tab=profile"
+                  href="/user/account"
                   className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md"
                   onClick={() => setIsMenuOpen(false)}
                 >
