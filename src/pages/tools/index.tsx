@@ -53,15 +53,14 @@ const ToolsPage: React.FC = () => {
 
   return (
     <Layout title="实用工具 - 星海账户" showAlert={false} hidePageTitle={true}>
-      <div className="max-w-5xl mx-auto py-2 sm:py-4 px-2 sm:px-4">
+      <div className="max-w-6xl mx-auto py-2 sm:py-4 px-2 sm:px-4">
         {/* 页面标题 */}
-        <div className="text-center mb-2 sm:mb-4">
+        <div className="text-left mb-2 sm:mb-4">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-1 sm:mb-2">实用工具</h1>
-          <p className="text-sm sm:text-base text-gray-600">一站式在线工具集，提高您的工作效率</p>
         </div>
         
-        {/* 移动端无外层卡片，桌面端保留卡片 */}
-        <div className="md:bg-white md:rounded-lg md:shadow-sm md:border md:border-gray-200 md:overflow-hidden md:transition-all md:duration-300 md:hover:shadow-md">
+        {/* 工具区域整体卡片 */}
+        <div className="lg:bg-white lg:rounded-lg lg:shadow-sm lg:p-6 lg:mt-4">
           {/* 移动端工具区域整体卡片 */}
           <div className="bg-white rounded-lg shadow-sm overflow-hidden md:bg-transparent md:rounded-none md:shadow-none md:overflow-visible">
             {/* 工具标签栏 */}
