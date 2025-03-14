@@ -18,7 +18,7 @@ const AccountDetailPage: React.FC = () => {
   // 通知补货相关状态
   const [showNotifyModal, setShowNotifyModal] = useState(false);
   const [notifyEmail, setNotifyEmail] = useState('');
-  const [notifyQuantity, setNotifyQuantity] = useState('所需数量');
+  const [notifyQuantity, setNotifyQuantity] = useState('');
   const [notifyDescription, setNotifyDescription] = useState('');
   
   // 折扣信息弹窗状态
@@ -149,9 +149,9 @@ const AccountDetailPage: React.FC = () => {
     alert('已添加到购物车');
   };
 
-  // 处理通知补货点击 - 修改为跳转到客服页面
+  // 处理通知补货点击 - 改回显示弹窗
   const handleNotifyClick = () => {
-    router.push('/customer-service');
+    setShowNotifyModal(true);
   };
 
   // 在组件加载时，如果用户已登录，设置默认邮箱
@@ -168,6 +168,14 @@ const AccountDetailPage: React.FC = () => {
     // 只允许输入数字
     if (/^\d*$/.test(value)) {
       setNotifyQuantity(value);
+    }
+  };
+
+  // 处理补充说明输入，限制最多150个字符
+  const handleNotifyDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    if (value.length <= 150) {
+      setNotifyDescription(value);
     }
   };
 
@@ -483,7 +491,8 @@ const AccountDetailPage: React.FC = () => {
                   value={notifyEmail}
                   onChange={(e) => setNotifyEmail(e.target.value)}
                   placeholder="请输入您的邮箱"
-                  className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                  disabled={user && user.email ? true : false}
+                  className={`w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent ${user && user.email ? 'bg-gray-50' : ''}`}
                 />
               </div>
               <div>
@@ -495,8 +504,8 @@ const AccountDetailPage: React.FC = () => {
                   id="notifyQuantity"
                   value={notifyQuantity}
                   onChange={handleNotifyQuantityChange}
-                  placeholder="请输入需要的数量"
-                  className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                  placeholder="所需数量"
+                  className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                 />
               </div>
               <div>
@@ -506,11 +515,15 @@ const AccountDetailPage: React.FC = () => {
                 <textarea
                   id="notifyDescription"
                   value={notifyDescription}
-                  onChange={(e) => setNotifyDescription(e.target.value)}
-                  placeholder="请输入补充说明"
+                  onChange={handleNotifyDescriptionChange}
+                  placeholder="请输入补充说明，最多150个字符"
                   rows={3}
-                  className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                  maxLength={150}
+                  className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                 />
+                <div className="text-right text-xs text-gray-500 mt-1">
+                  {notifyDescription.length}/150
+                </div>
               </div>
               <div className="flex space-x-3 pt-2">
                 <button
@@ -518,6 +531,15 @@ const AccountDetailPage: React.FC = () => {
                   className="flex-1 py-[10.5px] bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
                 >
                   取消
+                </button>
+                <button
+                  onClick={() => {
+                    alert('补货通知已提交，我们会尽快处理！');
+                    setShowNotifyModal(false);
+                  }}
+                  className="flex-1 py-[10.5px] bg-[#009688] text-white rounded-lg hover:bg-[#00897b] transition-colors"
+                >
+                  提交通知
                 </button>
               </div>
             </div>
