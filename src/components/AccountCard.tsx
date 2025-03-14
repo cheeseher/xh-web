@@ -7,6 +7,16 @@ import {
   FaAt, FaGlobe, FaMailBulk, FaGlobeAmericas, FaGlobeEurope, FaGlobeAsia
 } from 'react-icons/fa';
 
+interface BrandStyle {
+  icon: React.ReactNode;
+  gradient: string;
+  shadow: string;
+  bgColor: string;
+  logo: string;
+  isGrayPlaceholder?: boolean;
+  isCustomPlaceholder?: boolean;
+}
+
 interface AccountCardProps {
   id: string;
   title: string;
@@ -49,11 +59,13 @@ const AccountCard: React.FC<AccountCardProps> = ({
         };
       case 'instagram':
         return {
-          icon: <FaInstagram className="text-5xl text-pink-500" />,
-          gradient: 'from-pink-500 via-purple-500 to-orange-500',
-          shadow: 'shadow-pink-500/30',
-          bgColor: 'bg-gray-100',
-          logo: '/images/instagram.png'
+          icon: null,
+          gradient: 'from-gray-300 to-gray-400',
+          shadow: 'shadow-gray-400/30',
+          bgColor: 'bg-gray-300',
+          logo: '/images/instagram.png',
+          isGrayPlaceholder: true,
+          isCustomPlaceholder: true
         };
       case 'twitter':
         return {
@@ -185,9 +197,32 @@ const AccountCard: React.FC<AccountCardProps> = ({
       <div className="bg-white rounded-lg overflow-hidden flex flex-row sm:flex-col h-full border border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
         {/* 商品图片区域 */}
         <div className={`bg-white w-24 h-24 sm:w-full sm:h-auto sm:aspect-square flex items-center justify-center flex-shrink-0 relative`}>
-          <div className={`flex items-center justify-center w-20 h-20 sm:w-32 sm:h-32 rounded-full ${brandStyle.shadow} transition-transform duration-300 hover:scale-110`}>
-            {brandStyle.icon}
-          </div>
+          {category === 'instagram' ? (
+            <div className="w-full h-full p-[6px]">
+              <div className="w-full h-full border border-gray-300 border-dashed rounded-lg grid grid-cols-3 grid-rows-3 bg-gray-100">
+                <div className="border-b border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                <div className="border-b border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                <div className="border-b border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                <div className="border-b border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                <div className="border-b border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center">
+                  <div className="text-center">
+                    <FaInstagram className="text-2xl text-gray-500 mx-auto mb-1" />
+                    <div className="text-xs text-gray-500">
+                      正方形图片
+                    </div>
+                  </div>
+                </div>
+                <div className="border-b border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                <div className="border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                <div className="border-r border-gray-400 border-dashed opacity-30 flex items-center justify-center"></div>
+                <div className="flex items-center justify-center"></div>
+              </div>
+            </div>
+          ) : (
+            <div className={`flex items-center justify-center w-20 h-20 sm:w-32 sm:h-32 rounded-full ${brandStyle.isGrayPlaceholder ? 'bg-gray-300' : ''} ${brandStyle.shadow} transition-transform duration-300 hover:scale-110`}>
+              {brandStyle.icon}
+            </div>
+          )}
         </div>
         
         {/* 商品信息区域 */}
