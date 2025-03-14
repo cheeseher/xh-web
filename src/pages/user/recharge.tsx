@@ -55,46 +55,60 @@ const RechargePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {/* 账号信息卡片 */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <div className="flex items-center space-x-2 mb-4">
-              <FaUser className="text-gray-400" />
-              <h2 className="text-lg font-semibold text-gray-900">账号信息</h2>
+        {/* 合并账号信息和余额信息为一个卡片 */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* 账号信息 */}
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <FaUser className="text-gray-400" />
+                <h2 className="text-lg font-semibold text-gray-900">账号信息</h2>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg space-y-4">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                  <span className="text-sm text-gray-500 mb-1 sm:mb-0">账户昵称</span>
+                  <span className="font-medium text-gray-900">{user.username}</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                  <span className="text-sm text-gray-500 mb-1 sm:mb-0">账户邮箱</span>
+                  <span className="font-medium text-gray-900 break-all">{user.email || 'dbadmin@qq.com'}</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                  <span className="text-sm text-gray-500 mb-1 sm:mb-0">会员等级</span>
+                  <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium w-fit">
+                    VIP{user.vipLevel || 1}
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                <span className="text-sm text-gray-500 mb-1 sm:mb-0">账户昵称</span>
-                <span className="font-medium text-gray-900">{user.username}</span>
+
+            {/* 余额信息 */}
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <FaWallet className="text-gray-400" />
+                <h2 className="text-lg font-semibold text-gray-900">余额信息</h2>
               </div>
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                <span className="text-sm text-gray-500 mb-1 sm:mb-0">账户邮箱</span>
-                <span className="font-medium text-gray-900 break-all">{user.email || 'dbadmin@qq.com'}</span>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                <span className="text-sm text-gray-500 mb-1 sm:mb-0">会员等级</span>
-                <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium w-fit">
-                  VIP{user.vipLevel || 1}
-                </span>
+              <div className="bg-gray-50 p-4 rounded-lg space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-500">当前余额</span>
+                  <span className="font-medium text-2xl text-primary">{user.balance || 99} 元</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-500">累计充值</span>
+                  <span className="font-medium text-gray-900">500 元</span>
+                </div>
               </div>
             </div>
           </div>
-
-          {/* 余额信息卡片 */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <div className="flex items-center space-x-2 mb-4">
-              <FaWallet className="text-gray-400" />
-              <h2 className="text-lg font-semibold text-gray-900">余额信息</h2>
-            </div>
-            <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">当前余额</span>
-                <span className="font-medium text-2xl text-primary">{user.balance || 99} 元</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">累计充值</span>
-                <span className="font-medium text-gray-900">500 元</span>
-              </div>
+          
+          {/* 折扣提示信息 */}
+          <div className="mt-4 pt-3 border-t border-gray-100">
+            <div className="bg-[#f8f9fa] rounded-md p-3">
+              <p className="text-sm text-gray-700">
+                <span className="text-[#009688] font-medium">当前任意购买商品9.5折</span>
+                <span className="mx-2 text-gray-400">|</span>
+                <span>累计充值500元享受9.5折优惠，优先客服支持</span>
+              </p>
             </div>
           </div>
         </div>
@@ -118,7 +132,7 @@ const RechargePage: React.FC = () => {
               <button
                 key={amount}
                 onClick={() => handleAmountSelect(amount)}
-                className={`py-3 px-4 rounded-lg transition-all duration-200 ${
+                className={`h-[42px] rounded-lg transition-all duration-200 ${
                   selectedAmount === amount
                     ? 'bg-primary text-white shadow-md'
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
@@ -139,7 +153,7 @@ const RechargePage: React.FC = () => {
                   value={customAmount}
                   onChange={handleCustomAmountChange}
                   placeholder="请输入充值金额"
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                  className="w-full px-4 h-[42px] border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">元</span>
               </div>
@@ -149,7 +163,7 @@ const RechargePage: React.FC = () => {
           {/* 充值按钮 */}
           <button
             onClick={handleRecharge}
-            className="w-full md:w-auto px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors font-medium flex items-center justify-center"
+            className="w-full md:w-auto px-8 h-[42px] bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors font-medium flex items-center justify-center"
           >
             <FaWallet className="mr-2" />
             立即充值
