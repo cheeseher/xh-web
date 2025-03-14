@@ -39,12 +39,16 @@ const RechargePage: React.FC = () => {
       };
     }
     
-    // 假设当前累计充值为500元
-    const totalRecharge = 500;
+    // 假设当前累计充值为300元（距离500元还差200元）
+    const totalRecharge = 300;
     const currentThreshold = vipThresholds[currentVipLevel - 1];
     const nextThreshold = vipThresholds[currentVipLevel];
+    
+    // 计算进度百分比
     const progress = Math.min(100, Math.round((totalRecharge - currentThreshold) / (nextThreshold - currentThreshold) * 100));
-    const nextLevelDiff = nextThreshold - totalRecharge;
+    
+    // 固定为200元升级
+    const nextLevelDiff = 200;
     
     return {
       progress,
@@ -153,7 +157,7 @@ const RechargePage: React.FC = () => {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">累计充值</span>
-                  <span className="font-medium text-gray-900">500 元</span>
+                  <span className="font-medium text-gray-900">300 元</span>
                 </div>
               </div>
             </div>
@@ -181,7 +185,7 @@ const RechargePage: React.FC = () => {
           {/* VIP升级提示 */}
           <div className="flex items-center space-x-2 px-4 py-3 bg-red-50 text-red-600 rounded-lg mb-6">
             <FaInfoCircle className="flex-shrink-0" />
-            <span className="text-sm">继续充值 401 元升级VIP1</span>
+            <span className="text-sm">继续充值 200 元升级VIP2</span>
           </div>
 
           {/* 快捷金额选择 */}
@@ -205,15 +209,16 @@ const RechargePage: React.FC = () => {
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">自定义充值金额</label>
             <div className="flex items-center">
-              <div className="relative flex-1 max-w-xs">
+              <div className="relative flex-1 max-w-xs flex items-center">
                 <input
                   type="number"
                   value={customAmount}
                   onChange={handleCustomAmountChange}
+                  onFocus={() => setSelectedAmount(null)}
                   placeholder="请输入充值金额"
                   className="w-full px-4 h-[42px] border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">元</span>
+                <span className="ml-2 text-gray-700">元</span>
               </div>
             </div>
           </div>
