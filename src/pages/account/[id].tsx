@@ -265,7 +265,7 @@ const AccountDetailPage: React.FC = () => {
                   className="ml-3 text-gray-700 cursor-pointer hover:text-gray-900 flex items-center"
                   onClick={() => setShowDiscountModal(true)}
                 >
-                  <span className="underline">查看批发优惠</span>
+                  <span className="underline">查看详细批发价格</span>
                 </span>
               </div>
             </div>
@@ -434,7 +434,7 @@ const AccountDetailPage: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-gray-800">批发优惠详情</h3>
+              <h3 className="text-xl font-bold text-gray-800">详细批发价格表</h3>
               <button 
                 onClick={() => setShowDiscountModal(false)}
                 className="text-gray-500 hover:text-gray-700"
@@ -443,31 +443,24 @@ const AccountDetailPage: React.FC = () => {
               </button>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+                <thead className="bg-gray-100">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">数量</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">折扣</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">单价</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">原价</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">折后价</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">数量</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">原价(元)</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border-b">批发价(元)</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {accountData.discounts.map((discount, index) => (
-                    <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                    <tr key={index} className={index % 2 === 0 ? 'bg-white hover:bg-gray-50' : 'bg-gray-50 hover:bg-gray-100'}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{discount.quantity}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{discount.discount}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">¥{discount.unitPrice}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">¥{discount.originalPrice}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">¥{discount.discountPrice}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">¥{accountData.price.toFixed(2)}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-500">¥{discount.unitPrice}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
-            <div className="mt-4 text-sm text-gray-500">
-              <p>注：批发价格会在结算时自动计算，无需手动输入优惠码。</p>
             </div>
           </div>
         </div>
