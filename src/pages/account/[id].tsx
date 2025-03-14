@@ -64,6 +64,52 @@ const AccountDetailPage: React.FC = () => {
     ]
   };
 
+  // 计算当前购买数量的单价
+  const getCurrentUnitPrice = () => {
+    if (quantity >= 1000) return 3.78;
+    if (quantity >= 500) return 3.91;
+    if (quantity >= 300) return 3.99;
+    if (quantity >= 200) return 4.07;
+    if (quantity >= 100) return 4.12;
+    if (quantity >= 50) return 4.16;
+    return accountData.price;
+  };
+
+  // 计算会员折扣
+  const getMemberDiscount = () => {
+    // 模拟会员等级折扣，实际应从用户数据中获取
+    if (user) {
+      if (user.email?.includes('vip')) return 0.95; // VIP会员95折
+      return 0.98; // 普通会员98折
+    }
+    return 1; // 非会员无折扣
+  };
+
+  // 获取会员等级名称
+  const getMemberLevel = () => {
+    if (user) {
+      if (user.email?.includes('vip')) return 'VIP2';
+      return 'VIP1';
+    }
+    return '普通用户';
+  };
+
+  // 获取会员折扣文本
+  const getMemberDiscountText = () => {
+    if (user) {
+      if (user.email?.includes('vip')) return '95折';
+      return '98折';
+    }
+    return '';
+  };
+
+  // 计算最终价格
+  const getFinalPrice = () => {
+    const unitPrice = getCurrentUnitPrice();
+    const memberDiscount = getMemberDiscount();
+    return (unitPrice * memberDiscount * quantity).toFixed(2);
+  };
+
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     if (!isNaN(value) && value > 0) {
@@ -275,25 +321,42 @@ const AccountDetailPage: React.FC = () => {
               <div className="space-y-5">
                 <div className="flex items-center">
                   <span className="text-gray-700 w-24 font-medium">数量</span>
-                  <input
-                    type="number"
-                    min="1"
-                    value={quantity}
-                    onChange={handleQuantityChange}
-                    className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
-                  />
+                  <div className="flex-1 flex items-center">
+                    <input
+                      type="number"
+                      min="1"
+                      value={quantity}
+                      onChange={handleQuantityChange}
+                      className="w-2/3 px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                    />
+                    <div className="ml-4 relative">
+                      <span className="text-gray-700 flex items-center">
+                        <FaInfoCircle 
+                          className="mr-1 text-gray-400 cursor-pointer" 
+                          onClick={() => alert('该结果为批发优惠与会员折扣叠加的最终价格')}
+                        />
+                        折后价格: <span className="text-red-500 font-medium text-lg">¥{getFinalPrice()}</span>
+                      </span>
+                    </div>
+                  </div>
                 </div>
                 
                 <div className="flex items-center">
                   <span className="text-gray-700 w-24 font-medium">接收邮箱</span>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="账号密码将发送至此邮箱"
-                    disabled={user && user.email ? true : false}
-                    className={`w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent ${user && user.email ? 'bg-gray-50' : ''}`}
-                  />
+                  <div className="flex-1 flex items-center">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="账号密码将发送至此邮箱"
+                      disabled={user && user.email ? true : false}
+                      className={`w-2/3 px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent ${user && user.email ? 'bg-gray-50' : ''}`}
+                    />
+                    <div className="ml-4 flex items-center space-x-2">
+                      <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium">{getMemberLevel()}</span>
+                      {user && <span className="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">{getMemberDiscountText()}</span>}
+                    </div>
+                  </div>
                 </div>
                 
                 <div className="flex items-center">
