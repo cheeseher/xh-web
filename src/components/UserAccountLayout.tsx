@@ -59,7 +59,7 @@ const InfoContent = () => {
       </div>
       
       {/* 账户信息卡片 - 与充值页面保持一致 */}
-      <div className="bg-white sm:p-6 p-3 rounded-xl shadow-sm sm:border sm:border-gray-100 mb-6">
+      <div className="bg-white sm:p-6 p-3 sm:rounded-xl sm:shadow-sm sm:border sm:border-gray-100 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* 账号信息 */}
           <div>
@@ -1376,7 +1376,7 @@ const UserAccountLayout: React.FC<UserAccountLayoutProps> = ({
           </div>
           
           {/* 右侧内容区域 - 统一宽度 */}
-          <div className="w-full bg-white rounded-lg shadow-sm p-2 md:p-6 h-auto md:h-[calc(100vh-200px)] overflow-visible md:overflow-auto pb-20 md:pb-6">
+          <div className="w-full bg-white md:rounded-lg md:shadow-sm p-2 md:p-6 h-auto md:h-[calc(100vh-200px)] overflow-visible md:overflow-auto pb-20 md:pb-6">
             {renderContent()}
           </div>
         </div>
