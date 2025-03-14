@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FaShoppingCart, FaUser, FaBars, FaTimes, FaCaretDown, FaStar, FaCrown, FaWallet, FaKey, FaHistory, FaEnvelope } from 'react-icons/fa';
@@ -9,6 +9,21 @@ const Navbar: React.FC = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { user, logout } = useUser();
   const router = useRouter();
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // 处理点击事件，如果点击的是菜单外部，则关闭菜单
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const menuItems = [
     { name: '账户商城', href: '/' },
@@ -88,19 +103,19 @@ const Navbar: React.FC = () => {
                 </Link>
 
                 {/* 用户菜单 */}
-                <div className="relative">
-                  <button
+                <div className="relative" ref={userMenuRef}>
+                  <div
+                    className="flex items-center text-gray-300 hover:text-white cursor-pointer"
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center text-gray-300 hover:text-white"
                   >
-                    <span className="mr-1">{user.username}</span>
+                    <span className="mr-1 hover:text-white">{user.username}</span>
                     {user.vipLevel > 0 && (
                       <div className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium mr-2">
                         VIP{user.vipLevel}
                       </div>
                     )}
                     <FaCaretDown className={`transition-transform duration-200 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
-                  </button>
+                  </div>
 
                   {/* 下拉菜单 */}
                   {isUserMenuOpen && (
@@ -108,29 +123,15 @@ const Navbar: React.FC = () => {
                       <div className="px-4 py-2 border-b border-gray-100">
                         <p className="text-sm font-medium text-gray-900">{user.username}</p>
                         <div className="flex items-center justify-between mt-1">
-                          <p className="text-base font-semibold text-primary">余额：¥{user.balance.toFixed(2)}</p>
+                          <p className="text-base font-semibold text-[#009688]">余额：¥{user.balance.toFixed(2)}</p>
                         </div>
+                        <p className="text-xs text-gray-500 mt-1"></p>
                       </div>
                       <Link
-                        href="/user/profile"
+                        href="/user/account?tab=profile"
                         className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
-                        onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <FaUser className="mr-2 text-gray-500" /> 个人资料
-                      </Link>
-                      <Link
-                        href="/user/records"
-                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
-                        <FaHistory className="mr-2 text-gray-500" /> 消费记录
-                      </Link>
-                      <Link
-                        href="/user/password"
-                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
-                        <FaKey className="mr-2 text-gray-500" /> 修改密码
+                        <FaUser className="mr-2 text-gray-500" /> 我的账户
                       </Link>
                       <button
                         onClick={() => {
@@ -258,25 +259,11 @@ const Navbar: React.FC = () => {
             {user && (
               <div className="border-t border-gray-200 pt-4 space-y-1">
                 <Link
-                  href="/user/profile"
+                  href="/user/account?tab=profile"
                   className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <FaUser className="mr-3 text-gray-500" /> 个人资料
-                </Link>
-                <Link
-                  href="/user/records"
-                  className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <FaHistory className="mr-3 text-gray-500" /> 消费记录
-                </Link>
-                <Link
-                  href="/user/password"
-                  className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <FaKey className="mr-3 text-gray-500" /> 修改密码
+                  <FaUser className="mr-3 text-gray-500" /> 我的账户
                 </Link>
                 <button
                   onClick={() => {
