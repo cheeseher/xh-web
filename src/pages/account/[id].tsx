@@ -247,13 +247,28 @@ const AccountDetailPage: React.FC = () => {
             <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm h-full flex items-center justify-center">
               <div className="w-full aspect-square flex items-center justify-center">
                 {String(id).includes('gmail') && (
-                  <FaGoogle className="text-6xl sm:text-7xl text-red-500" />
+                  <Image 
+                    src="/images/gmail.png" 
+                    alt="Gmail账号" 
+                    width={200} 
+                    height={200}
+                    className="object-contain"
+                  />
                 )}
                 {String(id).includes('outlook') && (
                   <FaMicrosoft className="text-6xl sm:text-7xl text-blue-500" />
                 )}
                 {String(id).includes('instagram') && (
-                  <FaInstagram className="text-6xl sm:text-7xl text-pink-500" />
+                  <div className="w-full h-full flex items-center justify-center">
+                    <Image 
+                      src="/images/instagram.png" 
+                      alt="Instagram账号" 
+                      width={180} 
+                      height={180}
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
                 )}
                 {String(id).includes('twitter') && (
                   <FaTwitter className="text-6xl sm:text-7xl text-sky-400" />
@@ -361,13 +376,15 @@ const AccountDetailPage: React.FC = () => {
                 
                 <div className="flex items-center">
                   <span className="text-gray-700 w-24 font-medium">查询密码</span>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="填写您于自身记忆的查询密码"
-                    className="w-full px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
-                  />
+                  <div className="flex-1 flex items-center">
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="填写您于自身记忆的查询密码"
+                      className="w-2/3 px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                    />
+                  </div>
                 </div>
                 
                 <div className="flex items-center">
