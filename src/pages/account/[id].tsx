@@ -36,7 +36,7 @@ const AccountDetailPage: React.FC = () => {
     title: 'Gmail邮箱-稳定可用（手工）',
     price: 4.20,
     originalPrice: 6.50,
-    batchPrice: '≥500/¥3.99',
+    batchPrice: '大于500单价¥3.99',
     image: '/images/gmail.png',
     stock: 420,
     sold: 387,
@@ -103,22 +103,9 @@ const AccountDetailPage: React.FC = () => {
     alert('已添加到购物车');
   };
 
-  // 处理通知补货提交
-  const handleSubmitNotify = () => {
-    // 这里可以添加表单验证
-    if (!notifyEmail) {
-      alert('请填写邮箱');
-      return;
-    }
-    
-    // 模拟提交通知
-    alert(`通知补货请求已提交！\n邮箱: ${notifyEmail}\n数量: ${notifyQuantity}\n说明: ${notifyDescription}`);
-    
-    // 关闭弹窗并重置表单
-    setShowNotifyModal(false);
-    setNotifyEmail('');
-    setNotifyQuantity('');
-    setNotifyDescription('');
+  // 处理通知补货点击 - 修改为跳转到客服页面
+  const handleNotifyClick = () => {
+    router.push('/customer-service');
   };
 
   // 在组件加载时，如果用户已登录，设置默认邮箱
@@ -197,21 +184,13 @@ const AccountDetailPage: React.FC = () => {
         {/* 面包屑导航 */}
         <div className="mb-4">
           <div className="flex items-center text-sm mb-2">
+            <span className="bg-[#009688] text-white text-xs px-2 py-1 rounded-md mr-2">自动发货</span>
             <Link href="/" className="text-gray-600 hover:text-gray-800">谷歌邮箱</Link>
             <span className="text-gray-400 mx-2">›</span>
             <span className="text-gray-700">{accountData.title}</span>
           </div>
           <div className="flex items-center text-sm space-x-3">
-            <span className="bg-[#009688] text-white text-xs px-2 py-1 rounded-md">自动发货</span>
-            <span className="text-gray-700 font-medium">库存: <span className="text-green-600">{accountData.stock}</span></span>
-            <span className="text-gray-300">|</span>
-            <span 
-              className="text-gray-700 hover:text-gray-900 cursor-pointer hover:underline flex items-center" 
-              onClick={() => setShowNotifyModal(true)}
-            >
-              <FaInfoCircle className="mr-1" />
-              通知补货
-            </span>
+            {/* 库存和通知补货信息已移至橙色卡片右上角 */}
           </div>
         </div>
         
@@ -261,7 +240,18 @@ const AccountDetailPage: React.FC = () => {
             <h1 className="text-2xl font-bold text-gray-800 mb-4">{accountData.title}</h1>
             
             {/* 价格信息卡片 */}
-            <div className="bg-[#fff2e8] p-5 rounded-lg shadow-sm mb-5">
+            <div className="bg-[#fff2e8] p-5 rounded-lg shadow-sm mb-5 relative">
+              <div className="absolute top-5 right-5 flex items-center text-sm space-x-3">
+                <span className="text-gray-700 font-medium">库存: <span className="text-green-600">{accountData.stock}</span></span>
+                <span className="text-gray-300">|</span>
+                <span 
+                  className="text-gray-700 hover:text-gray-900 cursor-pointer hover:underline flex items-center" 
+                  onClick={handleNotifyClick}
+                >
+                  <FaInfoCircle className="mr-1" />
+                  通知补货
+                </span>
+              </div>
               <div className="flex items-baseline mb-3">
                 <span className="text-gray-600 mr-3 font-medium">价格</span>
                 <span className="text-red-500 text-3xl font-bold">¥{accountData.price.toFixed(2)}</span>
@@ -270,6 +260,7 @@ const AccountDetailPage: React.FC = () => {
               <div className="flex items-center mt-2">
                 <span className="text-gray-600 mr-3 font-medium">批发价</span>
                 <span className="bg-[#ef4444] text-white text-xs px-3 py-1 rounded-md">{accountData.batchPrice}</span>
+                <span className="bg-[#ef4444] text-white text-xs px-3 py-1 rounded-md ml-2">大于1000单价¥3.78</span>
                 <span 
                   className="ml-3 text-gray-700 cursor-pointer hover:text-gray-900 flex items-center"
                   onClick={() => setShowDiscountModal(true)}
@@ -426,12 +417,6 @@ const AccountDetailPage: React.FC = () => {
                 />
               </div>
               <div className="flex space-x-3 pt-2">
-                <button
-                  onClick={handleSubmitNotify}
-                  className="flex-1 py-[10.5px] bg-[#009688] text-white rounded-lg hover:bg-[#00897b] transition-colors"
-                >
-                  提交
-                </button>
                 <button
                   onClick={() => setShowNotifyModal(false)}
                   className="flex-1 py-[10.5px] bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
