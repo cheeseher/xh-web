@@ -15,7 +15,7 @@ const UsdtPaymentPage: React.FC = () => {
   const usdtAmount = amount ? (Number(amount) / 7).toFixed(2) : '0.00'; // 模拟汇率转换
   const usdtAddress = 'TYQraQ5JJXKyVD6LTBuBHmDXCYHTQTiwA3';
   const paymentId = '202503101741607286955837';
-  const platformOrderId = 'XINGHAIVIP26652031019484906';
+  const platformOrderId = orderId || 'XINGHAIVIP26652031019484906';
 
   useEffect(() => {
     if (remainingTime > 0) {
@@ -37,13 +37,6 @@ const UsdtPaymentPage: React.FC = () => {
     const seconds = time % 60;
     return `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')} : ${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`;
   };
-
-  if (!user) {
-    if (typeof window !== 'undefined') {
-      router.push('/login');
-    }
-    return null;
-  }
 
   return (
     <Layout title="USDT支付 - 星海账户" hidePageTitle={true}>

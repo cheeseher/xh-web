@@ -7,6 +7,7 @@ import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 
 const RegisterPage = () => {
   const router = useRouter();
+  const { redirect } = router.query;
   const [formData, setFormData] = useState({
     nickname: '',
     email: '',
@@ -79,8 +80,12 @@ const RegisterPage = () => {
     try {
       // TODO: 实现注册逻辑
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // 注册成功后跳转
-      router.push('/login');
+      // 注册成功后跳转到登录页面，并传递redirect参数
+      if (redirect && typeof redirect === 'string') {
+        router.push(`/login?redirect=${encodeURIComponent(redirect)}`);
+      } else {
+        router.push('/login');
+      }
     } catch (error) {
       console.error('注册失败:', error);
       setErrors(prev => ({
@@ -108,7 +113,7 @@ const RegisterPage = () => {
               </h2>
               <p className="mt-2 text-sm text-gray-600">
                 已有账号？
-                <Link href="/login" className="text-[#009688] hover:text-[#00796b] ml-1">
+                <Link href={redirect ? `/login?redirect=${encodeURIComponent(redirect as string)}` : "/login"} className="text-[#009688] hover:text-[#00796b] ml-1">
                   立即登录
                 </Link>
               </p>

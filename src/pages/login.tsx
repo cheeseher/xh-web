@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Layout from '../components/Layout';
@@ -8,6 +8,7 @@ import { login } from '../utils/auth';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
+  const { redirect } = router.query;
   const { setUser } = useUser();
   const [formData, setFormData] = useState({
     username: '',
@@ -39,8 +40,12 @@ const LoginPage: React.FC = () => {
       // 更新用户状态
       setUser(user);
 
-      // 跳转到首页
-      router.push('/');
+      // 如果有重定向参数，则跳转到指定页面，否则跳转到首页
+      if (redirect && typeof redirect === 'string') {
+        router.push(redirect);
+      } else {
+        router.push('/');
+      }
     } catch (error) {
       setError(error instanceof Error ? error.message : '登录失败，请稍后重试');
     } finally {
@@ -60,7 +65,7 @@ const LoginPage: React.FC = () => {
               </h2>
               <p className="mt-2 text-sm text-gray-600">
                 还没有账号？
-                <Link href="/register" className="text-primary hover:text-primary-dark ml-1">
+                <Link href={redirect ? `/register?redirect=${encodeURIComponent(redirect as string)}` : "/register"} className="text-primary hover:text-primary-dark ml-1">
                   立即注册
                 </Link>
               </p>

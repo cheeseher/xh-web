@@ -125,14 +125,16 @@ const AccountDetailPage: React.FC = () => {
       return;
     }
     
-    if (!user) {
-      router.push('/login');
+    // 检查邮箱是否填写
+    if (!email) {
+      alert('请填写接收邮箱');
       return;
     }
     
+    // 不再强制要求登录
     // 模拟订单创建
     const orderId = `ORDER${Date.now()}`;
-    router.push(`/payment?orderId=${orderId}&productId=${accountData.id}&quantity=${quantity}`);
+    router.push(`/payment?orderId=${orderId}&productId=${accountData.id}&quantity=${quantity}&email=${encodeURIComponent(email)}`);
   };
 
   const handleAddToCart = () => {
@@ -141,11 +143,13 @@ const AccountDetailPage: React.FC = () => {
       return;
     }
     
-    if (!user) {
-      router.push('/login');
+    // 检查邮箱是否填写
+    if (!email) {
+      alert('请填写接收邮箱');
       return;
     }
     
+    // 不再强制要求登录
     alert('已添加到购物车');
   };
 
@@ -392,8 +396,12 @@ const AccountDetailPage: React.FC = () => {
                       className={`w-full sm:w-2/3 px-4 py-[10.5px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent ${user && user.email ? 'bg-gray-50' : ''}`}
                     />
                     <div className="mt-2 sm:mt-0 sm:ml-4 flex items-center space-x-2">
-                      <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium">{getMemberLevel()}</span>
-                      {user && <span className="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">{getMemberDiscountText()}</span>}
+                      {user && (
+                        <>
+                          <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded text-sm font-medium">{getMemberLevel()}</span>
+                          <span className="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">{getMemberDiscountText()}</span>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { useUser } from '../contexts/UserContext';
@@ -6,18 +6,53 @@ import { FaShoppingCart, FaMoneyBillWave, FaWallet, FaCheckCircle, FaInfoCircle 
 
 const PaymentPage: React.FC = () => {
   const router = useRouter();
+  const { orderId, productId, quantity, email } = router.query;
   const { user } = useUser();
   const [paymentMethod, setPaymentMethod] = useState<'usdt' | 'other'>('usdt');
-
-  // 模拟订单数据
-  const orderData = {
-    orderId: 'XINGHAIVIP264520311150124492',
-    productName: '会员充值-1000.00',
-    price: 1000,
+  const [orderData, setOrderData] = useState({
+    orderId: '',
+    productName: '',
+    price: 0,
     quantity: 1,
-    total: 1000,
-    email: '777777@qq.com',
-    time: '2023-03-11 15:01:42'
+    total: 0,
+    email: '',
+    time: ''
+  });
+
+  // 初始化订单数据
+  useEffect(() => {
+    if (router.isReady) {
+      // 模拟从后端获取商品信息
+      const productInfo = getProductInfo(productId as string);
+      
+      // 计算订单总价
+      const qty = parseInt(quantity as string) || 1;
+      const total = productInfo.price * qty;
+      
+      // 设置订单数据
+      setOrderData({
+        orderId: orderId as string || `ORDER${Date.now()}`,
+        productName: productInfo.name,
+        price: productInfo.price,
+        quantity: qty,
+        total: total,
+        email: (email as string) || (user?.email || ''),
+        time: new Date().toLocaleString()
+      });
+    }
+  }, [router.isReady, orderId, productId, quantity, email, user]);
+
+  // 模拟获取商品信息
+  const getProductInfo = (id: string) => {
+    // 这里应该是从API获取商品信息，这里简单模拟
+    const products: Record<string, {name: string, price: number}> = {
+      'gmail-1': { name: 'Gmail邮箱-稳定可用（手工）', price: 4.20 },
+      'outlook-1': { name: 'Outlook邮箱-稳定可用', price: 3.50 },
+      'instagram-1': { name: 'Instagram账号-纯手工', price: 8.80 },
+      'default': { name: '未知商品', price: 10.00 }
+    };
+    
+    return products[id] || products['default'];
   };
 
   // 处理支付方法选择

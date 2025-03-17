@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaEnvelope, FaLock, FaInfoCircle } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaInfoCircle, FaUser } from 'react-icons/fa';
 import { useUser } from '../contexts/UserContext';
 
 interface PurchaseFormProps {
