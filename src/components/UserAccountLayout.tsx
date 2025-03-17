@@ -404,8 +404,7 @@ const OrderContent = () => {
       status: 'success',
       email: 'user@example.com',
       password: '123456',
-      cardInfo: 'gmail123@gmail.com----Password123----backup@example.com',
-      canRefund: true
+      cardInfo: 'gmail123@gmail.com----Password123----backup@example.com'
     },
     {
       orderNumber: 'ORD202403210002',
@@ -417,8 +416,7 @@ const OrderContent = () => {
       status: 'pending',
       email: 'user2@example.com',
       password: '654321',
-      cardInfo: 'outlook123@outlook.com----Password456----backup2@example.com',
-      canRefund: false
+      cardInfo: 'outlook123@outlook.com----Password456----backup2@example.com'
     },
     {
       orderNumber: 'ORD202403210003',
@@ -430,60 +428,7 @@ const OrderContent = () => {
       status: 'failed',
       email: 'user3@example.com',
       password: 'abcdef',
-      cardInfo: 'instagram123@gmail.com----Password789----backup3@example.com',
-      canRefund: false
-    },
-    {
-      orderNumber: 'ORD202403210004',
-      productName: 'Twitter账号',
-      unitPrice: 60,
-      quantity: 1,
-      totalAmount: 60,
-      orderTime: '2024-03-22 09:15:00',
-      status: 'success',
-      email: 'user4@example.com',
-      password: 'twitter123',
-      cardInfo: 'twitter123@gmail.com----Password123----backup4@example.com',
-      canRefund: true
-    },
-    {
-      orderNumber: 'ORD202403210005',
-      productName: 'Facebook账号',
-      unitPrice: 70,
-      quantity: 1,
-      totalAmount: 70,
-      orderTime: '2024-03-22 11:30:00',
-      status: 'success',
-      email: 'user5@example.com',
-      password: 'facebook123',
-      cardInfo: 'facebook123@gmail.com----Password123----backup5@example.com',
-      canRefund: true
-    },
-    {
-      orderNumber: 'ORD202403210006',
-      productName: 'LinkedIn账号',
-      unitPrice: 90,
-      quantity: 1,
-      totalAmount: 90,
-      orderTime: '2024-03-22 14:45:00',
-      status: 'pending',
-      email: 'user6@example.com',
-      password: 'linkedin123',
-      cardInfo: 'linkedin123@gmail.com----Password123----backup6@example.com',
-      canRefund: false
-    },
-    {
-      orderNumber: 'ORD202403210007',
-      productName: 'Pinterest账号',
-      unitPrice: 55,
-      quantity: 1,
-      totalAmount: 55,
-      orderTime: '2024-03-23 10:20:00',
-      status: 'success',
-      email: 'user7@example.com',
-      password: 'pinterest123',
-      cardInfo: 'pinterest123@gmail.com----Password123----backup7@example.com',
-      canRefund: true
+      cardInfo: 'instagram123@gmail.com----Password789----backup3@example.com'
     }
   ];
 
@@ -491,8 +436,6 @@ const OrderContent = () => {
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [currentOrder, setCurrentOrder] = useState<any>(null);
   const [copySuccess, setCopySuccess] = useState('');
-  const [isRefunding, setIsRefunding] = useState(false);
-  const [refundDescription, setRefundDescription] = useState('');
   const [message, setMessage] = useState({ type: '', text: '' });
   
   // 分页相关状态
@@ -522,8 +465,6 @@ const OrderContent = () => {
         return '处理中';
       case 'failed':
         return '失败';
-      case 'refunding':
-        return '退款审核中';
       default:
         return '未知';
     }
@@ -537,8 +478,6 @@ const OrderContent = () => {
         return 'bg-yellow-100 text-yellow-800';
       case 'failed':
         return 'bg-red-100 text-red-800';
-      case 'refunding':
-        return 'bg-blue-100 text-blue-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
@@ -563,49 +502,6 @@ const OrderContent = () => {
       });
   };
 
-  // 处理退款申请
-  const handleRefundSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!refundDescription.trim()) {
-      setMessage({ type: 'error', text: '请填写退款说明' });
-      return;
-    }
-
-    try {
-      // 模拟API调用
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // 更新订单状态
-      setOrders(prev => prev.map(order => 
-        order.orderNumber === currentOrder?.orderNumber 
-          ? { ...order, status: 'refunding', canRefund: false } 
-          : order
-      ));
-      
-      setMessage({ type: 'success', text: '退款申请已提交，请等待处理' });
-      
-      // 关闭模态框并跳转到客服系统页面
-      setTimeout(() => {
-        setIsRefunding(false);
-        setCurrentOrder(null);
-        setRefundDescription('');
-        window.location.href = '/customer-service';
-      }, 2000);
-    } catch (error) {
-      setMessage({ type: 'error', text: '申请失败，请稍后重试' });
-    }
-  };
-
-  // 打开退款弹窗
-  const handleRefundRequest = (orderNumber: string) => {
-    const order = orders.find(order => order.orderNumber === orderNumber);
-    if (order && order.canRefund) {
-      setCurrentOrder(order);
-      setIsRefunding(true);
-    }
-  };
-  
   // 渲染分页器
   const renderPagination = () => {
     if (totalPages <= 1) return null;
@@ -737,15 +633,6 @@ const OrderContent = () => {
                             查看
                           </button>
                         )}
-                        {order.canRefund && (
-                          <button 
-                            onClick={() => handleRefundRequest(order.orderNumber)}
-                            className="px-3 py-1 bg-red-50 text-red-500 hover:bg-red-100 rounded-md transition-colors"
-                            title="申请退款"
-                          >
-                            申请退款
-                          </button>
-                        )}
                       </div>
                     </td>
                   </tr>
@@ -853,116 +740,33 @@ const OrderContent = () => {
           </div>
         </div>
       )}
-      
-      {/* 退款申请弹窗 */}
-      {isRefunding && currentOrder && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
-            <div className="flex justify-between items-center p-6 border-b">
-              <h3 className="text-lg font-medium">申请退款</h3>
-              <button 
-                onClick={() => {
-                  setIsRefunding(false);
-                  setRefundDescription('');
-                }}
-                className="text-gray-400 hover:text-gray-500"
-              >
-                <FaTimes />
-              </button>
-            </div>
-            <form onSubmit={handleRefundSubmit} className="p-6">
-              <div className="mb-4">
-                <p className="text-sm text-gray-500 mb-1">订单号</p>
-                <p className="font-medium">{currentOrder.orderNumber}</p>
-              </div>
-              <div className="mb-4">
-                <p className="text-sm text-gray-500 mb-1">商品名称</p>
-                <p className="font-medium">{currentOrder.productName}</p>
-              </div>
-              <div className="mb-4">
-                <p className="text-sm text-gray-500 mb-1">订单金额</p>
-                <p className="font-medium text-[#009688]">¥{currentOrder.totalAmount.toFixed(2)}</p>
-              </div>
-              <div className="mb-6">
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-                  详细说明 <span className="text-red-500">*</span> <span className="text-xs text-gray-500">(最多150字)</span>
-                </label>
-                <textarea
-                  id="description"
-                  value={refundDescription}
-                  onChange={(e) => {
-                    if (e.target.value.length <= 150) {
-                      setRefundDescription(e.target.value);
-                    }
-                  }}
-                  rows={4}
-                  maxLength={150}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688]"
-                  required
-                  placeholder="请详细描述退款原因，最多150字"
-                ></textarea>
-                <div className="text-xs text-gray-500 text-right mt-1">
-                  {refundDescription.length}/150
-                </div>
-              </div>
-              <div className="flex justify-start space-x-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsRefunding(false);
-                    setRefundDescription('');
-                  }}
-                  className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
-                >
-                  取消
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
-                >
-                  提交申请并联系客服
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
 // 修改充值记录组件，移除卡片背景并添加表格边框
 const RechargeContent = () => {
-  const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
-  const [currentOrderNumber, setCurrentOrderNumber] = useState('');
-  const [refundDescription, setRefundDescription] = useState('');
-  const [refundError, setRefundError] = useState('');
-  const [refundSuccess, setRefundSuccess] = useState('');
   const [mockRechargeRecords, setMockRechargeRecords] = useState([
     { id: 'R20230501001', amount: 100, status: 'success', time: '2023-05-01 10:30:45', paymentMethod: 'USDT' },
     { id: 'R20230425002', amount: 200, status: 'success', time: '2023-04-25 15:22:18', paymentMethod: 'USDT' },
     { id: 'R20230410003', amount: 50, status: 'success', time: '2023-04-10 09:15:33', paymentMethod: 'USDT' },
     { id: 'R20230401004', amount: 300, status: 'pending', time: '2023-04-01 14:05:27', paymentMethod: 'USDT' },
-    { id: 'R20230320005', amount: 150, status: 'failed', time: '2023-03-20 11:45:52', paymentMethod: 'USDT' },
+    { id: 'R20230320005', amount: 150, status: 'failed', time: '2023-03-20 11:45:52', paymentMethod: 'USDT' }
   ]);
 
-  // 获取状态文本
   const getStatusText = (status: string) => {
     switch (status) {
       case 'success':
-        return '充值成功';
+        return '成功';
       case 'pending':
         return '处理中';
       case 'failed':
-        return '充值失败';
-      case 'refunding':
-        return '退款审核中';
+        return '失败';
       default:
-        return '未知状态';
+        return '未知';
     }
   };
 
-  // 获取状态样式
   const getStatusStyle = (status: string) => {
     switch (status) {
       case 'success':
@@ -971,61 +775,9 @@ const RechargeContent = () => {
         return 'bg-yellow-100 text-yellow-800';
       case 'failed':
         return 'bg-red-100 text-red-800';
-      case 'refunding':
-        return 'bg-blue-100 text-blue-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
-  };
-
-  // 复制文本
-  const handleCopyText = (text: string) => {
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        toast.success('复制成功');
-      })
-      .catch(() => {
-        toast.error('复制失败');
-      });
-  };
-
-  // 打开退款申请模态框
-  const handleRefundRequest = (orderNumber: string) => {
-    setCurrentOrderNumber(orderNumber);
-    setRefundDescription('');
-    setRefundError('');
-    setRefundSuccess('');
-    setIsRefundModalOpen(true);
-  };
-
-  // 提交退款申请
-  const handleRefundSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!refundDescription.trim()) {
-      setRefundError('请填写退款原因');
-      return;
-    }
-    
-    // 模拟API调用
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // 更新订单状态
-    setMockRechargeRecords(prevRecords => 
-      prevRecords.map(record => 
-        record.id === currentOrderNumber 
-          ? { ...record, status: 'refunding' } 
-          : record
-      )
-    );
-    
-    setRefundSuccess('退款申请已提交，请等待审核');
-    
-    // 关闭模态框并跳转到客服系统页面
-    setTimeout(() => {
-      setIsRefundModalOpen(false);
-      window.location.href = '/customer-service';
-    }, 2000);
   };
 
   return (
@@ -1064,7 +816,6 @@ const RechargeContent = () => {
                     <div className="flex items-center">
                       <span className="mr-2">{record.id}</span>
                       <button 
-                        onClick={() => handleCopyText(record.id)}
                         className="text-gray-400 hover:text-gray-600"
                       >
                         <FaCopy size={14} />
@@ -1094,80 +845,6 @@ const RechargeContent = () => {
         <div className="text-center py-12 bg-gray-50 rounded-lg">
           <FaWallet className="mx-auto text-5xl text-gray-400 mb-4" />
           <p className="text-gray-500 text-lg">暂无充值记录</p>
-        </div>
-      )}
-
-      {/* 退款申请模态框 */}
-      {isRefundModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <h3 className="text-lg font-semibold mb-4">申请退款</h3>
-            
-            {refundSuccess ? (
-              <div className="text-center py-4">
-                <FaCheckCircle className="mx-auto text-green-500 text-4xl mb-2" />
-                <p className="text-green-600">{refundSuccess}</p>
-              </div>
-            ) : (
-              <form onSubmit={handleRefundSubmit}>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    订单号
-                  </label>
-                  <input
-                    type="text"
-                    value={currentOrderNumber}
-                    readOnly
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50"
-                  />
-                </div>
-                
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    退款原因 <span className="text-red-500">*</span> <span className="text-xs text-gray-500">(最多150字)</span>
-                  </label>
-                  <textarea
-                    value={refundDescription}
-                    onChange={(e) => {
-                      if (e.target.value.length <= 150) {
-                        setRefundDescription(e.target.value);
-                      }
-                    }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                    rows={4}
-                    maxLength={150}
-                    placeholder="请详细描述退款原因，最多150字"
-                  ></textarea>
-                  <div className="flex justify-between mt-1">
-                    <div>
-                      {refundError && (
-                        <p className="text-sm text-red-600">{refundError}</p>
-                      )}
-                    </div>
-                    <div className="text-xs text-gray-500 text-right">
-                      {refundDescription.length}/150
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex justify-start space-x-3">
-                  <button
-                    type="button"
-                    onClick={() => setIsRefundModalOpen(false)}
-                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                  >
-                    取消
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
-                  >
-                    提交申请并联系客服
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
         </div>
       )}
     </div>

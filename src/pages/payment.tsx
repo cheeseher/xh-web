@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { useUser } from '../contexts/UserContext';
-import { FaShoppingCart, FaMoneyBillWave, FaWallet, FaCheckCircle, FaInfoCircle } from 'react-icons/fa';
+import { FaShoppingCart, FaMoneyBillWave, FaWallet, FaCheckCircle, FaInfoCircle, FaAlipay, FaWeixin } from 'react-icons/fa';
 
 const PaymentPage: React.FC = () => {
   const router = useRouter();
   const { orderId, productId, quantity, email } = router.query;
   const { user } = useUser();
-  const [paymentMethod, setPaymentMethod] = useState<'usdt' | 'other'>('usdt');
+  const [paymentMethod, setPaymentMethod] = useState<'alipay' | 'wechat' | 'usdt'>('alipay');
   const [orderData, setOrderData] = useState({
     orderId: '',
     productName: '',
@@ -56,17 +56,15 @@ const PaymentPage: React.FC = () => {
   };
 
   // 处理支付方法选择
-  const handlePaymentMethodChange = (method: 'usdt' | 'other') => {
+  const handlePaymentMethodChange = (method: 'alipay' | 'wechat' | 'usdt') => {
     setPaymentMethod(method);
   };
 
   // 处理支付
   const handlePay = () => {
-    if (paymentMethod === 'usdt') {
-      router.push(`/user/payment/usdt?orderId=${orderData.orderId}&amount=${orderData.total}`);
-    } else {
-      alert('其他支付方式暂未开放');
-    }
+    // 根据不同的支付方式打开新窗口
+    const paymentUrl = `/payment/${paymentMethod}?orderId=${orderData.orderId}&amount=${orderData.total}`;
+    window.open(paymentUrl, '_blank');
   };
 
   return (
@@ -136,6 +134,51 @@ const PaymentPage: React.FC = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            {/* 支付宝支付 */}
+            <div 
+              onClick={() => handlePaymentMethodChange('alipay')}
+              className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
+                paymentMethod === 'alipay' 
+                  ? 'border-primary bg-primary/5 ring-1 ring-primary' 
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-3 ${
+                paymentMethod === 'alipay' ? 'bg-[#1677FF] text-white' : 'bg-gray-100 text-gray-500'
+              }`}>
+                <FaAlipay />
+              </div>
+              <div className="flex-grow">
+                <h3 className="font-medium">支付宝支付</h3>
+              </div>
+              {paymentMethod === 'alipay' && (
+                <FaCheckCircle className="text-primary ml-2" />
+              )}
+            </div>
+
+            {/* 微信支付 */}
+            <div 
+              onClick={() => handlePaymentMethodChange('wechat')}
+              className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
+                paymentMethod === 'wechat' 
+                  ? 'border-primary bg-primary/5 ring-1 ring-primary' 
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-3 ${
+                paymentMethod === 'wechat' ? 'bg-[#07C160] text-white' : 'bg-gray-100 text-gray-500'
+              }`}>
+                <FaWeixin />
+              </div>
+              <div className="flex-grow">
+                <h3 className="font-medium">微信支付</h3>
+              </div>
+              {paymentMethod === 'wechat' && (
+                <FaCheckCircle className="text-primary ml-2" />
+              )}
+            </div>
+
+            {/* USDT支付 */}
             <div 
               onClick={() => handlePaymentMethodChange('usdt')}
               className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
@@ -145,37 +188,14 @@ const PaymentPage: React.FC = () => {
               }`}
             >
               <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-3 ${
-                paymentMethod === 'usdt' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'
+                paymentMethod === 'usdt' ? 'bg-[#26A17B] text-white' : 'bg-gray-100 text-gray-500'
               }`}>
                 <FaWallet />
               </div>
               <div className="flex-grow">
-                <h3 className="font-medium">USDT 支付</h3>
-                <p className="text-sm text-gray-500">使用USDT加密货币支付</p>
+                <h3 className="font-medium">USDT支付</h3>
               </div>
               {paymentMethod === 'usdt' && (
-                <FaCheckCircle className="text-primary ml-2" />
-              )}
-            </div>
-            
-            <div 
-              onClick={() => handlePaymentMethodChange('other')}
-              className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
-                paymentMethod === 'other' 
-                  ? 'border-primary bg-primary/5 ring-1 ring-primary' 
-                  : 'border-gray-200 hover:border-gray-300'
-              }`}
-            >
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-3 ${
-                paymentMethod === 'other' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'
-              }`}>
-                <FaMoneyBillWave />
-              </div>
-              <div className="flex-grow">
-                <h3 className="font-medium">其他支付方式</h3>
-                <p className="text-sm text-gray-500">更多支付选项</p>
-              </div>
-              {paymentMethod === 'other' && (
                 <FaCheckCircle className="text-primary ml-2" />
               )}
             </div>

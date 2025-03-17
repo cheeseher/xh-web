@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import { useUser } from '../../contexts/UserContext';
-import { FaShoppingBag, FaWallet, FaHistory, FaEye, FaTimes, FaCopy, FaUndo } from 'react-icons/fa';
+import { FaShoppingBag, FaWallet, FaHistory, FaEye, FaTimes, FaCopy } from 'react-icons/fa';
 
 // 模拟订单记录数据
 const mockOrderRecords = [
@@ -16,8 +16,7 @@ const mockOrderRecords = [
     status: 'success',
     email: 'user@example.com',
     password: '123456',
-    cardInfo: 'gmail123@gmail.com----Password123----backup@example.com',
-    canRefund: true
+    cardInfo: 'gmail123@gmail.com----Password123----backup@example.com'
   },
   {
     orderNumber: 'ORD202403210002',
@@ -29,8 +28,7 @@ const mockOrderRecords = [
     status: 'pending',
     email: 'user2@example.com',
     password: '654321',
-    cardInfo: 'outlook123@outlook.com----Password456----backup2@example.com',
-    canRefund: false
+    cardInfo: 'outlook123@outlook.com----Password456----backup2@example.com'
   },
   {
     orderNumber: 'ORD202403210003',
@@ -42,8 +40,7 @@ const mockOrderRecords = [
     status: 'failed',
     email: 'user3@example.com',
     password: 'abcdef',
-    cardInfo: 'instagram123@gmail.com----Password789----backup3@example.com',
-    canRefund: false
+    cardInfo: 'instagram123@gmail.com----Password789----backup3@example.com'
   }
 ];
 
@@ -112,12 +109,10 @@ const RecordsPage: React.FC<UserRecordsProps> = ({ initialTab, standalone = true
   const router = useRouter();
   const { user } = useUser();
   const [activeTab, setActiveTab] = useState(initialTab || 'order');
+  const [orders, setOrders] = useState(mockOrderRecords);
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [currentOrder, setCurrentOrder] = useState<any>(null);
   const [copySuccess, setCopySuccess] = useState('');
-  const [orders, setOrders] = useState(mockOrderRecords);
-  const [isRefunding, setIsRefunding] = useState(false);
-  const [refundReason, setRefundReason] = useState('');
   const [message, setMessage] = useState({ type: '', text: '' });
 
   // 根据URL参数设置活动标签
@@ -198,44 +193,6 @@ const RecordsPage: React.FC<UserRecordsProps> = ({ initialTab, standalone = true
       setActiveTab('recharge');
     } else if (orderId.startsWith('ORD')) {
       setActiveTab('order');
-    }
-  };
-
-  // 处理退款申请
-  const handleRefundSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!refundReason.trim()) {
-      setMessage({ type: 'error', text: '请填写退款原因' });
-      return;
-    }
-
-    try {
-      // 模拟API调用
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // 更新订单状态
-      setOrders(prev => prev.map(order => 
-        order.orderNumber === currentOrder?.orderNumber 
-          ? { ...order, status: 'refunding', canRefund: false } 
-          : order
-      ));
-      
-      setMessage({ type: 'success', text: '退款申请已提交，请等待处理' });
-      setIsRefunding(false);
-      setCurrentOrder(null);
-      setRefundReason('');
-    } catch (error) {
-      setMessage({ type: 'error', text: '申请失败，请稍后重试' });
-    }
-  };
-
-  // 打开退款弹窗
-  const handleRefundRequest = (orderNumber: string) => {
-    const order = orders.find(order => order.orderNumber === orderNumber);
-    if (order && order.canRefund) {
-      setCurrentOrder(order);
-      setIsRefunding(true);
     }
   };
 
@@ -376,15 +333,6 @@ const RecordsPage: React.FC<UserRecordsProps> = ({ initialTab, standalone = true
                                 title="查看"
                               >
                                 <FaEye />
-                              </button>
-                            )}
-                            {order.canRefund && (
-                              <button 
-                                onClick={() => handleRefundRequest(order.orderNumber)}
-                                className="text-red-500 hover:text-red-700"
-                                title="申请退款"
-                              >
-                                <FaUndo />
                               </button>
                             )}
                           </div>
@@ -630,54 +578,6 @@ const RecordsPage: React.FC<UserRecordsProps> = ({ initialTab, standalone = true
                 关闭
               </button>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* 退款申请弹窗 */}
-      {isRefunding && currentOrder && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">申请退款</h3>
-            <p className="text-sm text-gray-500 mb-4">
-              订单号: <span className="font-medium text-gray-700">{currentOrder.orderNumber}</span>
-            </p>
-            
-            <form onSubmit={handleRefundSubmit}>
-              <div className="mb-4">
-                <label htmlFor="refundReason" className="block text-sm font-medium text-gray-700 mb-1">
-                  退款原因
-                </label>
-                <textarea
-                  id="refundReason"
-                  rows={4}
-                  value={refundReason}
-                  onChange={(e) => setRefundReason(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#009688]/20 focus:border-[#009688]"
-                  placeholder="请详细说明退款原因..."
-                />
-              </div>
-              
-              <div className="flex justify-end space-x-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsRefunding(false);
-                    setCurrentOrder(null);
-                    setRefundReason('');
-                  }}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                >
-                  取消
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-[#009688] text-white rounded-md hover:bg-[#00796b]"
-                >
-                  提交申请
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       )}
