@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../../components/Layout';
-import { FaSearch, FaClipboard, FaInfoCircle, FaShoppingBag, FaCalendarAlt, FaClock, FaLock, FaShieldAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaSearch, FaClipboard, FaInfoCircle, FaShoppingBag, FaCalendarAlt, FaClock, FaLock, FaShieldAlt, FaChevronLeft, FaChevronRight, FaEnvelope } from 'react-icons/fa';
 
 interface Account {
   account: string;
@@ -20,8 +20,8 @@ interface SearchResult {
 }
 
 const OrderQueryPage: React.FC = () => {
-  const [orderId, setOrderId] = useState('');
   const [email, setEmail] = useState('');
+  const [queryPassword, setQueryPassword] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
   const [error, setError] = useState('');
@@ -31,8 +31,8 @@ const OrderQueryPage: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!orderId.trim()) {
-      setError('请输入订单号');
+    if (!email.trim()) {
+      setError('请输入邮箱');
       return;
     }
     
@@ -53,7 +53,7 @@ const OrderQueryPage: React.FC = () => {
       }
       
       setSearchResult({
-        orderId: orderId,
+        orderId: 'ORD' + Math.floor(Math.random() * 10000000),
         productName: '谷歌邮箱账号',
         price: 99.00,
         quantity: accounts.length,
@@ -134,7 +134,7 @@ const OrderQueryPage: React.FC = () => {
                     </div>
                     <div className="ml-3">
                       <p className="text-xs sm:text-sm text-gray-700">
-                        欢迎使用订单查询系统，请输入您的订单号和查询密码进行查询。
+                        欢迎使用订单查询系统，请输入您的邮箱和查询密码进行查询。
                       </p>
                     </div>
                   </div>
@@ -142,26 +142,26 @@ const OrderQueryPage: React.FC = () => {
                 
                 <form onSubmit={handleSearch} className="space-y-4 sm:space-y-6">
                   <div>
-                    <label htmlFor="orderId" className="block text-sm font-medium text-gray-700 mb-1">
-                      订单号
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      邮箱
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaClipboard className="h-5 w-5 text-gray-400" />
+                        <FaEnvelope className="h-5 w-5 text-gray-400" />
                       </div>
                       <input
-                        type="text"
-                        id="orderId"
-                        value={orderId}
-                        onChange={(e) => setOrderId(e.target.value)}
-                        placeholder="请输入您的订单号"
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="请输入您的邮箱"
                         className="w-full pl-10 pr-4 h-[42px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                       />
                     </div>
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="queryPassword" className="block text-sm font-medium text-gray-700 mb-1">
                       查询密码
                     </label>
                     <div className="relative">
@@ -170,9 +170,9 @@ const OrderQueryPage: React.FC = () => {
                       </div>
                       <input
                         type="password"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        id="queryPassword"
+                        value={queryPassword}
+                        onChange={(e) => setQueryPassword(e.target.value)}
                         placeholder="请输入查询密码"
                         className="w-full pl-10 pr-4 h-[42px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
                       />
@@ -255,8 +255,8 @@ const OrderQueryPage: React.FC = () => {
                     <button 
                       onClick={() => {
                         setSearchResult(null);
-                        setOrderId('');
                         setEmail('');
+                        setQueryPassword('');
                         setVerificationCode('');
                       }}
                       className="text-[#009688] hover:text-[#00796b] text-xs sm:text-sm border border-[#009688] px-2 sm:px-3 py-1 rounded-md transition-colors"
