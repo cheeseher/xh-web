@@ -2,9 +2,9 @@
 const mockUsers = [
   {
     id: '1',
-    username: 'test',
-    password: 'test123',
     email: 'test@example.com',
+    password: 'test123',
+    username: 'test',
     avatar: '/images/default-avatar.png',
     isVip: true,
     vipLevel: 2,
@@ -13,15 +13,15 @@ const mockUsers = [
   }
 ];
 
-export const login = async (username: string, password: string) => {
+export const login = async (email: string, password: string) => {
   // 模拟API请求延迟
   await new Promise(resolve => setTimeout(resolve, 1000));
 
   // 创建演示用户数据
   const demoUser = {
     id: Math.random().toString(36).substr(2, 9),
-    username: username,
-    email: `${username}@example.com`,
+    email: email,
+    username: email.split('@')[0],
     avatar: '/images/default-avatar.png',
     isVip: true,
     vipLevel: 1,

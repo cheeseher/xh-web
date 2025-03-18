@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
-import { FaSearch, FaClipboard, FaInfoCircle, FaShoppingBag, FaCalendarAlt, FaClock, FaLock, FaShieldAlt, FaChevronLeft, FaChevronRight, FaEnvelope } from 'react-icons/fa';
+import { FaSearch, FaClipboard, FaInfoCircle, FaShoppingBag, FaCalendarAlt, FaClock, FaLock, FaShieldAlt, FaChevronLeft, FaChevronRight, FaEnvelope, FaCheck, FaSpinner } from 'react-icons/fa';
 
 interface Account {
   account: string;
@@ -27,10 +27,24 @@ const OrderQueryPage: React.FC = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [currentVerificationCode, setCurrentVerificationCode] = useState('1111');
   const pageSize = 10; // 每页显示的卡密数量
+
+  // 预设的邮箱和密码
+  const PRESET_EMAIL = '111@qq.com';
+  const PRESET_PASSWORD = '11111111';
+  const PRESET_VERIFICATION_CODE = '1111';
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // 首先校验验证码
+    if (verificationCode !== PRESET_VERIFICATION_CODE) {
+      setError('验证码错误');
+      return;
+    }
+    
     if (!email.trim()) {
       setError('请输入邮箱');
       return;
@@ -40,8 +54,22 @@ const OrderQueryPage: React.FC = () => {
     setError('');
     setCurrentPage(1); // 重置页码
     
-    // 模拟订单查询结果
+    // 延迟模拟网络请求
     setTimeout(() => {
+      // 检查邮箱和密码
+      if (email !== PRESET_EMAIL) {
+        setError('未查询到该订单号');
+        setLoading(false);
+        return;
+      }
+      
+      if (queryPassword !== PRESET_PASSWORD) {
+        setError('订单号或查询密码错误，请检查后重试');
+        setLoading(false);
+        return;
+      }
+      
+      // 邮箱和密码都正确，返回查询结果
       // 生成更多的测试数据
       const accounts = [];
       for (let i = 1; i <= 25; i++) {
@@ -67,9 +95,15 @@ const OrderQueryPage: React.FC = () => {
   };
 
   const handleRefreshVerificationCode = () => {
-    // 模拟刷新验证码
+    // 模拟刷新验证码 - 始终重置为预设的验证码
+    setCurrentVerificationCode(PRESET_VERIFICATION_CODE);
     console.log('刷新验证码');
   };
+
+  // 页面加载时自动设置验证码
+  useEffect(() => {
+    handleRefreshVerificationCode();
+  }, []);
 
   // 计算总页数
   const totalPages = searchResult ? Math.ceil(searchResult.accounts.length / pageSize) : 0;
@@ -114,6 +148,21 @@ const OrderQueryPage: React.FC = () => {
     }
     
     return pages;
+  };
+
+  // 处理复制操作
+  const handleCopyAll = () => {
+    const accountsText = searchResult?.accounts
+      .map(acc => `${acc.account}----${acc.password}----${acc.backupEmail} 格式：账号----密码----辅助邮箱（用于登录确认输入）`)
+      .join('\n') || '';
+    
+    navigator.clipboard.writeText(accountsText);
+    setCopySuccess(true);
+    
+    // 1秒后恢复按钮状态
+    setTimeout(() => {
+      setCopySuccess(false);
+    }, 1000);
   };
 
   return (
@@ -201,7 +250,7 @@ const OrderQueryPage: React.FC = () => {
                         className="w-32 h-[42px] bg-gray-100 rounded-lg flex items-center justify-center cursor-pointer"
                         onClick={handleRefreshVerificationCode}
                       >
-                        <span className="text-sm text-gray-500">点击刷新</span>
+                        <span className="text-sm text-gray-500">{currentVerificationCode}</span>
                       </div>
                     </div>
                   </div>
@@ -226,11 +275,14 @@ const OrderQueryPage: React.FC = () => {
                       type="submit"
                       disabled={loading}
                       className={`w-full h-[42px] flex items-center justify-center rounded-lg ${
-                        loading ? 'bg-gray-400' : 'bg-[#009688] hover:bg-[#00796b]'
+                        loading ? 'bg-[#009688]/80' : 'bg-[#009688] hover:bg-[#00796b]'
                       } text-white transition-colors`}
                     >
                       {loading ? (
-                        <span>查询中...</span>
+                        <>
+                          <FaSpinner className="animate-spin mr-2" />
+                          <span>查询中...</span>
+                        </>
                       ) : (
                         <>
                           <FaSearch className="mr-2" />
@@ -309,16 +361,20 @@ const OrderQueryPage: React.FC = () => {
                 <div className="flex justify-between items-center mb-3 sm:mb-4">
                   <h3 className="text-base sm:text-lg font-medium text-gray-800">账号信息</h3>
                   <button 
-                    className="text-[#009688] hover:text-[#00796b] text-xs sm:text-sm flex items-center"
-                    onClick={() => {
-                      const accountsText = searchResult.accounts
-                        .map(acc => `${acc.account}----${acc.password}----${acc.backupEmail} 格式：账号----密码----辅助邮箱（用于登录确认输入）`)
-                        .join('\n');
-                      navigator.clipboard.writeText(accountsText);
-                    }}
+                    className="text-[#009688] hover:text-[#00796b] text-xs sm:text-sm flex items-center transition-all duration-200"
+                    onClick={handleCopyAll}
                   >
-                    <FaClipboard className="mr-1" />
-                    复制全部
+                    {copySuccess ? (
+                      <>
+                        <FaCheck className="mr-1" />
+                        <span>复制成功</span>
+                      </>
+                    ) : (
+                      <>
+                        <FaClipboard className="mr-1" />
+                        <span>复制全部</span>
+                      </>
+                    )}
                   </button>
                 </div>
                 

@@ -3,16 +3,18 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import { useUser } from '../contexts/UserContext';
-import { FaUser, FaLock } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaShieldAlt } from 'react-icons/fa';
 import { login } from '../utils/auth';
+import Captcha from '../components/Captcha';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
   const { redirect } = router.query;
   const { setUser } = useUser();
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
+    captcha: ''
   });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -25,14 +27,35 @@ const LoginPage: React.FC = () => {
     }));
   };
 
+  const handleCaptchaRefresh = () => {
+    setFormData(prev => ({ ...prev, captcha: '' }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // 验证表单
+    if (!formData.email.trim()) {
+      setError('请输入邮箱');
+      return;
+    }
+    
+    if (!formData.password.trim()) {
+      setError('请输入密码');
+      return;
+    }
+    
+    if (!formData.captcha.trim()) {
+      setError('请输入验证码');
+      return;
+    }
+    
     setError('');
     setIsLoading(true);
 
     try {
       // 调用登录函数
-      const user = await login(formData.username, formData.password);
+      const user = await login(formData.email, formData.password);
       
       // 保存用户信息到 localStorage
       localStorage.setItem('user', JSON.stringify(user));
@@ -80,21 +103,21 @@ const LoginPage: React.FC = () => {
               )}
 
               <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                  用户名
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  邮箱
                 </label>
                 <div className="mt-1 relative">
                   <input
-                    id="username"
-                    name="username"
-                    type="text"
+                    id="email"
+                    name="email"
+                    type="email"
                     required
-                    value={formData.username}
+                    value={formData.email}
                     onChange={handleInputChange}
                     className="appearance-none block w-full px-4 h-[42px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
-                    placeholder="请输入用户名"
+                    placeholder="请输入邮箱"
                   />
-                  <FaUser className="absolute right-3 top-3.5 text-gray-400" />
+                  <FaEnvelope className="absolute right-3 top-3.5 text-gray-400" />
                 </div>
               </div>
 
@@ -114,6 +137,30 @@ const LoginPage: React.FC = () => {
                     placeholder="请输入密码"
                   />
                   <FaLock className="absolute right-3 top-3.5 text-gray-400" />
+                </div>
+              </div>
+              
+              <div>
+                <label htmlFor="captcha" className="block text-sm font-medium text-gray-700">
+                  验证码
+                </label>
+                <div className="mt-1 flex space-x-2">
+                  <div className="relative flex-1">
+                    <input
+                      id="captcha"
+                      name="captcha"
+                      type="text"
+                      required
+                      value={formData.captcha}
+                      onChange={handleInputChange}
+                      className="appearance-none block w-full px-4 h-[42px] border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009688] focus:border-transparent"
+                      placeholder="请输入验证码"
+                    />
+                    <FaShieldAlt className="absolute right-3 top-3.5 text-gray-400" />
+                  </div>
+                  <div className="w-32 h-[42px] bg-gray-100 rounded-md overflow-hidden">
+                    <Captcha onRefresh={handleCaptchaRefresh} />
+                  </div>
                 </div>
               </div>
 
